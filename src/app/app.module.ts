@@ -22,11 +22,8 @@ import { WikiPage } from '../pages/wiki/wiki';
   entryComponents: [
     MyApp,
     HomePage,
-<<<<<<< Updated upstream
-    WikiPage
-=======
+    WikiPage,
     Splash
->>>>>>> Stashed changes
   ],
   providers: [
     StatusBar,
