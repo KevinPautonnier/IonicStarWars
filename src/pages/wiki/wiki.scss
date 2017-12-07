@@ -1,3 +1,25 @@
 page-wiki {
-	
+
+	ion-card {
+		position: relative;
+		text-align: center;
+		height:12vh;
+	}
+
+	.card-title {
+		position: absolute;
+		top: 26%;
+		font-size: 2.3em;
+		width: 100%;
+		font-weight: bold;
+		color: #FFF;
+	}
+
+	.card-subtitle {
+		font-size: 1.0em;
+		position: absolute;
+		top: 52%;
+		width: 100%;
+		color: #fff;
+	}
 }
