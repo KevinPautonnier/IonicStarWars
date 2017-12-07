@@ -17,10 +17,9 @@ So the application goals are to:
 This project use Ionic in order to simply create a multi-OS application.
 
 Those are the requirements:
-
-  ..* -node.js
-  ..* -npm
-  ..* -Ionic
+  * -node.js
+  * -npm
+  * -Ionic
 
 
 Then just clone the repo on your computer.
