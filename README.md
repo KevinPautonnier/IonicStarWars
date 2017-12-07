@@ -37,7 +37,7 @@ Then it will launch the preview of the application on your default browser.
 If you want to send the application to your phone, type :
 
 ```{r, engine='bash', count_lines}
-IonicStarWars$ ionic cordova run android
+IonicStarWars$ ionic cordova run android --livereload
 ```
 
 Replace `android` by `ios` if you are working with an IPhone.
