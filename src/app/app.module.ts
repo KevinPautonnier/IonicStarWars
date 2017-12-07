@@ -13,7 +13,8 @@ import { Splash } from '../pages/splash/splash';
   declarations: [
     MyApp,
     HomePage,
-    WikiPage
+    WikiPage,
+    Splash
   ],
   imports: [
     BrowserModule,
