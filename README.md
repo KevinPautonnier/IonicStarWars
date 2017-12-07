@@ -18,9 +18,9 @@ This project use Ionic in order to simply create a multi-OS application.
 
 Those are the requirements:
 
-  -node.js
-  -npm
-  -Ionic
+  ..* -node.js
+  ..* -npm
+  ..* -Ionic
 
 
 Then just clone the repo on your computer.
@@ -41,6 +41,6 @@ If you want to send the application to your phone, type :
 IonicStarWars$ ionic cordova run android
 ```
 
-replace `android` by `ios` if you are working with an IPhone.
+Replace `android` by `ios` if you are working with an IPhone.
 
 *NB: You must be working on an OS-X in order to deploy on an IPhone*
