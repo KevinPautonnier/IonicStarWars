@@ -7,8 +7,13 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { WikiPage } from '../pages/wiki/wiki';
-import { Splash } from '../pages/splash/splash';
 import { WikiFilmsPage } from '../pages/wiki-films/wiki-films';
+import { WikiSpeciesPage } from '../pages/wiki-species/wiki-species';
+import { WikiCharactersPage } from '../pages/wiki-characters/wiki-characters';
+import { WikiVehiculesPage } from '../pages/wiki-vehicules/wiki-vehicules';
+import { WikiStarshipsPage } from '../pages/wiki-starships/wiki-starships';
+import { WikiPlanetsPage } from '../pages/wiki-planets/wiki-planets';
+import { Splash } from '../pages/splash/splash';
 
 @NgModule({
   declarations: [
@@ -16,6 +21,11 @@ import { WikiFilmsPage } from '../pages/wiki-films/wiki-films';
     HomePage,
     WikiPage,
     WikiFilmsPage,
+    WikiSpeciesPage,
+    WikiCharactersPage,
+    WikiVehiculesPage,
+    WikiStarshipsPage,
+    WikiPlanetsPage,
     Splash
   ],
   imports: [
@@ -28,6 +38,11 @@ import { WikiFilmsPage } from '../pages/wiki-films/wiki-films';
     HomePage,
     WikiPage,
     WikiFilmsPage,
+    WikiSpeciesPage,
+    WikiCharactersPage,
+    WikiVehiculesPage,
+    WikiStarshipsPage,
+    WikiPlanetsPage,
     Splash
   ],
   providers: [
