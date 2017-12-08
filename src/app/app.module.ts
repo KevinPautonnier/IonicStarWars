@@ -8,12 +8,14 @@ import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { WikiPage } from '../pages/wiki/wiki';
 import { Splash } from '../pages/splash/splash';
+import { WikiFilmsPage } from '../pages/wiki-films/wiki-films';
 
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
     WikiPage,
+    WikiFilmsPage,
     Splash
   ],
   imports: [
@@ -25,6 +27,7 @@ import { Splash } from '../pages/splash/splash';
     MyApp,
     HomePage,
     WikiPage,
+    WikiFilmsPage,
     Splash
   ],
   providers: [
