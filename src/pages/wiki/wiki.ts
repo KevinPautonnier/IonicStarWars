@@ -1,5 +1,5 @@
-import {Component} from '@angular/core';
-import {Page,NavController} from 'ionic-angular';
+import { Component } from '@angular/core';
+import { NavController } from 'ionic-angular';
 import { WikiFilmsPage } from '../wiki-films/wiki-films';
 
 @Component({
@@ -9,8 +9,8 @@ import { WikiFilmsPage } from '../wiki-films/wiki-films';
 
 export class WikiPage {
 
-	constructor(public navCtrl: NavController) {
-		this.nav = navCtrl
+	constructor(public nav: NavController) {
+		this.nav = nav
 	};
 
 	toHomePage (){
