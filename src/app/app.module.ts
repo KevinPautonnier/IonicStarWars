@@ -8,13 +8,15 @@ import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { WikiPage } from '../pages/wiki/wiki';
 import { Splash } from '../pages/splash/splash';
+import { GalaxyPage } from '../pages/galaxy/galaxy';
 
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
     WikiPage,
-    Splash
+    Splash,
+    GalaxyPage
   ],
   imports: [
     BrowserModule,
@@ -25,7 +27,8 @@ import { Splash } from '../pages/splash/splash';
     MyApp,
     HomePage,
     WikiPage,
-    Splash
+    Splash,
+    GalaxyPage
   ],
   providers: [
     StatusBar,

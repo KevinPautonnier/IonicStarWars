@@ -1,0 +1,45 @@
+#galaxy{
+  background-image: url('../../assets/imgs/galaxy/background.png');
+  background-size: cover;
+  img{
+    width: 27vmin;
+    position: absolute;
+  }
+
+  #tatooine {
+    top: 5vh;
+    left: 20vw;
+  }
+  #c1a {
+    top: 10vh;
+    right: 20vw;
+  }
+  #dagobah {
+    top: 30vh;
+    left: 5vw;
+  }
+  #death {
+    top: 30vh;
+    right: 5vw;
+  }
+  #millenium {
+    top: 55vh;
+    left: 10vw;
+    width: 40vmin;
+  }
+  #mustafar {
+    top: 60vh;
+    right: 10vw;
+  }
+  #destroyer {
+    top: 75vh;
+    left: 20vw;
+    width: 70vmin;
+  }
+  #xwing{
+    top: 45vh;
+    left: 45vw;
+  }
+}
+
+
