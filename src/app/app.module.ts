@@ -10,6 +10,12 @@ import { WikiPage } from '../pages/wiki/wiki';
 import { Splash } from '../pages/splash/splash';
 import { SidesPage } from '../pages/sides/sides';
 import { WikiFilmsPage } from '../pages/wiki-films/wiki-films';
+import { WikiSpeciesPage } from '../pages/wiki-species/wiki-species';
+import { WikiCharactersPage } from '../pages/wiki-characters/wiki-characters';
+import { WikiVehiculesPage } from '../pages/wiki-vehicules/wiki-vehicules';
+import { WikiStarshipsPage } from '../pages/wiki-starships/wiki-starships';
+import { WikiPlanetsPage } from '../pages/wiki-planets/wiki-planets';
+import { Splash } from '../pages/splash/splash';
 
 
 @NgModule({
@@ -17,9 +23,14 @@ import { WikiFilmsPage } from '../pages/wiki-films/wiki-films';
     MyApp,
     HomePage,
     WikiPage,
+    WikiFilmsPage,
+    WikiSpeciesPage,
+    WikiCharactersPage,
+    WikiVehiculesPage,
+    WikiStarshipsPage,
+    WikiPlanetsPage,
     Splash,
-    SidesPage,
-    WikiFilmsPage
+    SidesPage
   ],
   imports: [
     BrowserModule,
@@ -30,9 +41,14 @@ import { WikiFilmsPage } from '../pages/wiki-films/wiki-films';
     MyApp,
     HomePage,
     WikiPage,
+    WikiFilmsPage,
+    WikiSpeciesPage,
+    WikiCharactersPage,
+    WikiVehiculesPage,
+    WikiStarshipsPage,
+    WikiPlanetsPage,
     Splash,
-    SidesPage,
-    WikiFilmsPage
+    SidesPage
   ],
   providers: [
     StatusBar,
