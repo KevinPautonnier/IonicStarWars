@@ -33,4 +33,19 @@ page-sides {
     width: 70%;
   }
 
+  #dark{
+      width: 50vw;
+      height: 100vh;
+      position: absolute;
+      left: 0px;
+      z-index: 10;
+  }
+
+  #light{
+      width: 50vw;
+      height: 100vh;
+      position: absolute;
+      right: 0px;
+      z-index: 10;
+  }
 }
