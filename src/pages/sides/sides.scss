@@ -1,0 +1,51 @@
+page-sides {
+
+  .grid {
+    margin: 0px;
+    padding: 0px;
+  }
+
+  #dv{
+    background-image: url('../../assets/imgs/sides/DV.png');
+    background-position: left bottom;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-color: black;
+    height: 100vh;
+  }
+  #yd{
+    background-image: url('../../assets/imgs/sides/YD.png');
+    background-position: right bottom;
+    background-size: contain;
+    background-repeat: no-repeat;
+    height: 100vh;
+  }
+
+  #cys{
+    position: absolute;
+    z-index: 5;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+  }
+
+  #cysimg{
+    width: 70%;
+  }
+
+  #dark{
+      width: 50vw;
+      height: 100vh;
+      position: absolute;
+      left: 0px;
+      z-index: 10;
+  }
+
+  #light{
+      width: 50vw;
+      height: 100vh;
+      position: absolute;
+      right: 0px;
+      z-index: 10;
+  }
+}

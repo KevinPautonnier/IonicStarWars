@@ -6,13 +6,14 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { HomePage } from '../pages/home/home';
 import { WikiPage } from '../pages/wiki/wiki';
 import { Splash } from '../pages/splash/splash';
+import { SidesPage } from '../pages/sides/sides';
 
 
 @Component({
   templateUrl: 'app.html'
 })
 export class MyApp {
-  rootPage:any = HomePage;
+  rootPage:any = SidesPage;
 
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen,  modalCtrl: ModalController) {
     platform.ready().then(() => {
