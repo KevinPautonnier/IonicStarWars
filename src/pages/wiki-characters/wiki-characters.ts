@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { ApiModule } from '../wiki/wiki';
 
 /**
  * Generated class for the WikiCharactersPage page.
@@ -20,6 +21,10 @@ export class WikiCharactersPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad WikiCharactersPage');
+  }
+
+  getCharacter(){
+  	new ApiModule().getFromApi("people/1/");
   }
 
 }

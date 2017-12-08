@@ -13,9 +13,10 @@ import { WikiPlanetsPage } from '../wiki-planets/wiki-planets';
 })
 
 export class WikiPage {
+	toDisplay = undefined;
 
 	constructor(public nav: NavController) {
-		this.nav = nav
+		this.nav = nav;
 	};
 
 	toWikiFilmsPage (){this.nav.push(WikiFilmsPage);};
@@ -24,5 +25,48 @@ export class WikiPage {
 	toWikiVehiculesPage (){this.nav.push(WikiVehiculesPage);};
 	toWikiStarshipsPage (){this.nav.push(WikiStarshipsPage);};
 	toWikiPlanetsPage (){this.nav.push(WikiPlanetsPage);};
+
+	rechercher(name) {
+
+	}
+
+	getToDisplay(){ return this.toDisplay; }
+	setToDisplay(_toDisplay){ this.toDisplay = _toDisplay }
+	resetToDisplay(){this.toDisplay = undefined }
+
+}
+
+import { NgModule }  from '@angular/core';
+
+@NgModule({
+  imports:      [ ],
+  declarations: [ ]
+})
+
+export class ApiModule {
+	apiRequestUrl;
+
+	constructor() {
+	this.apiRequestUrl = "https://swapi.co/api/";
+	};
+	
+	getFromApi( urlComplement ){
+		console.log(this.apiRequestUrl + urlComplement);
+
+		fetch(new Request(this.apiRequestUrl + urlComplement))
+		.then(response => {
+			if (response.status === 200) {
+				return response.json();
+			} else {
+				throw new Error('Something went wrong on api server!');
+			}
+		})
+		.then(response => {
+				console.debug(response);
+				return response;
+			}).catch(error => {
+				console.error(error);
+			});
+		}
 }
 
