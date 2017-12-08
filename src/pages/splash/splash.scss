@@ -1,8 +1,11 @@
 body {
     position: relative;
     min-height: 380px;
+    background-color: black;
     background-image: url("../../assets/imgs/splash.png");
-    background-size: cover;
+    background-repeat: no-repeat;
+    background-size: auto 100%;
+    background-position: center;
 }
 
 h1 {
@@ -55,8 +58,8 @@ p a:hover {
 
 .lightsaber {
     position: absolute;
-    width: 4px;
-    height: 12px;
+    width: 5px;
+    height: 15px;
     background-color: #666;
     border-radius: 1px;
     bottom: 0;
@@ -74,8 +77,8 @@ p a:hover {
     position: absolute;
     content: ' ';
     display: block;
-    width: 2px;
-    height: 25px;
+    width: 4px;
+    height: 30px;
     max-height: 1px;
     left: 1px;
     top: 1px;

@@ -9,6 +9,7 @@ import { HomePage } from '../pages/home/home';
 import { WikiPage } from '../pages/wiki/wiki';
 import { Splash } from '../pages/splash/splash';
 import { SidesPage } from '../pages/sides/sides';
+import { WikiFilmsPage } from '../pages/wiki-films/wiki-films';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import { SidesPage } from '../pages/sides/sides';
     HomePage,
     WikiPage,
     Splash,
-    SidesPage
+    SidesPage,
+    WikiFilmsPage
   ],
   imports: [
     BrowserModule,
@@ -29,7 +31,8 @@ import { SidesPage } from '../pages/sides/sides';
     HomePage,
     WikiPage,
     Splash,
-    SidesPage
+    SidesPage,
+    WikiFilmsPage
   ],
   providers: [
     StatusBar,
