@@ -54,7 +54,8 @@ function getData2step ( urlComplement, callback ){
 	if(url[1] == ""){
 		updateFullCategorie(url[0]);
 	}else{
-
+		// TODO : liste de page
+		requestApi(urlComplement, callback);
 	}
 }
 
@@ -83,7 +84,7 @@ function _callbackInitCategorie( response ){
 	var newCategorie = {
 		count : response.count,
 		nbElemPerPage : response.results.length,
-		data = {}
+		data : {}
 	}
 	var i = 0;
 	while(response.results.length > i){
