@@ -12,6 +12,10 @@ page-sides {
     background-repeat: no-repeat;
     background-color: black;
     height: 100vh;
+    animation-name: zeroToOne;
+    animation-duration: 4s;
+    animation-delay: 2s;
+    animation-iteration-count: infinite;
   }
   #yd{
     background-image: url('../../assets/imgs/sides/YD.png');
@@ -19,7 +23,49 @@ page-sides {
     background-size: contain;
     background-repeat: no-repeat;
     height: 100vh;
+    animation-name: zeroToOne;
+    animation-duration: 4s;
+    animation-iteration-count: infinite;
   }
+
+    @keyframes zeroToOne{
+      5%
+         {
+             -webkit-transform: translateY(5px);
+             transform: translateY(5px);
+         }
+         10%
+         {
+             -webkit-transform: translateY(-5px);
+            transform: translateY(-5px);
+         }
+         16%
+         {
+             -webkit-transform: translateY(3px);
+             transform: translateY(3px);
+         }
+         22%
+         {
+             -webkit-transform: translateY(-3px);
+             transform: translateY(-3px);
+         }
+         27%
+         {
+             -webkit-transform: translateY(2px);
+             transform: translateY(2px);
+         }
+         33%
+         {
+             -webkit-transform: translateY(0);
+             transform: translateY(0);
+         }
+    }
+
+    @keyframes oneToZero{
+      0%{width: 100%;}
+      50%{width:90%;}
+      100%{width:100%;}
+    }
 
   #cys{
     position: absolute;
@@ -48,4 +94,6 @@ page-sides {
       right: 0px;
       z-index: 10;
   }
+
+
 }

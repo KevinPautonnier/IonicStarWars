@@ -42,7 +42,7 @@ export class WikiPage {
 
 import { NgModule }  from '@angular/core';
 
-var tmp; 
+var tmp;
 var apiRequestUrl = "https://swapi.co/api/";
 var data = {categories : ["films","people","vehicules","starships","species","planets"]};
 // {films:{count:70, nbElemPerPage:3, data:{1:{}, ...}, ...}, ...}
@@ -63,7 +63,7 @@ function requestApi( urlComplement, callback ){
 
 	var requestUrl = apiRequestUrl + urlComplement;
 	console.log("RequestApi:" + requestUrl);
-	
+
 	fetch(new Request(requestUrl))
 	.then(response => {
 		if (response.status === 200) {
@@ -147,15 +147,14 @@ export class ApiModule {
 	getData( urlComplement, callback ) {
 		var url = urlComplement.split("/");
 		//console.log("data=" + data);
-		if( data[url[0]] == undefined && data.categories.includes(url[0])){
-			tmp = {};
-			tmp.urlComplement = urlComplement;
-			tmp.callback = callback;
-			requestApi(url[0]+"/", _callbackInitCategorie );
-		}else{
-			console.log("categorie instancié");
-			getData2step( urlComplement, callback );
-		}
+		// if( data[url[0]] == undefined && data.categories.includes(url[0])){
+		// 	tmp = {};
+		// 	tmp.urlComplement = urlComplement;
+		// 	tmp.callback = callback;
+		// 	requestApi(url[0]+"/", _callbackInitCategorie );
+		// }else{
+		// 	console.log("categorie instancié");
+		// 	getData2step( urlComplement, callback );
+		// }
 	}
 }
-
