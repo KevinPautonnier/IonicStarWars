@@ -13,7 +13,7 @@ import { SidesPage } from '../pages/sides/sides';
   templateUrl: 'app.html'
 })
 export class MyApp {
-  rootPage:any = SidesPage;
+  rootPage:any = Splash;
 
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen,  modalCtrl: ModalController) {
     platform.ready().then(() => {

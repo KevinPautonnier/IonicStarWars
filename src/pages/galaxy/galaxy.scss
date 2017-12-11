@@ -28,11 +28,11 @@
     width: 40vmin;
   }
   #mustafar {
-    top: 60vh;
+    top: 58vh;
     right: 10vw;
   }
   #destroyer {
-    top: 75vh;
+    top: 72vh;
     left: 20vw;
     width: 70vmin;
   }
@@ -40,6 +40,27 @@
     top: 45vh;
     left: 45vw;
   }
+
+  #bb8{
+      position: absolute;
+      bottom: 5px;
+      right: 5px;
+      height: 10%;
+      width: auto;
+  }
+
+
+  .speech-bubble{
+    position: absolute;
+    bottom: 15px;
+    left: 5px;
+    width: 85%;
+    text-align: right;
+    p{
+      border-radius: 8px;
+      background-color: black;
+      color: #ffe81f;
+    }
+  }
+
 }
-
-

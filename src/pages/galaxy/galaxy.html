@@ -4,14 +4,20 @@
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
 -->
+<body>
+  <ion-content padding id="galaxy">
+      <img src="../../assets/imgs/galaxy/c1a-200.png" id="c1a">
+      <img src="../../assets/imgs/galaxy/dagobah-200.png" id="dagobah">
+      <img src="../../assets/imgs/galaxy/Death_Star-200.png" id="death">
+      <img src="../../assets/imgs/galaxy/destroyer.png" id="destroyer">
+      <img src="../../assets/imgs/galaxy/millennium-200.png" id="millenium">
+      <img src="../../assets/imgs/galaxy/Mustafar-200.png" id="mustafar">
+      <img src="../../assets/imgs/galaxy/X-wing-200.png" id="xwing">
+      <img src="../../assets/imgs/galaxy/tatooine-200.png" id="tatooine">
 
-<ion-content padding id="galaxy">
-    <img src="../../assets/imgs/galaxy/c1a-200.png" id="c1a">
-    <img src="../../assets/imgs/galaxy/dagobah-200.png" id="dagobah">
-    <img src="../../assets/imgs/galaxy/Death_Star-200.png" id="death">
-    <img src="../../assets/imgs/galaxy/destroyer.png" id="destroyer">
-    <img src="../../assets/imgs/galaxy/millennium-200.png" id="millenium">
-    <img src="../../assets/imgs/galaxy/Mustafar-200.png" id="mustafar">
-    <img src="../../assets/imgs/galaxy/X-wing-200.png" id="xwing">
-    <img src="../../assets/imgs/galaxy/tatooine-200.png" id="tatooine">
-</ion-content>
+      <div class="speech-bubble">
+        <p id="speech1"> Hello</p>
+      </div>
+      <img [navPush]="wikiPage" src="../../assets/imgs/bb8.png" alt="bb8 is your guide in this galaxy" id="bb8">
+  </ion-content>
+</body>

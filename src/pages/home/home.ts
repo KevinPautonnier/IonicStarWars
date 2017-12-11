@@ -16,8 +16,6 @@ export class HomePage {
     "Click on me to get infos about the association!",
   ];
 
-  i =0;
-
   constructor(public navCtrl: NavController) {
     this.bb8speech(this.speechs.length, this.speechs, this);
   };
@@ -31,6 +29,4 @@ export class HomePage {
       }, 2000);
     }
   };
-
-
 }
