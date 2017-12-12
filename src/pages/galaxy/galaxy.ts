@@ -25,7 +25,7 @@ export class GalaxyPage {
       this.storage.get('side').then((val) => {
 
         if(val == "dark"){
-          document.getElementById("me").src = "../../assets/imgs/galaxy/darth-vader.png";
+          (<HTMLImageElement>document.getElementById("me")).src = "../../assets/imgs/galaxy/darth-vader.png";
           this.sideToast("Aucune limite à mon pouvoir !");
           console.log(val);
         }
