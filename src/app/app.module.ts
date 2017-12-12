@@ -16,7 +16,7 @@ import { WikiStarshipsPage } from '../pages/wiki-starships/wiki-starships';
 import { WikiPlanetsPage } from '../pages/wiki-planets/wiki-planets';
 import { Splash } from '../pages/splash/splash';
 import { GalaxyPage } from '../pages/galaxy/galaxy';
-
+import { IonicStorageModule } from '@ionic/storage';
 
 @NgModule({
   declarations: [
@@ -36,6 +36,7 @@ import { GalaxyPage } from '../pages/galaxy/galaxy';
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
+    IonicStorageModule.forRoot(),
     ApiModule
   ],
   bootstrap: [IonicApp],

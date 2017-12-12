@@ -13,9 +13,9 @@
   <ion-grid>
     <ion-row>
       <ion-col col-6 id="dv" ></ion-col>
-      <div id="dark" [navPush]="galaxyPage"></div>
-      <div id="light" [navPush]="galaxyPage"></div>
-      <ion-col [navPush]="homePage" col-6 id="yd" ></ion-col>
+      <div id="dark" (click)="chooseSide('dark')" ></div>
+      <div id="light" (click)="chooseSide('light')" ></div>
+      <ion-col col-6 id="yd" ></ion-col>
     </ion-row>
   </ion-grid>
 </ion-content>
