@@ -16,13 +16,19 @@ export class SidesPage {
     galaxyPage = GalaxyPage;
 
 
-    constructor(private nativeAudio: NativeAudio, public navCtrl: NavController, public navParams: NavParams , private storage: Storage) {//
-      this.nativeAudio.play('../../assets/musics/MainTheme.mp3', () => console.log('uniqueId1 is done playing'));
+    constructor(private nativeAudio: NativeAudio, public navCtrl: NavController, public navParams: NavParams , private storage: Storage) {
+
+      this.nativeAudio.preloadComplex('theme', '../../assets/musics/MainTheme.mp3', 0.5, 1, 0);
+      nativeAudio.play('theme');
+
     }
 
     chooseSide(test){
       this.storage.set('side', test);
       this.storage.get('side').then((val) => {console.log(val)});
+      
+      this.nativeAudio.stop('theme');
+
       this.navCtrl.push(GalaxyPage);
     }
 }
