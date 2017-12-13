@@ -146,15 +146,15 @@ export class ApiModule {
 
 	getData( urlComplement, callback ) {
 		var url = urlComplement.split("/");
-		//console.log("data=" + data);
-		// if( data[url[0]] == undefined && data.categories.includes(url[0])){
-		// 	tmp = {};
-		// 	tmp.urlComplement = urlComplement;
-		// 	tmp.callback = callback;
-		// 	requestApi(url[0]+"/", _callbackInitCategorie );
-		// }else{
-		// 	console.log("categorie instancié");
-		// 	getData2step( urlComplement, callback );
-		// }
+		console.log("data=" + data);
+		if( data[url[0]] == undefined && data.categories.includes(url[0])){
+			tmp = {};
+			tmp.urlComplement = urlComplement;
+			tmp.callback = callback;
+			requestApi(url[0]+"/", _callbackInitCategorie );
+		}else{
+			console.log("categorie instancié");
+			getData2step( urlComplement, callback );
+		}
 	}
 }
