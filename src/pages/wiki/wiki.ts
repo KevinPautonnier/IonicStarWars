@@ -147,7 +147,7 @@ export class ApiModule {
 	getData( urlComplement, callback ) {
 		var url = urlComplement.split("/");
 		console.log("data=" + data);
-		if( data[url[0]] == undefined && data.categories.includes(url[0])){
+		if( data[url[0]] == undefined && data.categories.indexOf(url[0]) > -1 ){
 			tmp = {};
 			tmp.urlComplement = urlComplement;
 			tmp.callback = callback;
