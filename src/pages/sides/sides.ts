@@ -18,17 +18,22 @@ export class SidesPage {
 
     constructor(private nativeAudio: NativeAudio, public navCtrl: NavController, public navParams: NavParams , private storage: Storage) {
 
-      this.nativeAudio.preloadComplex('theme', '../../assets/musics/MainTheme.mp3', 0.5, 1, 0);
-      nativeAudio.play('theme');
+      // Audio run
+      this.nativeAudio.preloadComplex('theme', '../../assets/musics/ImperialMarch.mp3', 1, 1, 0 );
 
     }
 
+    ionViewDidLoad() {
+        this.nativeAudio.play('theme');
+    }
+
+    //Store the side choose by the user
     chooseSide(test){
-      this.storage.set('side', test);
-      this.storage.get('side').then((val) => {console.log(val)});
-      
+      //stop audio before changing page
       this.nativeAudio.stop('theme');
 
+      this.storage.set('side', test);
+      this.storage.get('side').then((val) => {console.log(val)});
       this.navCtrl.push(GalaxyPage);
     }
 }

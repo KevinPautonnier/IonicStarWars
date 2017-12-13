@@ -12,17 +12,20 @@ import { NativeAudio } from '@ionic-native/native-audio';
 export class Splash {
   constructor(private nativeAudio: NativeAudio, public viewCtrl: ViewController, public splashScreen: SplashScreen, public navCtrl: NavController) {
 
-    this.nativeAudio.preloadComplex('saber', '../../assets/musics/LightSaber.mp3', 1, 1, 0);
-    nativeAudio.play('saber');
-    
-  }
+    // audio run
+    this.nativeAudio.preloadComplex('saber', '../../assets/musics/LightSaber.mp3', 1, 1, 3);
 
-  ionViewDidEnter() {
-    setTimeout(() => {
-      this.nativeAudio.stop('saber');
-      this.navCtrl.push(SidesPage);
-    }, 4000);
-    this.splashScreen.hide();
-  }
+    }
+
+    ionViewDidLoad() {
+        this.nativeAudio.play('saber');
+    }
+
+    ionViewDidEnter() {
+      setTimeout(() => {
+        this.navCtrl.push(SidesPage);
+        this.nativeAudio.stop('saber');
+      }, 4000);
+    }
 
 }

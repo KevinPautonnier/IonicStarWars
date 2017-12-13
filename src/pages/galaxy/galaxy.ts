@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams , ToastController  } from 'ionic-angular';
 import { WikiPage } from '../wiki/wiki';
 import { Storage } from '@ionic/storage';
+import { NativeAudio } from '@ionic-native/native-audio';
 
 @IonicPage()
 @Component({
@@ -11,16 +12,21 @@ import { Storage } from '@ionic/storage';
 export class GalaxyPage {
   wikiPage = WikiPage;
 
-  // variables pour les info-bulles
+  // Varibles for "info-bulles"
   speechs=[
     "Click on the planet/starships to view infos about episodes",
     "Click on the X-Wing to access a list of all datas available",
     "Click on me to get infos about the association!",
   ];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private storage: Storage , private toastCtrl: ToastController) {
+  constructor(private nativeAudio: NativeAudio, public navCtrl: NavController, public navParams: NavParams, private storage: Storage , private toastCtrl: ToastController) {
     this.bb8speech(this.speechs.length, this.speechs, this);
 
+    // Audio launching
+    this.nativeAudio.preloadComplex('ambiance', '../../assets/musics/ambiance.mp3', 1, 1, 0);
+    nativeAudio.loop('ambiance');
+
+    // Test side choosed by user
     storage.ready().then(() => {
       this.storage.get('side').then((val) => {
 
@@ -42,24 +48,26 @@ export class GalaxyPage {
 
   }
 
-  bb8speech(i, speechs, fun){
-    if(i>0){
-      setTimeout(function(){
-          console.log(i);
-          document.getElementById("speech1").innerHTML=speechs[i-1];
-          console.log(speechs[i-1]);
-          fun.bb8speech((i-1), speechs, fun);
-      }, 2000);
+    // Launch the assistant BB8
+    bb8speech(i, speechs, fun){
+      if(i>0){
+        setTimeout(function(){
+            console.log(i);
+            document.getElementById("speech1").innerHTML=speechs[i-1];
+            console.log(speechs[i-1]);
+            fun.bb8speech((i-1), speechs, fun);
+        }, 2000);
+      }
     }
-  }
 
-  sideToast(text) {
-   let toast = this.toastCtrl.create({
-     message: text,
-     duration: 4000,
-     position: 'top',
+    // Toast adapt for the side choosen
+    sideToast(text) {
+     let toast = this.toastCtrl.create({
+       message: text,
+       duration: 4000,
+       position: 'top',
 
-   });
-   toast.present();
- }
+     });
+     toast.present();
+   }
 }
