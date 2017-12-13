@@ -17,6 +17,7 @@ import { WikiPlanetsPage } from '../pages/wiki-planets/wiki-planets';
 import { Splash } from '../pages/splash/splash';
 import { GalaxyPage } from '../pages/galaxy/galaxy';
 import { IonicStorageModule } from '@ionic/storage';
+import { NativeAudio } from '@ionic-native/native-audio';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { IonicStorageModule } from '@ionic/storage';
     BrowserModule,
     IonicModule.forRoot(MyApp),
     IonicStorageModule.forRoot(),
+    NativeAudio,
     ApiModule
   ],
   bootstrap: [IonicApp],
