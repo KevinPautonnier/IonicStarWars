@@ -33,7 +33,7 @@ export class Splash {
       }
       else{
         setTimeout(() => {
-          this.navCtrl.push(galaxyPage);
+          this.navCtrl.push(this.galaxyPage);
           this.nativeAudio.stop('saber');
         }, 4000);
       }
