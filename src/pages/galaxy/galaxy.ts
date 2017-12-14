@@ -23,7 +23,7 @@ export class GalaxyPage {
     this.bb8speech(this.speechs.length, this.speechs, this);
 
     // Audio launching
-    this.nativeAudio.preloadComplex('ambiance', '../../assets/musics/ambiance.mp3', 1, 1, 0);
+    this.nativeAudio.preloadComplex('ambiance', 'assets/musics/ambiance.mp3', 1, 1, 0);
     nativeAudio.loop('ambiance');
 
     // Test side choosed by user
@@ -31,7 +31,7 @@ export class GalaxyPage {
       this.storage.get('side').then((val) => {
 
         if(val == "dark"){
-          (<HTMLImageElement>document.getElementById("me")).src = "../../assets/imgs/galaxy/darth-vader.png";
+          (<HTMLImageElement>document.getElementById("me")).src = "assets/imgs/galaxy/darth-vader.png";
           this.sideToast("Aucune limite à mon pouvoir !");
           console.log(val);
         }
