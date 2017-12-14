@@ -19,7 +19,7 @@ export class SidesPage {
     constructor(private nativeAudio: NativeAudio, public navCtrl: NavController, public navParams: NavParams , private storage: Storage) {
 
       // Audio run
-      this.nativeAudio.preloadComplex('theme', '../../assets/musics/ImperialMarch.mp3', 1, 1, 0 );
+      this.nativeAudio.preloadComplex('theme', 'assets/musics/ImperialMarch.mp3', 1, 1, 0 );
 
     }
 
@@ -30,8 +30,9 @@ export class SidesPage {
     //Store the side choose by the user
     chooseSide(test){
       //stop audio before changing page
+      this.nativeAudio.stop('theme');
+      console.log(test);
 
-      console.log(test)
       if(test != undefined){
         this.storage.set('side', test).then((val) => {
           this.nativeAudio.stop('theme');

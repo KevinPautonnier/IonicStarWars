@@ -16,7 +16,8 @@ export class Splash {
 
   constructor(private nativeAudio: NativeAudio, public viewCtrl: ViewController, public splashScreen: SplashScreen, public navCtrl: NavController, private storage: Storage) {
     // audio run
-    this.nativeAudio.preloadComplex('saber', '../../assets/musics/LightSaber.mp3', 1, 1, 3);
+    this.nativeAudio.preloadComplex('saber', 'assets/musics/LightSaber.mp3', 1, 1, 3);
+
     }
 
     ionViewDidLoad() {
