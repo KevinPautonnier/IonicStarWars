@@ -23,7 +23,7 @@ export class WikiPage {
 
 	toWikiFilmsPage (){this.nav.push(WikiFilmsPage);};
 	toWikiSpeciesPage (){
-		this.storage.set("navigation", {categorie : "species", films : undefined, page:1, nbElemPerPage:20});
+		this.storage.set("navigation", {categorie : "species", films : undefined, page:1, nbElemPerPage:6});
 		this.nav.push(WikiElementsPage);
 	};
 	toWikiCharactersPage (){this.nav.push(WikiCharactersPage);};

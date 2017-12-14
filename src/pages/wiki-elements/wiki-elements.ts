@@ -43,7 +43,20 @@ export class WikiElementsPage {
 		console.log("page:" + this.page);
 		console.log("nbElemPerPage:" + this.nbElemPerPage);
 */
-		this.api.getData(this.categorie + "/" + (this.nbElemPerPage*(this.page-1) + 1) + "-" + (this.nbElemPerPage*(this.page-1) + this.nbElemPerPage), response => {console.log(response)});
+		var nbPreviousElements = this.nbElemPerPage*(this.page-1);
+		this.api.getData(this.categorie + "/" + ( nbPreviousElements + 1 ) + "-" + ( nbPreviousElements + this.nbElemPerPage ), response => {console.log(response); this.setListe(response)});
 	}
 
+	setListe (jsonData){
+		var newContainerContent = "";
+		for (var prop in jsonData) {
+			console.log("obj." + prop +" = " + jsonData[prop].name);
+			newContainerContent += '<div [navPush]="wikiDetail" class="element">';
+			newContainerContent += '<div class="image">img</div>';
+			newContainerContent += '<div class="name">' + jsonData[prop].name + '</div>';
+			newContainerContent += '</div>';
+		}
+
+		document.getElementById("container").innerHTML = newContainerContent;
+	}
 }
