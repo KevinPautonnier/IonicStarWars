@@ -18,6 +18,7 @@ import { WikiPlanetsPage } from '../pages/wiki-planets/wiki-planets';
 import { Splash } from '../pages/splash/splash';
 import { GalaxyPage } from '../pages/galaxy/galaxy';
 import { IonicStorageModule } from '@ionic/storage';
+import { SettingsPage } from '../pages/settings/settings';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { IonicStorageModule } from '@ionic/storage';
     WikiPlanetsPage,
     Splash,
     SidesPage,
-    GalaxyPage
+    GalaxyPage,
+    SettingsPage
   ],
   imports: [
     BrowserModule,
@@ -53,7 +55,8 @@ import { IonicStorageModule } from '@ionic/storage';
     WikiPlanetsPage,
     Splash,
     SidesPage,
-    GalaxyPage
+    GalaxyPage,
+    SettingsPage
   ],
   providers: [
     StatusBar,

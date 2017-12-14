@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams , ToastController  } from 'ionic-angular';
 import { WikiPage } from '../wiki/wiki';
+import { SettingsPage } from '../settings/settings';
 import { Storage } from '@ionic/storage';
 import { NativeAudio } from '@ionic-native/native-audio';
 
@@ -11,6 +12,7 @@ import { NativeAudio } from '@ionic-native/native-audio';
 })
 export class GalaxyPage {
   wikiPage = WikiPage;
+  settingsPage = SettingsPage;
 
   // Varibles for "info-bulles"
   speechs=[
@@ -42,10 +44,8 @@ export class GalaxyPage {
         else{
           this.sideToast("Qui êtes vous ? je ne sens pas la force en vous.");
         }
-
       })
     })
-
   }
 
     // Launch the assistant BB8

@@ -19,7 +19,7 @@ export class SidesPage {
     constructor(private nativeAudio: NativeAudio, public navCtrl: NavController, public navParams: NavParams , private storage: Storage) {
 
       // Audio run
-      this.nativeAudio.preloadComplex('theme', 'assets/musics/ImperialMarch.mp3', 1, 1, 0 );
+      this.nativeAudio.preloadComplex('theme', 'assets/musics/ImperialMarch.mp3', 0.5, 1, 0 );
 
     }
 
