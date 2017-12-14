@@ -33,13 +33,13 @@ export class Splash {
           setTimeout(() => {
             this.navCtrl.push(GalaxyPage);
             this.nativeAudio.stop('saber');
-          }, 4000);
+          }, 3000);
         }
         else{
           setTimeout(() => {
             this.navCtrl.push(SidesPage);
             this.nativeAudio.stop('saber');
-          }, 4000);
+          }, 3000);
         }
       })
     }

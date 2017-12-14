@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams , ToastController  } from 'ionic-angular';
+import { IonicPage, NavController, NavParams , ToastController , LoadingController } from 'ionic-angular';
 import { WikiPage } from '../wiki/wiki';
 import { Storage } from '@ionic/storage';
 import { NativeAudio } from '@ionic-native/native-audio';
+import {Modal} from '../../app/app.component';
 
 @IonicPage()
 @Component({
@@ -19,7 +20,7 @@ export class GalaxyPage {
     "Click on me to get infos about the association!",
   ];
 
-  constructor(private nativeAudio: NativeAudio, public navCtrl: NavController, public navParams: NavParams, private storage: Storage , private toastCtrl: ToastController) {
+  constructor(private nativeAudio: NativeAudio, public navCtrl: NavController, public navParams: NavParams, private storage: Storage , private toastCtrl: ToastController, private loadingCtrl: LoadingController) {
     this.bb8speech(this.speechs.length, this.speechs, this);
 
     // Audio launching
@@ -33,11 +34,9 @@ export class GalaxyPage {
         if(val == "dark"){
           (<HTMLImageElement>document.getElementById("me")).src = "assets/imgs/galaxy/darth-vader.png";
           this.sideToast("Aucune limite à mon pouvoir !");
-          console.log(val);
         }
         else if(val == "light"){
           this.sideToast("La force est très puissante en toi, je le sens !");
-          console.log(val);
         }
         else{
           this.sideToast("Qui êtes vous ? je ne sens pas la force en vous.");
@@ -52,11 +51,9 @@ export class GalaxyPage {
     bb8speech(i, speechs, fun){
       if(i>0){
         setTimeout(function(){
-            console.log(i);
             document.getElementById("speech1").innerHTML=speechs[i-1];
-            console.log(speechs[i-1]);
             fun.bb8speech((i-1), speechs, fun);
-        }, 2000);
+        }, 4000);
       }
     }
 
