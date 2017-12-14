@@ -32,8 +32,13 @@ export class SidesPage {
       //stop audio before changing page
       this.nativeAudio.stop('theme');
       console.log(test);
+
       if(test != undefined){
-        this.storage.set('side', test).then((val) => {this.navCtrl.push(GalaxyPage)});
+        this.storage.set('side', test).then((val) => {
+          this.nativeAudio.stop('theme');
+          this.navCtrl.push(GalaxyPage);
+        });
       }
+      this.storage.set('firstTime', false);
     }
 }
