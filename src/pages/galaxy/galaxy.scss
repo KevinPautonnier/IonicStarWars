@@ -84,3 +84,206 @@
     font-family: STARWARS;
   }
 }
+
+.loading-wrapper{
+  background-color: rgba(1,1,1,0.2)!important;
+
+}
+
+.loader{
+  h1{
+      color: #ffe81f!important;
+      font-weight: bold;
+      font-family: STARWARS;
+  }
+
+}
+
+@import "../../../node_modules/compass-sass-mixins/lib/compass";
+
+html {height:100%}
+body {
+  background-color:tan;
+  position:relative;
+  height:100%;
+}
+
+.droid {
+  margin:auto;
+  position:relative;
+  top:50%;
+  animation-name: droid-run;
+  animation-duration: 350ms;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+  width:100px;
+  .head {
+    position:absolute;
+    background-color:white;
+    border-radius:80px 80px 0 0;
+    width:80px;
+    height:40px;
+    bottom:100%;
+    margin:auto;
+    left:0;
+    right:0;
+    animation: head-wobble .5s infinite;
+    animation-direction: alternate;
+    overflow:hidden;
+    span {
+      position:absolute;
+      width:100%;
+      background-color:orange;
+      &:nth-child(1) {
+        height:2px;
+        top:2px;
+
+      }
+      &:nth-child(2) {
+        height:4px;
+        top:6px;
+        background-color:silver;
+      }
+      &:nth-child(3) {
+        height:5px;
+        bottom:2px;
+      }
+    }
+    .eye {
+      position:absolute;
+      content:'';
+      background-color:black;
+      width:18px;
+      height:18px;
+      border-radius:50%;
+      top:19%;left:23%;
+      border:2px solid white;
+    }
+    .small-eye {
+      position:absolute;
+      content:'';
+      background-color:black;
+      width:10px;
+      height:10px;
+      border-radius:50%;
+      top:50%;
+      left:54%;
+      box-shadow:0 0 0 1px white,0 0 0 2px black;
+      &:before {
+        content:'';
+        position:absolute;
+        top:12px;
+        left:-25%;
+        background-color:white;
+        height:7px;
+        width:25px;
+      }
+    }
+    &:after {
+      content:'';
+      position:absolute;
+      top:0;
+      left:0;
+      border-radius:inherit;
+      width:100%;
+      height:100%;
+      box-shadow: inset -10px 5px 20px rgba(0,0,0,.5);
+    }
+  }
+  .wheel {
+    height:100px;
+    width:100px;
+    background-color:white;
+    border-radius:50%;
+    overflow:hidden;
+    animation-name: wheel-turn;
+    animation-duration: 350ms;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+    span {
+    //overflow:hidden;
+    perspective: 800;
+    position:absolute;
+
+      margin:10%;
+      width:40px;
+      height:40px;
+      border:3px solid orange;
+      border-radius:50%;
+      transform-origin: 50px 50px;
+      transform:rotate(360deg);
+      &:nth-child(2) {
+        transform:rotate(120deg);
+        //transform:skew(120deg);
+      }
+      &:nth-child(3) {
+        transform:rotate(240deg);
+      }
+    }
+    &:before {
+      content:'';
+      top:10px;
+      left:10px;
+      right:10px;
+      bottom:10px;
+      border-radius:50%;
+      border:4px solid silver;
+      position:absolute;
+    }
+    &:after {
+      content:'';
+      position:absolute;
+      top:0;
+      left:0;
+      border-radius:inherit;
+      width:100%;
+      height:100%;
+      box-shadow: inset -25px -25px 40px rgba(0,0,0,.5);
+      animation-name: shadow-turn;
+      animation-duration: 350ms;
+      animation-iteration-count: infinite;
+      animation-timing-function: linear;
+    }
+  }
+}
+@keyframes droid-run {
+  0% {
+    transform:rotate(0deg);
+    top:50%;
+  }
+  50% {
+    top:52%;
+    transform:rotate(3deg);
+  }
+  100% {
+    transform:rotate(0deg);
+    top:50%;
+  }
+}
+@keyframes wheel-turn {
+  0% {
+    transform:rotate(0deg);
+  }
+  100% {
+    transform:rotate(-360deg);
+  }
+}
+@keyframes shadow-turn {
+  0% {
+    transform:rotate(0deg);
+  }
+  100% {
+    transform:rotate(360deg);
+  }
+}
+@keyframes head-wobble {
+  0% {
+    transform:rotate(5deg);
+  }
+  50% {
+    transform:rotate(0deg);
+  }
+  100% {
+    transform:rotate(-5deg);
+  }
+}

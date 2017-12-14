@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { ApiModule } from '../wiki/wiki';
 import { Storage } from '@ionic/storage';
+import { WikiDetailsPage } from '../wiki-details/wiki-details';
 
 /**
  * Generated class for the WikiElementsPage page.
@@ -16,6 +17,7 @@ import { Storage } from '@ionic/storage';
   templateUrl: 'wiki-elements.html',
 })
 export class WikiElementsPage {
+	wikiDetail = WikiDetailsPage;
 	api = undefined;
 	categorie;
 	page;
