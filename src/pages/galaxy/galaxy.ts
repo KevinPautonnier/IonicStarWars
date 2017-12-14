@@ -15,9 +15,9 @@ export class GalaxyPage {
 
   // Varibles for "info-bulles"
   speechs=[
-    "Click on the planet/starships to view infos about episodes",
-    "Click on the X-Wing to access a list of all datas available",
     "Click on me to get infos about the association!",
+    "Click on the X-Wing to access a list of all datas available",
+    "Click on the planet/starships to view infos about episodes",
   ];
 
   constructor(private nativeAudio: NativeAudio, public navCtrl: NavController, public navParams: NavParams, private storage: Storage , private toastCtrl: ToastController, private loadingCtrl: LoadingController) {
