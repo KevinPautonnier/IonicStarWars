@@ -24,10 +24,16 @@ Those are the requirements:
 
 Then just clone the repo on your computer.
 
+Before testing the application you have to update your project:
+
+```{r, engine='bash', count_lines}
+IonicStarWars$ npm update
+```
+
 In order to test the application, type:
 
 ```{r, engine='bash', count_lines}
-IonicStarWars$ ionic serve
+IonicStarWars$ ionic cordova run browser
 ```
 This will prompt you about installing project dependencies, answer yes.
 
