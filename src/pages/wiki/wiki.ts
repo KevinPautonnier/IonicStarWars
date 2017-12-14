@@ -152,7 +152,7 @@ function _callbackGetDataElement( response ) {
 
 export class ApiModule {
 
-	constructor(private storage: Storage {
+	constructor(private storage: Storage ){
 		wikiStorage = storage;
 		storage.set("test","testValue");
 	}
