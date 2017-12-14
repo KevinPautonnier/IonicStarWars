@@ -49,19 +49,22 @@ var apiRequestUrl = "https://swapi.co/api/";
 var data = {categories : ["films","people","vehicules","starships","species","planets"]};
 // {films:{count:70, nbElemPerPage:3, data:{1:{}, ...}, ...}, ...}
 
-
 function getData2step ( urlComplement, callback ){
 	var url = urlComplement.split("/");
 	//console.log("2ndStep:" + url[1]);
-
-	if(url[1] == ""){
-		updateFullCategorie(url[0]);
+	var categorieName = url[0];
+	var elementNumber = url[1];
+	if(elementNumber == ""){
+		updateFullCategorie(categorieName);
 	}else{
-		if(data[url[0]].data[url[1]] == undefined ) {
+		if(data[categorieName].data[elementNumber] == undefined ) {
 			// si l'élément demandé n'a pas encore été requeté.
-			requestApi(urlComplement, callback);
+			requestApi(urlComplement, response => {
+				data[categorieName].data[elementNumber] = response;
+				callback(response);
+			});
 		}else {
-			callback(data[url[0]].data[url[1]])
+			callback(data[categorieName].data[elementNumber])
 		}
 		
 	}
@@ -86,7 +89,6 @@ function requestApi( urlComplement, callback ){
 		}
 	})
 	.then(response => {
-			//console.debug(response);
 			callback(response);
 		}).catch(error => {
 			console.error(error);
@@ -104,7 +106,7 @@ function _callbackInitCategorie( response ){
 		newCategorie.data[i+1] = response.results[i];
 		i= i+1;
 	};
-	console.log("creation:" + tmp.urlComplement.split("/")[0] );
+	//console.log("creation:" + tmp.urlComplement.split("/")[0] );
 	data[tmp.urlComplement.split("/")[0]] = newCategorie;
 	getData2step(tmp.urlComplement, tmp.callback);
 }
@@ -152,11 +154,11 @@ function formatUrl(url){
 	}
 }
 
+
 @NgModule({
   imports:      [ ],
   declarations: [ ]
 })
-
 
 export class ApiModule {
 
