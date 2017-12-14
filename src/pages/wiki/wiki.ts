@@ -6,7 +6,6 @@ import { WikiCharactersPage } from '../wiki-characters/wiki-characters';
 import { WikiVehiculesPage } from '../wiki-vehicules/wiki-vehicules';
 import { WikiStarshipsPage } from '../wiki-starships/wiki-starships';
 import { WikiPlanetsPage } from '../wiki-planets/wiki-planets';
-import { Storage } from '@ionic/storage';
 
 @Component({
   selector: 'page-wiki',
