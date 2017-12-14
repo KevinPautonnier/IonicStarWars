@@ -6,6 +6,7 @@ import { WikiCharactersPage } from '../wiki-characters/wiki-characters';
 import { WikiVehiculesPage } from '../wiki-vehicules/wiki-vehicules';
 import { WikiStarshipsPage } from '../wiki-starships/wiki-starships';
 import { WikiPlanetsPage } from '../wiki-planets/wiki-planets';
+import { WikiElementsPage } from '../wiki-elements/wiki-elements';
 import { Storage } from '@ionic/storage';
 
 @Component({
@@ -21,7 +22,7 @@ export class WikiPage {
 	};
 
 	toWikiFilmsPage (){this.nav.push(WikiFilmsPage);};
-	toWikiSpeciesPage (){this.nav.push(WikiSpeciesPage);};
+	toWikiSpeciesPage (){this.nav.push(WikiElementsPage);};
 	toWikiCharactersPage (){this.nav.push(WikiCharactersPage);};
 	toWikiVehiculesPage (){this.nav.push(WikiVehiculesPage);};
 	toWikiStarshipsPage (){this.nav.push(WikiStarshipsPage);};
@@ -44,23 +45,27 @@ export class WikiPage {
 import { NgModule }  from '@angular/core';
 
 var tmp;
+var wikiStorage;
 var apiRequestUrl = "https://swapi.co/api/";
 var data = {categories : ["films","people","vehicules","starships","species","planets"]};
-var wikiStorage;
 // {films:{count:70, nbElemPerPage:3, data:{1:{}, ...}, ...}, ...}
 
 function getData2step ( urlComplement, callback ){
 	var url = urlComplement.split("/");
 	//console.log("2ndStep:" + url[1]);
-
-	if(url[1] == ""){
-		updateFullCategorie(url[0]);
+	var categorieName = url[0];
+	var elementNumber = url[1];
+	if(elementNumber == ""){
+		updateFullCategorie(categorieName);
 	}else{
-		if(data[url[0]].data[url[1]] == undefined ) {
+		if(data[categorieName].data[elementNumber] == undefined ) {
 			// si l'élément demandé n'a pas encore été requeté.
-			requestApi(urlComplement, callback);
+			requestApi(urlComplement, response => {
+				data[categorieName].data[elementNumber] = response;
+				callback(response);
+			});
 		}else {
-			callback(data[url[0]].data[url[1]])
+			callback(data[categorieName].data[elementNumber])
 		}
 		
 	}
@@ -68,10 +73,11 @@ function getData2step ( urlComplement, callback ){
 
 function requestApi( urlComplement, callback ){
 	//console.log("requestApi_data=" + JSON.stringify(data));
+/*	
 	wikiStorage.get('test').then((val) => {
 		console.log('test : ', val);
 	});
-
+*/
 	var requestUrl = apiRequestUrl + urlComplement;
 	console.log("RequestApi:" + requestUrl);
 
@@ -84,7 +90,6 @@ function requestApi( urlComplement, callback ){
 		}
 	})
 	.then(response => {
-			//console.debug(response);
 			callback(response);
 		}).catch(error => {
 			console.error(error);
@@ -102,7 +107,7 @@ function _callbackInitCategorie( response ){
 		newCategorie.data[i+1] = response.results[i];
 		i= i+1;
 	};
-	console.log("creation:" + tmp.urlComplement.split("/")[0] );
+	//console.log("creation:" + tmp.urlComplement.split("/")[0] );
 	data[tmp.urlComplement.split("/")[0]] = newCategorie;
 	getData2step(tmp.urlComplement, tmp.callback);
 }
@@ -142,6 +147,13 @@ function _callbackGetDataElement( response ) {
 	//console.log("data=" + tmpData);
 }
 
+function formatUrl(url){
+	if(url.length > apiRequestUrl.length && url.subString(0,apiRequestUrl.length-1) == apiRequestUrl ){
+		return url.subString(apiRequestUrl.length, url.length-1);
+	}else{
+		return url;
+	}
+}
 
 
 @NgModule({
@@ -149,21 +161,38 @@ function _callbackGetDataElement( response ) {
   declarations: [ ]
 })
 
-
 export class ApiModule {
 
+	constructor( private storage: Storage ){
+		wikiStorage = storage;
+		wikiStorage.get("data").then(val => {
+			if(val == undefined) {
+				wikiStorage.set("data", {categories : ["films","people","vehicules","starships","species","planets"]});
+			}else {
+				data = val;
+			}
+		})
+	}
 
 	getData( urlComplement, callback ) {
-		var url = urlComplement.split("/");
 		//console.log("getData_data=" + JSON.stringify(data));
+
+		// *** Préparation de la sauvegarde dans storage ***
+		var newCallback = function(response ){ wikiStorage.set("data",data); callback(response) };
+		var url = urlComplement.split("/");
+
+		urlComplement = formatUrl(urlComplement);
+
 		if( data[url[0]] == undefined && data.categories.indexOf(url[0]) > -1 ){
+			// *** Si première demande d'une catégorie ***
 			tmp = {};
 			tmp.urlComplement = urlComplement;
-			tmp.callback = callback;
+			tmp.callback = newCallback;
 			requestApi(url[0]+"/", _callbackInitCategorie );
+
 		}else{
-			console.log("categorie instancié");
-			getData2step( urlComplement, callback );
+			// *** Si la catégorie à déjà été demandé ***
+			getData2step( urlComplement, newCallback );
 		}
 	}
 }

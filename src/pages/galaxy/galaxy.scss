@@ -1,9 +1,12 @@
+@font-face {
+  font-family: "Ma Super Fonte";
+  src: url('../assets/fonts/STARWARS.TTF');
+}
+
 #galaxy{
   background-image: url('../assets/imgs/galaxy/background.png');
   background-size: cover;
   img{
-    width: 25vmin;
-    position: absolute;
     filter: drop-shadow(0px 0px 10px white);
   }
 
@@ -12,29 +15,33 @@
     left: 20vw;
   }
   #c1a {
-    top: 10vh;
-    right: 20vw;
+    top: 1vh;
+    right: 26vw;
   }
   #dagobah {
-    top: 30vh;
+    top: 28vh;
     left: 5vw;
   }
   #death {
-    top: 30vh;
+    top: 21vh;
     right: 5vw;
   }
   #millenium {
-    top: 55vh;
-    left: 10vw;
+    top: 49vh;
+    left: 6vw;
     width: 40vmin;
   }
   #mustafar {
-    top: 58vh;
+    top: 42vh;
     right: 10vw;
+  }
+  #starkiller {
+    top: 61vh;
+    right: 18vw;
   }
   #destroyer {
     top: 72vh;
-    left: 20vw;
+    left: 10vw;
     width: 70vmin;
   }
   #me{
@@ -62,7 +69,20 @@
       color: #ffe81f;
     }
   }
+}
 
+.image-container{
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column-reverse;
+  width: 20vmin;
+
+  p{
+    color: white;
+    font-family: STARWARS;
+  }
 }
 
 .loading-wrapper{
