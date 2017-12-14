@@ -13,7 +13,6 @@ import { GalaxyPage } from '../galaxy/galaxy';
 })
 
 export class Splash {
-  galaxyPage = GalaxyPage;
 
   constructor(private nativeAudio: NativeAudio, public viewCtrl: ViewController, public splashScreen: SplashScreen, public navCtrl: NavController, private storage: Storage) {
     // audio run
@@ -25,18 +24,19 @@ export class Splash {
     }
 
     ionViewDidEnter() {
-      if (this.storage.get('firstTime') == undefined){
-        setTimeout(() => {
-          this.navCtrl.push(SidesPage);
-          this.nativeAudio.stop('saber');
-        }, 4000);
-      }
-      else{
-        setTimeout(() => {
-          this.navCtrl.push(this.galaxyPage);
-          this.nativeAudio.stop('saber');
-        }, 4000);
-      }
+      this.storage.get('firstTime').then((val) => {
+        if (val != null){
+          setTimeout(() => {
+            this.navCtrl.push(GalaxyPage);
+            this.nativeAudio.stop('saber');
+          }, 4000);
+        }
+        else{
+          setTimeout(() => {
+            this.navCtrl.push(SidesPage);
+            this.nativeAudio.stop('saber');
+          }, 4000);
+        }
+      })
     }
-
 }
