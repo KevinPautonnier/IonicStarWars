@@ -6,6 +6,7 @@ import { WikiCharactersPage } from '../wiki-characters/wiki-characters';
 import { WikiVehiculesPage } from '../wiki-vehicules/wiki-vehicules';
 import { WikiStarshipsPage } from '../wiki-starships/wiki-starships';
 import { WikiPlanetsPage } from '../wiki-planets/wiki-planets';
+import { WikiElementsPage } from '../wiki-elements/wiki-elements';
 import { Storage } from '@ionic/storage';
 
 @Component({
@@ -21,7 +22,7 @@ export class WikiPage {
 	};
 
 	toWikiFilmsPage (){this.nav.push(WikiFilmsPage);};
-	toWikiSpeciesPage (){this.nav.push(WikiSpeciesPage);};
+	toWikiSpeciesPage (){this.nav.push(WikiElementsPage);};
 	toWikiCharactersPage (){this.nav.push(WikiCharactersPage);};
 	toWikiVehiculesPage (){this.nav.push(WikiVehiculesPage);};
 	toWikiStarshipsPage (){this.nav.push(WikiStarshipsPage);};

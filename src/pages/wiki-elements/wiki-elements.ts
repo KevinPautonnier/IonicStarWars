@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { ApiModule } from '../wiki/wiki';
+import { Storage } from '@ionic/storage';
 
 /**
  * Generated class for the WikiElementsPage page.
@@ -14,12 +16,13 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   templateUrl: 'wiki-elements.html',
 })
 export class WikiElementsPage {
+	api = undefined;
+	constructor(public navCtrl: NavController, public navParams: NavParams, private storage: Storage) {
+		this.api = new ApiModule(storage);
+	}
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
-  }
-
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad WikiElementsPage');
-  }
+	ionViewDidLoad() {
+		console.log('ionViewDidLoad WikiElementsPage');
+	}
 
 }
