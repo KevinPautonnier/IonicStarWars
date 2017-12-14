@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { ApiModule } from '../wiki/wiki';
+import { Storage } from '@ionic/storage';
 
 /**
  * Generated class for the WikiCharactersPage page.
@@ -15,8 +16,9 @@ import { ApiModule } from '../wiki/wiki';
   templateUrl: 'wiki-characters.html',
 })
 export class WikiCharactersPage {
-
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  api = undefined;
+  constructor(public navCtrl: NavController, public navParams: NavParams, private storage: Storage) {
+    this.api = new ApiModule(storage);
   }
 
   ionViewDidLoad() {
@@ -24,7 +26,7 @@ export class WikiCharactersPage {
   }
 
   getCharacter(){
-  	new ApiModule().getData("people/12/", response =>{document.getElementById("requestData").innerHTML = JSON.stringify(response)});
+  	this.api.getData("people/12/", response =>{document.getElementById("requestData").innerHTML = JSON.stringify(response)});
   }
 
 }
