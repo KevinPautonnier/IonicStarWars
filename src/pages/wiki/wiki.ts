@@ -152,10 +152,7 @@ function _callbackGetDataElement( response ) {
 
 export class ApiModule {
 
-	constructor(private storage: Storage ){
-		wikiStorage = storage;
-		storage.set("test","testValue");
-	}
+
 	getData( urlComplement, callback ) {
 		var url = urlComplement.split("/");
 		//console.log("getData_data=" + JSON.stringify(data));
