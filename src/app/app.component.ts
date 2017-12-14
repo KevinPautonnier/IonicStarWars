@@ -33,7 +33,7 @@ export class MyApp {
    }
 
    showModal(time){
-     if(time>0){
+     if(time<=0){
        this.loading = this.loadingCtrl.create({
        spinner: 'hide',
        content: `<div class="loader">
