@@ -24,8 +24,7 @@ export class WikiCharactersPage {
   }
 
   getCharacter(){
-  	new ApiModule().getData("people/1/", response =>{document.getElementById("requestData").innerHTML = JSON.stringify(response)});
-  	
+  	new ApiModule().getData("people/12/", response =>{document.getElementById("requestData").innerHTML = JSON.stringify(response)});
   }
 
 }

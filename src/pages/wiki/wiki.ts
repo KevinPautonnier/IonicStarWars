@@ -6,6 +6,7 @@ import { WikiCharactersPage } from '../wiki-characters/wiki-characters';
 import { WikiVehiculesPage } from '../wiki-vehicules/wiki-vehicules';
 import { WikiStarshipsPage } from '../wiki-starships/wiki-starships';
 import { WikiPlanetsPage } from '../wiki-planets/wiki-planets';
+import { Storage } from '@ionic/storage';
 
 @Component({
   selector: 'page-wiki',
@@ -45,21 +46,31 @@ import { NgModule }  from '@angular/core';
 var tmp;
 var apiRequestUrl = "https://swapi.co/api/";
 var data = {categories : ["films","people","vehicules","starships","species","planets"]};
+var wikiStorage;
 // {films:{count:70, nbElemPerPage:3, data:{1:{}, ...}, ...}, ...}
 
 function getData2step ( urlComplement, callback ){
 	var url = urlComplement.split("/");
-	console.log("2ndStep:" + url[1]);
+	//console.log("2ndStep:" + url[1]);
 
 	if(url[1] == ""){
 		updateFullCategorie(url[0]);
 	}else{
-		// TODO : liste de page
-		requestApi(urlComplement, callback);
+		if(data[url[0]].data[url[1]] == undefined ) {
+			// si l'élément demandé n'a pas encore été requeté.
+			requestApi(urlComplement, callback);
+		}else {
+			callback(data[url[0]].data[url[1]])
+		}
+		
 	}
 }
 
 function requestApi( urlComplement, callback ){
+	//console.log("requestApi_data=" + JSON.stringify(data));
+	wikiStorage.get('test').then((val) => {
+		console.log('test : ', val);
+	});
 
 	var requestUrl = apiRequestUrl + urlComplement;
 	console.log("RequestApi:" + requestUrl);
@@ -141,12 +152,13 @@ function _callbackGetDataElement( response ) {
 
 export class ApiModule {
 
-	constructor() {
-	};
-
+	constructor(private storage: Storage {
+		wikiStorage = storage;
+		storage.set("test","testValue");
+	}
 	getData( urlComplement, callback ) {
 		var url = urlComplement.split("/");
-		console.log("data=" + data);
+		//console.log("getData_data=" + JSON.stringify(data));
 		if( data[url[0]] == undefined && data.categories.indexOf(url[0]) > -1 ){
 			tmp = {};
 			tmp.urlComplement = urlComplement;
