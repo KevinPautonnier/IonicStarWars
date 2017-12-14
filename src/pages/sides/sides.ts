@@ -30,10 +30,14 @@ export class SidesPage {
     //Store the side choose by the user
     chooseSide(test){
       //stop audio before changing page
-      this.nativeAudio.stop('theme');
+
       console.log(test)
       if(test != undefined){
-        this.storage.set('side', test).then((val) => {this.navCtrl.push(GalaxyPage)});
+        this.storage.set('side', test).then((val) => {
+          this.nativeAudio.stop('theme');
+          this.navCtrl.push(GalaxyPage);
+        });
       }
+      this.storage.set('firstTime', false);
     }
 }
