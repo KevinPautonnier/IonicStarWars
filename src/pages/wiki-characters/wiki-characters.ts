@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
 import { ApiModule } from '../wiki/wiki';
 import { Storage } from '@ionic/storage';
+import {Modal} from '../../app/app.component';
 
 /**
  * Generated class for the WikiCharactersPage page.
@@ -17,8 +18,10 @@ import { Storage } from '@ionic/storage';
 })
 export class WikiCharactersPage {
   api = undefined;
-  constructor(public navCtrl: NavController, public navParams: NavParams, private storage: Storage) {
+  modal = undefined;
+  constructor(public navCtrl: NavController, public navParams: NavParams, private storage: Storage, private loadingCtrl:LoadingController) {
     this.api = new ApiModule(storage);
+    this.modal = new Modal(loadingCtrl);
   }
 
   ionViewDidLoad() {
@@ -26,6 +29,7 @@ export class WikiCharactersPage {
   }
 
   getCharacter(){
-  	this.api.getData("people/12/", response =>{document.getElementById("requestData").innerHTML = JSON.stringify(response)});
+    this.modal.showModal(0);
+  	this.api.getData("people/12/", response =>{document.getElementById("requestData").innerHTML = JSON.stringify(response);this.modal.hideModal()});
   }
 }
