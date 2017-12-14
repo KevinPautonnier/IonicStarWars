@@ -1,10 +1,9 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams , ToastController  } from 'ionic-angular';
+import { IonicPage, NavController, NavParams , ToastController , LoadingController } from 'ionic-angular';
 import { WikiPage } from '../wiki/wiki';
-import { SettingsPage } from '../settings/settings';
 import { Storage } from '@ionic/storage';
 import { NativeAudio } from '@ionic-native/native-audio';
-import {EpisodeDetailsPage} from "../episode-details/episode-details";
+import {Modal} from '../../app/app.component';
 
 @IonicPage()
 @Component({
@@ -13,21 +12,16 @@ import {EpisodeDetailsPage} from "../episode-details/episode-details";
 })
 export class GalaxyPage {
   wikiPage = WikiPage;
-  settingsPage = SettingsPage;
-
-  nav = undefined;
 
   // Varibles for "info-bulles"
   speechs=[
-    "Click on the planet/starships to view infos about episodes",
-    "Click on the X-Wing to access a list of all datas available",
     "Click on me to get infos about the association!",
+    "Click on the X-Wing to access a list of all datas available",
+    "Click on the planet/starships to view infos about episodes",
   ];
 
-  constructor(private nativeAudio: NativeAudio, public navCtrl: NavController, public navParams: NavParams, private storage: Storage , private toastCtrl: ToastController, nav: NavController) {
+  constructor(private nativeAudio: NativeAudio, public navCtrl: NavController, public navParams: NavParams, private storage: Storage , private toastCtrl: ToastController, private loadingCtrl: LoadingController) {
     this.bb8speech(this.speechs.length, this.speechs, this);
-
-    this.nav = nav;
 
     // Audio launching
     this.nativeAudio.preloadComplex('ambiance', 'assets/musics/ambiance.mp3', 1, 1, 0);
@@ -38,33 +32,29 @@ export class GalaxyPage {
       this.storage.get('side').then((val) => {
 
         if(val == "dark"){
+
           (<HTMLImageElement>document.getElementById("me")).src = "assets/imgs/galaxy/darth-vader.png";
           this.sideToast("Aucune limite à mon pouvoir !");
-          console.log(val);
         }
         else if(val == "light"){
           this.sideToast("La force est très puissante en toi, je le sens !");
-          console.log(val);
         }
         else{
           this.sideToast("Qui êtes vous ? je ne sens pas la force en vous.");
         }
+
       })
     })
+
   }
-
-
-  toFilmDetailsPage (){this.nav.push(EpisodeDetailsPage);};
 
     // Launch the assistant BB8
     bb8speech(i, speechs, fun){
       if(i>0){
         setTimeout(function(){
-            console.log(i);
             document.getElementById("speech1").innerHTML=speechs[i-1];
-            console.log(speechs[i-1]);
             fun.bb8speech((i-1), speechs, fun);
-        }, 2000);
+        }, 4000);
       }
     }
 

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, LoadingController } from 'ionic-angular';
 import { WikiFilmsPage } from '../wiki-films/wiki-films';
 import { WikiSpeciesPage } from '../wiki-species/wiki-species';
 import { WikiCharactersPage } from '../wiki-characters/wiki-characters';
@@ -8,6 +8,7 @@ import { WikiStarshipsPage } from '../wiki-starships/wiki-starships';
 import { WikiPlanetsPage } from '../wiki-planets/wiki-planets';
 import { WikiElementsPage } from '../wiki-elements/wiki-elements';
 import { Storage } from '@ionic/storage';
+import {Modal} from '../../app/app.component';
 
 @Component({
   selector: 'page-wiki',
@@ -17,7 +18,7 @@ import { Storage } from '@ionic/storage';
 export class WikiPage {
 	toDisplay = undefined;
 
-	constructor(public nav: NavController) {
+	constructor(public nav: NavController, private loadingCtrl: LoadingController) {
 		this.nav = nav;
 	};
 
@@ -25,7 +26,7 @@ export class WikiPage {
 	toWikiSpeciesPage (){this.nav.push(WikiElementsPage);};
 	toWikiCharactersPage (){this.nav.push(WikiCharactersPage);};
 	toWikiVehiculesPage (){this.nav.push(WikiVehiculesPage);};
-	toWikiStarshipsPage (){this.nav.push(WikiStarshipsPage);};
+	toWikiStarshipsPage (){new Modal(this.loadingCtrl).showModal(3);this.nav.push(WikiStarshipsPage);};
 	toWikiPlanetsPage (){this.nav.push(WikiPlanetsPage);};
 
 	rechercher(name) {
@@ -67,13 +68,13 @@ function getData2step ( urlComplement, callback ){
 		}else {
 			callback(data[categorieName].data[elementNumber])
 		}
-		
+
 	}
 }
 
 function requestApi( urlComplement, callback ){
 	//console.log("requestApi_data=" + JSON.stringify(data));
-/*	
+/*
 	wikiStorage.get('test').then((val) => {
 		console.log('test : ', val);
 	});
