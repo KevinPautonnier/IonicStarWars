@@ -23,7 +23,7 @@ export class WikiPage {
 
 	toWikiFilmsPage (){this.nav.push(WikiFilmsPage);};
 	toWikiSpeciesPage (){
-		this.storage.set("navigation", {categorie : "species", films : undefined, page:1, nbElemPerPage:5});
+		this.storage.set("navigation", {categorie : "species", films : undefined, page:1, nbElemPerPage:20});
 		this.nav.push(WikiElementsPage);
 	};
 	toWikiCharactersPage (){this.nav.push(WikiCharactersPage);};
@@ -70,33 +70,45 @@ function getData2step ( urlComplement, callback ){
 				requestApi(categorieName + "/" +  zone[0], callback);
 			}else{
 				var firstId = Number(zone[0]);
+				var LastId = Number(zone[1]);
 				tmp["firstId"] = Number(zone[0]);
 				tmp["LastId"] = Number(zone[1]);
 				tmp["nbSend"] = 0;
 				tmp["categorie"] = categorieName;
 				tmp["callback"] = callback;
-				
+				tmp["nbSend"] = 0;
 				while(firstId <= tmp["LastId"]){
-					tmp["nbSend"] = tmp["nbSend"] + 1;
-					requestApi(categorieName + "/" +  firstId, response => {
-						tmp["nbSend"] = tmp["nbSend"] -1;
+					if(data[categorieName].data[firstId] == undefined ){
+						tmp["nbSend"] = tmp["nbSend"] + 1;
+						requestApi(categorieName + "/" +  firstId, function(elementsId, response) {
+							tmp["nbSend"] = tmp["nbSend"] -1;
+							var firstId = Number(tmp["firstId"]);
+							var LastId = Number(tmp["LastId"]);
+							//console.log("idAjout:" + (firstId + p));
+							data[tmp["categorie"]].data[elementsId] = response;
 
-						var firstId = Number(tmp["firstId"]);
-						var LastId = Number(tmp["LastId"]);
-						data[tmp["categorie"]].data[firstId + p] = response;
+							if(tmp["nbSend"] == 0){
+								// *** La dernière requête est de retour ***
 
-						if(tmp["nbSend"] == 0){
-							// *** La dernière requête est de retour ***
-
-							var newResponse = {};
-							
-							for (var p = 0; p <= (LastId-firstId); p++){
-								newResponse[p+firstId] = data[tmp["categorie"]].data[firstId + p];
+								var newResponse = {};
+								
+								for (var p = 0; p <= (LastId-firstId); p++){
+									newResponse[p+firstId] = data[tmp["categorie"]].data[firstId + p];
+								}
+								tmp["callback"](newResponse);
 							}
-							tmp["callback"](newResponse);
-						}
-					});
+						}.bind(null, firstId));
+					}
 					firstId = firstId + 1;
+				}
+				if(tmp["nbSend"] == 0){
+					// *** Aucune requête n'a été effectué ***
+					var newResponse = {};
+					firstId = Number(zone[0]); 
+					for (var p = 0; p <= (LastId-firstId); p++){
+						newResponse[p+firstId] = data[categorieName].data[firstId + p];
+					}
+					callback(newResponse);
 				}
 			}
 
@@ -109,7 +121,7 @@ function getData2step ( urlComplement, callback ){
 					callback(response);
 				});
 			}else {
-				callback(data[categorieName].data[elementNumber])
+				callback(data[categorieName].data[elementNumber]);
 			}
 		}
 	}

@@ -38,10 +38,11 @@ export class WikiElementsPage {
 
 	ionViewDidSet() {
 		console.log('ionViewDidSet WikiElementsPage');
+/*		
 		console.log("categorie:" + this.categorie);
 		console.log("page:" + this.page);
 		console.log("nbElemPerPage:" + this.nbElemPerPage);
-
+*/
 		this.api.getData(this.categorie + "/" + (this.nbElemPerPage*(this.page-1) + 1) + "-" + (this.nbElemPerPage*(this.page-1) + this.nbElemPerPage), response => {console.log(response)});
 	}
 
