@@ -16,13 +16,14 @@ import { Storage } from '@ionic/storage';
 
 export class WikiPage {
 	toDisplay = undefined;
-
-	constructor(public nav: NavController) {
-		this.nav = nav;
+	constructor(public nav: NavController, private storage: Storage) {
 	};
 
 	toWikiFilmsPage (){this.nav.push(WikiFilmsPage);};
-	toWikiSpeciesPage (){this.nav.push(WikiElementsPage);};
+	toWikiSpeciesPage (){
+		this.storage.set("navigation", {categorie : "species", films : undefined, page:1, nbElemPerPage:5});
+		this.nav.push(WikiElementsPage);
+	};
 	toWikiCharactersPage (){this.nav.push(WikiCharactersPage);};
 	toWikiVehiculesPage (){this.nav.push(WikiVehiculesPage);};
 	toWikiStarshipsPage (){this.nav.push(WikiStarshipsPage);};
@@ -31,11 +32,11 @@ export class WikiPage {
 	rechercher(name) {
 
 	}
-
+/*
 	getToDisplay(){ return this.toDisplay; }
 	setToDisplay(_toDisplay){ this.toDisplay = _toDisplay }
 	resetToDisplay(){this.toDisplay = undefined }
-
+*/
 }
 
 
@@ -44,7 +45,7 @@ export class WikiPage {
 
 import { NgModule }  from '@angular/core';
 
-var tmp;
+var tmp= {};
 var wikiStorage;
 var apiRequestUrl = "https://swapi.co/api/";
 var data = {categories : ["films","people","vehicules","starships","species","planets"]};
@@ -58,15 +59,58 @@ function getData2step ( urlComplement, callback ){
 	if(elementNumber == ""){
 		updateFullCategorie(categorieName);
 	}else{
-		if(data[categorieName].data[elementNumber] == undefined ) {
-			// si l'élément demandé n'a pas encore été requeté.
-			requestApi(urlComplement, response => {
-				data[categorieName].data[elementNumber] = response;
-				callback(response);
-			});
-		}else {
-			callback(data[categorieName].data[elementNumber])
+		if(elementNumber.includes("-")){
+			// *** Multiple element à charger ***
+			var zone = elementNumber.split("-");
+			var delta = Number(zone[1]) - Number(zone[0]);
+			if(delta < 2){
+				// *** Le mec il a pas compris --' ***
+				requestApi(categorieName + "/" +  zone[0], callback);
+			}else{
+				var firstId = Number(zone[0]);
+				tmp["firstId"] = Number(zone[0]);
+				tmp["LastId"] = Number(zone[1]);
+				tmp["nbSend"] = 0;
+				tmp["categorie"] = categorieName;
+				tmp["callback"] = callback;
+				
+				while(firstId <= tmp["LastId"]){
+					tmp["nbSend"] = tmp["nbSend"] + 1;
+					requestApi(categorieName + "/" +  firstId, response => {
+						tmp["nbSend"] = tmp["nbSend"] -1;
+
+						var firstId = Number(tmp["firstId"]);
+						var LastId = Number(tmp["LastId"]);
+						data[tmp["categorie"]].data[firstId + p] = response;
+
+						if(tmp["nbSend"] == 0){
+							// *** La dernière requête est de retour ***
+
+							var newResponse = {};
+							
+							for (var p = 0; p <= (LastId-firstId); p++){
+								newResponse[p+firstId] = data[tmp["categorie"]].data[firstId + p];
+							}
+							tmp["callback"](newResponse);
+						}
+					});
+					firstId = firstId + 1;
+				}
+			}
+
+		}else{
+			// *** Element unique ***
+			if(data[categorieName].data[elementNumber] == undefined ) {
+				// *** si l'élément demandé n'a pas encore été requeté. ***
+				requestApi(urlComplement, response => {
+					data[categorieName].data[elementNumber] = response;
+					callback(response);
+				});
+			}else {
+				callback(data[categorieName].data[elementNumber])
+			}
 		}
+		
 		
 	}
 }
@@ -107,9 +151,9 @@ function _callbackInitCategorie( response ){
 		newCategorie.data[i+1] = response.results[i];
 		i= i+1;
 	};
-	//console.log("creation:" + tmp.urlComplement.split("/")[0] );
-	data[tmp.urlComplement.split("/")[0]] = newCategorie;
-	getData2step(tmp.urlComplement, tmp.callback);
+	//console.log("creation:" + tmp["urlComplement"].split("/")[0] );
+	data[tmp["urlComplement"].split("/")[0]] = newCategorie;
+	getData2step(tmp["urlComplement"], tmp["callback"]);
 }
 
 function updateFullCategorie(categorie) {
@@ -185,9 +229,8 @@ export class ApiModule {
 
 		if( data[url[0]] == undefined && data.categories.indexOf(url[0]) > -1 ){
 			// *** Si première demande d'une catégorie ***
-			tmp = {};
-			tmp.urlComplement = urlComplement;
-			tmp.callback = newCallback;
+			tmp["urlComplement"] = urlComplement;
+			tmp["callback"] = newCallback;
 			requestApi(url[0]+"/", _callbackInitCategorie );
 
 		}else{

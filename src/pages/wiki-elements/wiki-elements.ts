@@ -17,12 +17,30 @@ import { Storage } from '@ionic/storage';
 })
 export class WikiElementsPage {
 	api = undefined;
+	categorie;
+	page;
+	nbElemPerPage;
 	constructor(public navCtrl: NavController, public navParams: NavParams, private storage: Storage) {
 		this.api = new ApiModule(storage);
+		storage.get("navigation").then( val => {
+			this.categorie = val.categorie;
+			this.page = val.page;
+			this.nbElemPerPage = val.nbElemPerPage;
+			this.ionViewDidSet();
+		});
 	}
 
 	ionViewDidLoad() {
 		console.log('ionViewDidLoad WikiElementsPage');
+	}
+
+	ionViewDidSet() {
+		console.log('ionViewDidSet WikiElementsPage');
+		console.log("categorie:" + this.categorie);
+		console.log("page:" + this.page);
+		console.log("nbElemPerPage:" + this.nbElemPerPage);
+
+		this.api.getData(this.categorie + "/" + (this.nbElemPerPage*(this.page-1) + 1) + "-" + (this.nbElemPerPage*(this.page-1) + this.nbElemPerPage), response => {console.log(response)});
 	}
 
 }
