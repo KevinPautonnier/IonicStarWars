@@ -25,6 +25,9 @@ export class Splash {
     }
 
     ionViewDidEnter() {
+
+      //this.storage.remove('firstTime');
+
       this.storage.get('firstTime').then((val) => {
         if (val != null){
           setTimeout(() => {
