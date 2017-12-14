@@ -19,6 +19,9 @@ import { Splash } from '../pages/splash/splash';
 import { GalaxyPage } from '../pages/galaxy/galaxy';
 import { IonicStorageModule } from '@ionic/storage';
 import { SettingsPage } from '../pages/settings/settings';
+import { EpisodeDetailsPage } from '../pages/episode-details/episode-details';
+import { WikiElementsPage } from '../pages/wiki-elements/wiki-elements';
+import { WikiDetailsPage } from '../pages/wiki-details/wiki-details';
 
 @NgModule({
   declarations: [
@@ -34,7 +37,10 @@ import { SettingsPage } from '../pages/settings/settings';
     Splash,
     SidesPage,
     GalaxyPage,
-    SettingsPage
+    SettingsPage,
+    EpisodeDetailsPage,
+    WikiElementsPage,
+    WikiDetailsPage
   ],
   imports: [
     BrowserModule,
@@ -56,7 +62,10 @@ import { SettingsPage } from '../pages/settings/settings';
     Splash,
     SidesPage,
     GalaxyPage,
-    SettingsPage
+    SettingsPage,
+    EpisodeDetailsPage,
+    WikiElementsPage,
+    WikiDetailsPage
   ],
   providers: [
     StatusBar,

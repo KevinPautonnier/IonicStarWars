@@ -4,6 +4,7 @@ import { WikiPage } from '../wiki/wiki';
 import { SettingsPage } from '../settings/settings';
 import { Storage } from '@ionic/storage';
 import { NativeAudio } from '@ionic-native/native-audio';
+import {EpisodeDetailsPage} from "../episode-details/episode-details";
 
 @IonicPage()
 @Component({
@@ -14,6 +15,8 @@ export class GalaxyPage {
   wikiPage = WikiPage;
   settingsPage = SettingsPage;
 
+  nav = undefined;
+
   // Varibles for "info-bulles"
   speechs=[
     "Click on the planet/starships to view infos about episodes",
@@ -21,8 +24,10 @@ export class GalaxyPage {
     "Click on me to get infos about the association!",
   ];
 
-  constructor(private nativeAudio: NativeAudio, public navCtrl: NavController, public navParams: NavParams, private storage: Storage , private toastCtrl: ToastController) {
+  constructor(private nativeAudio: NativeAudio, public navCtrl: NavController, public navParams: NavParams, private storage: Storage , private toastCtrl: ToastController, nav: NavController) {
     this.bb8speech(this.speechs.length, this.speechs, this);
+
+    this.nav = nav;
 
     // Audio launching
     this.nativeAudio.preloadComplex('ambiance', 'assets/musics/ambiance.mp3', 1, 1, 0);
@@ -47,6 +52,9 @@ export class GalaxyPage {
       })
     })
   }
+
+
+  toFilmDetailsPage (){this.nav.push(EpisodeDetailsPage);};
 
     // Launch the assistant BB8
     bb8speech(i, speechs, fun){

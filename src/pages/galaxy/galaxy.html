@@ -37,7 +37,7 @@
       <div class="image-container"  id="me">
           <img [navPush]="wikiPage" src="assets/imgs/galaxy/X-wing-200.png">
       </div>
-      <div class="image-container" id="tatooine">
+      <div (click)="toFilmDetailsPage()" class="image-container" id="tatooine">
           <img src="assets/imgs/galaxy/tatooine-200.png">
           <p>EPISODE I</p>
       </div>
