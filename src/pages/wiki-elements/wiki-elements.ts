@@ -49,7 +49,9 @@ export class WikiElementsPage {
 		console.log("nbElemPerPage:" + this.nbElemPerPage);
 */
 		var nbPreviousElements = this.nbElemPerPage*(this.page-1);
-		this.api.getData(this.categorie + "/" + ( nbPreviousElements + 1 ) + "-" + ( nbPreviousElements + this.nbElemPerPage ), response => {console.log(response); this.setListe(response)});
+		var request = this.categorie + "/" + ( nbPreviousElements + 1 ) + "-" + ( nbPreviousElements + this.nbElemPerPage );
+		console.log("request:" + request);
+		this.api.getData( request, response => {console.log(response); this.setListe(response)});
 	}
 
 	setListe (jsonData){
@@ -57,6 +59,9 @@ export class WikiElementsPage {
 		for (var prop in jsonData) {
 			jsonData[prop]["elementId"] = prop;
 			this.listElements.push(jsonData[prop]);
+			
+			console.log(jsonData[prop].name);
+			console.log(jsonData[prop].principaleAttributeName);
 		}
 		this.modal.hideModal();
 	}

@@ -20,19 +20,23 @@ export class WikiPage {
 	listCategories = [
 		{categorie:"films",title:"Films",imgUrl:"assets/imgs/films.jpeg"},
 		{categorie:"species",title:"Species",imgUrl:"assets/imgs/species.jpg"},
-		{categorie:"personnages",title:"Personnages",imgUrl:"assets/imgs/personnages.jpg"},
-		{categorie:"vehicules",title:"Vehicules",imgUrl:"assets/imgs/vehicules.jpg"},
+		{categorie:"people",title:"Personnages",imgUrl:"assets/imgs/personnages.jpg"},
+		{categorie:"vehicles",title:"Vehicles",imgUrl:"assets/imgs/vehicules.jpg"},
 		{categorie:"starships",title:"Starships",imgUrl:"assets/imgs/starships.jpeg"},
 		{categorie:"planets",title:"Planets",imgUrl:"assets/imgs/planets.jpg"},
 	]
+	navigation = {categorie : undefined, films : undefined, page:1, nbElemPerPage:24, elementId: undefined};
+
 	constructor(public nav: NavController, private loadingCtrl: LoadingController, private storage: Storage) {
-		this.storage.set("navigation", {categorie : "species", films : undefined, page:1, nbElemPerPage:24});
+		this.storage.set("navigation", this.navigation);
 	};
 
 	toElementListe(categorie) {
-		this.nav.push(WikiElementsPage);
+		console.log("toElementListe:" + categorie);
+		this.navigation["categorie"] = categorie;
+		this.storage.set("navigation", this.navigation).then(navigation => {this.nav.push(WikiElementsPage)});		
 	}
-
+/*
 	toWikiFilmsPage (){this.nav.push(WikiFilmsPage);};
 	toWikiSpeciesPage (){
 		
@@ -45,7 +49,7 @@ export class WikiPage {
 		this.nav.push(WikiStarshipsPage);
 	};
 	toWikiPlanetsPage (){this.nav.push(WikiPlanetsPage);};
-
+*/
 	rechercher(name) {
 
 	}
@@ -65,7 +69,17 @@ import { NgModule }  from '@angular/core';
 var tmp= {};
 var wikiStorage;
 var apiRequestUrl = "https://swapi.co/api/";
-var data = {categories : ["films","people","vehicules","starships","species","planets"]};
+var navigation;
+var data = {
+	categories : ["films","people","vehicules","starships","species","planets"],
+	principaleTuileAttribute:{
+		"films" : "titre",
+		"people" : "name",
+		"vehicules":"name",
+		"starships":"name",
+		"species":"name",
+		"planets" :"name"}
+};
 // {films:{count:70, nbElemPerPage:3, data:{1:{}, ...}, ...}, ...}
 
 function getData2step ( urlComplement, callback ){
@@ -105,8 +119,9 @@ function getData2step ( urlComplement, callback ){
 						requestApi(categorieName + "/" +  firstId, function(elementsId, response) {
 							tmp["nbSend"] = tmp["nbSend"] -1;
 							//console.log("idAjout:" + (firstId + p));
-							data[tmp["categorie"]].data[elementsId] = response;
-
+							if(response["__zone_symbol__currentTask"] == undefined){
+								data[tmp["categorie"]].data[elementsId] = response;
+							}
 							if(tmp["nbSend"] == 0){
 								// *** La dernière requête est de retour ***
 								tmp["callback"](concatData(tmp["categorie"],Number(tmp["firstId"]), Number(tmp["LastId"])));
@@ -138,7 +153,9 @@ function getData2step ( urlComplement, callback ){
 function concatData(categorie, firstId, LastId){
 	var newResponse = {};
 	for (var p = 0; p <= (LastId-firstId); p++){
-		newResponse[p+firstId] = data[categorie].data[firstId + p];
+		if(data[categorie].data[firstId + p] != undefined){
+			newResponse[p+firstId] = data[categorie].data[firstId + p];
+		}
 	}
 	return newResponse;
 }
@@ -162,9 +179,13 @@ function requestApi( urlComplement, callback ){
 		}
 	})
 	.then(response => {
+
+			//console.log("response.json:" + JSON.stringify(response));
+			response["principaleAttributeName"] = getPrincipaleAttributeName(navigation.categorie);
 			callback(response);
 		}).catch(error => {
 			console.error(error);
+			callback(error);
 	});
 }
 
@@ -176,6 +197,7 @@ function _callbackInitCategorie( response ){
 	}
 	var i = 0;
 	while(response.results.length > i){
+		response.results[i]["principaleAttributeName"] = response["principaleAttributeName"];
 		newCategorie.data[i+1] = response.results[i];
 		i= i+1;
 	};
@@ -201,6 +223,7 @@ function updateFullCategorie(categorie) {
 }
 
 function _callbackGetDataElement( response ) {
+	debugger;
 	var tmpData = {};
 	var categorie = response.previous.split("/")[4];
 	var page = Number(response.previous.split("/")[5].slice(-1)) +1;
@@ -208,6 +231,7 @@ function _callbackGetDataElement( response ) {
 	var i=0,j;
 	while(i < response.results.length){
 		j = (page-1)*data[categorie].nbElemPerPage + i;
+		response.results[i]["principaleAttributeName"] = response["principaleAttributeName"];
 		tmpData[categorie].data[j+1] = response.results[i];
 		i= i+1;
 	};
@@ -227,6 +251,33 @@ function formatUrl(url){
 	}
 }
 
+function getPrincipaleAttributeName(categorieName){
+	if(categorieName == "films"){
+		return "title";
+	}else{
+		return "name";
+	}
+}
+
+function getData05(urlComplement, callback ){
+	var newCallback = function(response ){ wikiStorage.set("data",data); callback(response) };
+	var url = urlComplement.split("/");
+
+	urlComplement = formatUrl(urlComplement);
+
+	if( data[url[0]] == undefined && data.categories.indexOf(url[0]) > -1 ){
+		// *** Si première demande d'une catégorie ***
+		console.log("newCategorie");
+		tmp["urlComplement"] = urlComplement;
+		tmp["callback"] = newCallback;
+		requestApi(url[0]+"/", _callbackInitCategorie );
+
+	}else{
+		// *** Si la catégorie à déjà été demandé ***
+		console.log("knewCategorie");
+		getData2step( urlComplement, newCallback );
+	}
+}
 
 @NgModule({
   imports:      [ ],
@@ -239,7 +290,7 @@ export class ApiModule {
 		wikiStorage = storage;
 		wikiStorage.get("data").then(val => {
 			if(val == undefined) {
-				wikiStorage.set("data", {categories : ["films","people","vehicules","starships","species","planets"]});
+				wikiStorage.set("data", {categories : ["films","people","vehicles","starships","species","planets"]});
 			}else {
 				data = val;
 			}
@@ -248,22 +299,9 @@ export class ApiModule {
 
 	getData( urlComplement, callback ) {
 		//console.log("getData_data=" + JSON.stringify(data));
-
 		// *** Préparation de la sauvegarde dans storage ***
-		var newCallback = function(response ){ wikiStorage.set("data",data); callback(response) };
-		var url = urlComplement.split("/");
-
-		urlComplement = formatUrl(urlComplement);
-
-		if( data[url[0]] == undefined && data.categories.indexOf(url[0]) > -1 ){
-			// *** Si première demande d'une catégorie ***
-			tmp["urlComplement"] = urlComplement;
-			tmp["callback"] = newCallback;
-			requestApi(url[0]+"/", _callbackInitCategorie );
-
-		}else{
-			// *** Si la catégorie à déjà été demandé ***
-			getData2step( urlComplement, newCallback );
-		}
+		//debugger;
+		wikiStorage.get("data").then(storageData =>{ data = storageData; })
+		wikiStorage.get("navigation").then(storageData =>{ navigation = storageData; getData05(urlComplement, callback )})
 	}
 }

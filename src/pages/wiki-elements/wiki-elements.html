@@ -17,7 +17,7 @@
   <div id="container">
     <div *ngFor="let tuile of listElements" (click)="goToDetails(tuile.elementId)" class="element">
       <div class="image">img</div>
-      <div class="name" >{{tuile.name}}</div>
+      <div class="name" >{{tuile[tuile.principaleAttributeName]}}</div>
     </div>
 
 
