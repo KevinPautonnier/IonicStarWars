@@ -20,6 +20,7 @@ export class SettingsPage {
       //change theme depending on the side choosen
       this.storage.get('side').then((val) => {
         if(val == "dark"){
+            //document.getElementById('btn1').setAttribute('color','danger');
         }
       })
     })
