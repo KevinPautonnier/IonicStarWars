@@ -19,15 +19,15 @@ export class SettingsPage {
     storage.ready().then(() => {
       this.storage.get('side').then((val) => {
         if(val == "dark"){
-          document.getElementsByClassName("button").color="danger";
+          //document.getElementsByClassName("button").color="danger";
         }
       })
     })
   }
 
   mute(){
-    this.nativeAudio.stop( 'ambiance' );
-    this.nativeAudio.unload( 'ambiance' );
+    //this.nativeAudio.stop( 'ambiance' );
+    //this.nativeAudio.unload( 'ambiance' );
   }
 
 }
