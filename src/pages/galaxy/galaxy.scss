@@ -3,11 +3,11 @@
   src: url('../assets/fonts/STARWARS.TTF');
 }
 
-#galaxy{
-  background-image: url('../assets/imgs/galaxy/background.png');
-  background-size: cover;
-  img{
-    filter: drop-shadow(0px 0px 10px white);
+  #galaxy{
+    background-image: url('../assets/imgs/galaxy/background.png');
+    background-size: cover;
+    img{
+      filter: drop-shadow(0px 0px 10px white);
   }
 
   #tatooine {
