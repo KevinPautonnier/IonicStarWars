@@ -5,6 +5,7 @@ import { Storage } from '@ionic/storage';
 import { NativeAudio } from '@ionic-native/native-audio';
 import { Modal } from '../../components/modules';
 import { SettingsPage } from '../settings/settings';
+import { Movie8Page } from '../movie8/movie8';
 
 @IonicPage()
 @Component({
@@ -20,6 +21,7 @@ export class GalaxyPage {
     duration: 3000,
     position: 'top'
   });
+  movie8Page = Movie8Page;
 
   // Varibles for "info-bulles"
   speechs=[
@@ -36,13 +38,13 @@ export class GalaxyPage {
       this.storage.get('side').then((val) => {
         if(val == "dark"){
           this.imageSrc = "assets/imgs/galaxy/darth-vader.png";
-          this.sideToast("Aucune limite à mon pouvoir !");
+          this.sideToast("Unlimiteeeeeeed Poweeeeeeeer !");
         }
         else if(val == "light"){
-          this.sideToast("La force est très puissante en toi, je le sens !");
+          this.sideToast("The force is strong with you, but you're not a jedi yet !");
         }
         else{
-          this.sideToast("Qui êtes vous ? je ne sens pas la force en vous.");
+          this.sideToast("Who are you ? i don't feel the force with you.");
         }
       })
     })
@@ -80,6 +82,7 @@ export class GalaxyPage {
        message: text,
        duration: 4000,
        position: 'top',
+       cssClass: "toastCustom",
      });
      this.toast.present();
    }

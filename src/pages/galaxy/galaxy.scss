@@ -1,3 +1,9 @@
+.toastCustom{
+    width: 80%;
+    margin: auto;
+    position: relative;
+}
+
 @font-face {
   font-family: "Ma Super Fonte";
   src: url('../assets/fonts/STARWARS.TTF');
@@ -45,9 +51,9 @@
     right: 5vw;
   }
   #millenium {
-    top: 49vh;
+    top: 53vh;
     left: 6vw;
-    width: 40vmin;
+    width: 30vmin;
   }
   #mustafar {
     top: 42vh;
@@ -70,15 +76,15 @@
 
   #bb8{
       position: absolute;
-      bottom: 5px;
-      right: 5px;
+      bottom: 3px;
+      right: 3px;
       height: 10%;
       width: auto;
   }
 
   .speech-bubble{
     position: absolute;
-    bottom: 15px;
+    bottom: 0px;
     left: 5px;
     width: 85%;
     text-align: right;

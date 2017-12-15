@@ -7,6 +7,7 @@ import { NativeAudio } from '@ionic-native/native-audio';
 import { MyApp  } from './app.component';
 import { WikiPage } from '../pages/wiki/wiki';
 import { Modal } from '../components/modules';
+import { YoutubeVideoPlayer } from '@ionic-native/youtube-video-player';
 
 import { ApiModule } from '../pages/wiki/wiki';
 import { SidesPage } from '../pages/sides/sides';
@@ -22,6 +23,8 @@ import { EpisodeDetailsPage } from '../pages/episode-details/episode-details';
 import { WikiElementsPage } from '../pages/wiki-elements/wiki-elements';
 import { WikiDetailsPage } from '../pages/wiki-details/wiki-details';
 import { AboutPage } from '../pages/about/about'
+import { Movie8Page } from '../pages/movie8/movie8'
+
 
 
 import { SidesPageModule } from '../pages/sides/sides.module';
@@ -39,6 +42,7 @@ import { EpisodeDetailsPageModule } from '../pages/episode-details/episode-detai
 import { WikiElementsPageModule } from '../pages/wiki-elements/wiki-elements.module';
 import { WikiDetailsPageModule } from '../pages/wiki-details/wiki-details.module';
 import { AboutPageModule } from '../pages/about/about.module'
+import { Movie8PageModule } from '../pages/movie8/movie8.module'
 
 @NgModule({
   declarations: [
@@ -64,7 +68,8 @@ import { AboutPageModule } from '../pages/about/about.module'
     EpisodeDetailsPageModule,
     WikiElementsPageModule,
     WikiDetailsPageModule,
-    AboutPageModule
+    AboutPageModule,
+    Movie8PageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -83,12 +88,14 @@ import { AboutPageModule } from '../pages/about/about.module'
     EpisodeDetailsPage,
     WikiElementsPage,
     WikiDetailsPage,
-    AboutPage
+    AboutPage,
+    Movie8Page
   ],
   providers: [
     StatusBar,
     SplashScreen,
     NativeAudio,
+    YoutubeVideoPlayer,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })
