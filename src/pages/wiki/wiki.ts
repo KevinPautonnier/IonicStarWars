@@ -17,18 +17,33 @@ import {Modal} from '../../app/app.component';
 
 export class WikiPage {
 	toDisplay = undefined;
-
+	listCategories = [
+		{categorie:"films",title:"Films",imgUrl:"assets/imgs/films.jpeg"},
+		{categorie:"species",title:"Species",imgUrl:"assets/imgs/species.jpg"},
+		{categorie:"personnages",title:"Personnages",imgUrl:"assets/imgs/personnages.jpg"},
+		{categorie:"vehicules",title:"Vehicules",imgUrl:"assets/imgs/vehicules.jpg"},
+		{categorie:"starships",title:"Starships",imgUrl:"assets/imgs/starships.jpeg"},
+		{categorie:"planets",title:"Planets",imgUrl:"assets/imgs/planets.jpg"},
+	]
 	constructor(public nav: NavController, private loadingCtrl: LoadingController, private storage: Storage) {
+		this.storage.set("navigation", {categorie : "species", films : undefined, page:1, nbElemPerPage:200});
 	};
+
+	toElementListe(categorie) {
+		this.nav.push(WikiElementsPage);
+	}
 
 	toWikiFilmsPage (){this.nav.push(WikiFilmsPage);};
 	toWikiSpeciesPage (){
-		this.storage.set("navigation", {categorie : "species", films : undefined, page:1, nbElemPerPage:6});
+		
 		this.nav.push(WikiElementsPage);
 	};
 	toWikiCharactersPage (){this.nav.push(WikiCharactersPage);};
 	toWikiVehiculesPage (){this.nav.push(WikiVehiculesPage);};
-	toWikiStarshipsPage (){new Modal(this.loadingCtrl).showModal(3);this.nav.push(WikiStarshipsPage);};
+	toWikiStarshipsPage (){
+		new Modal(this.loadingCtrl).showModal(3);
+		this.nav.push(WikiStarshipsPage);
+	};
 	toWikiPlanetsPage (){this.nav.push(WikiPlanetsPage);};
 
 	rechercher(name) {
@@ -64,10 +79,17 @@ function getData2step ( urlComplement, callback ){
 		if(elementNumber.includes("-")){
 			// *** Multiple element à charger ***
 			var zone = elementNumber.split("-");
+			if( Number(zone[0]) < 1 ){zone[0] = 1}
+			if( Number(zone[1]) > data[categorieName].count){zone[1] = data[categorieName].count}
 			var delta = Number(zone[1]) - Number(zone[0]);
 			if(delta < 2){
 				// *** Le mec il a pas compris --' ***
-				requestApi(categorieName + "/" +  zone[0], callback);
+				var newCallback = response => {
+					var container = {};
+					container[zone[0]] = response;
+					callback(container);
+				}
+				requestApi(categorieName + "/" +  zone[0], newCallback);
 			}else{
 				var firstId = Number(zone[0]);
 				var LastId = Number(zone[1]);
@@ -82,20 +104,12 @@ function getData2step ( urlComplement, callback ){
 						tmp["nbSend"] = tmp["nbSend"] + 1;
 						requestApi(categorieName + "/" +  firstId, function(elementsId, response) {
 							tmp["nbSend"] = tmp["nbSend"] -1;
-							var firstId = Number(tmp["firstId"]);
-							var LastId = Number(tmp["LastId"]);
 							//console.log("idAjout:" + (firstId + p));
 							data[tmp["categorie"]].data[elementsId] = response;
 
 							if(tmp["nbSend"] == 0){
 								// *** La dernière requête est de retour ***
-
-								var newResponse = {};
-								
-								for (var p = 0; p <= (LastId-firstId); p++){
-									newResponse[p+firstId] = data[tmp["categorie"]].data[firstId + p];
-								}
-								tmp["callback"](newResponse);
+								tmp["callback"](concatData(tmp["categorie"],Number(tmp["firstId"]), Number(tmp["LastId"])));
 							}
 						}.bind(null, firstId));
 					}
@@ -103,15 +117,9 @@ function getData2step ( urlComplement, callback ){
 				}
 				if(tmp["nbSend"] == 0){
 					// *** Aucune requête n'a été effectué ***
-					var newResponse = {};
-					firstId = Number(zone[0]); 
-					for (var p = 0; p <= (LastId-firstId); p++){
-						newResponse[p+firstId] = data[categorieName].data[firstId + p];
-					}
-					callback(newResponse);
+					callback(concatData(categorieName, Number(zone[0]), LastId));
 				}
 			}
-
 		}else{
 			// *** Element unique ***
 			if(data[categorieName].data[elementNumber] == undefined ) {
@@ -125,6 +133,14 @@ function getData2step ( urlComplement, callback ){
 			}
 		}
 	}
+}
+
+function concatData(categorie, firstId, LastId){
+	var newResponse = {};
+	for (var p = 0; p <= (LastId-firstId); p++){
+		newResponse[p+firstId] = data[categorie].data[firstId + p];
+	}
+	return newResponse;
 }
 
 function requestApi( urlComplement, callback ){

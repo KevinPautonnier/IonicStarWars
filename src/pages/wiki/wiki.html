@@ -8,13 +8,18 @@
 
 <ion-content padding>
 
+  <ion-card *ngFor="let tuile of listCategories" (click)="toElementListe(tuile.categorie)">
+    <img src={{tuile.imgUrl}}/>
+    <div class="card-title">{{tuile.categorie}}</div>
+  </ion-card>
+
   <ion-card (click)="toWikiFilmsPage()">
     <img src="assets/imgs/films.jpeg"/>
     <div class="card-title">Films</div>
   </ion-card>
 
   <ion-card (click)="toWikiSpeciesPage()">
-    <img src="assets/imgs/species.jpg"/>
+    <img src="assets/imgs/species.png"/>
     <div class="card-title">Species</div>
   </ion-card>
 
