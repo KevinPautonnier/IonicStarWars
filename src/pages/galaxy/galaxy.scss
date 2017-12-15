@@ -3,11 +3,35 @@
   src: url('../assets/fonts/STARWARS.TTF');
 }
 
+<<<<<<< HEAD
+=======
+@keyframes float {
+  0% {
+    filter: drop-shadow(5px 15px 0px rgba(0,0,0,0.6));
+    transform: translatey(0px);
+  }
+  50% {
+    filter: drop-shadow(25px 15px 0px rgba(0,0,0,0.2));
+    transform: translatey(-20px);
+  }
+  100% {
+    filter: drop-shadow( 5px 15px 0px rgba(0,0,0,0.6));
+    transform: translatey(0px);
+  }
+}
+
+>>>>>>> 8a88d2c215566aa170652e4e9c8a6641635569c3
 #galaxy{
   background-image: url('../assets/imgs/galaxy/background.jpg');
   background-size: cover;
   img{
     filter: drop-shadow(0px 0px 10px white);
+<<<<<<< HEAD
+=======
+  }
+  .image-container:not(#me)>img{
+    filter: drop-shadow(5px 6px 0px rgba(0,0,0,0.4));
+>>>>>>> 8a88d2c215566aa170652e4e9c8a6641635569c3
   }
 
   #tatooine {
@@ -47,6 +71,7 @@
   #me{
     top: 45vh;
     left: 45vw;
+    animation: float 6s ease-in-out infinite;
   }
 
   #bb8{
@@ -102,6 +127,15 @@
   }
 
 }
+
+h1 {
+  font-size: 24px;
+  margin: 10px 0 0 0;
+  font-weight: lighter;
+  text-transform: uppercase;
+  color: #eeeeee;
+}
+
 
 @import "../../../node_modules/compass-sass-mixins/lib/compass";
 

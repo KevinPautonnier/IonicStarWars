@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
 import { ApiModule } from '../wiki/wiki';
 import { Storage } from '@ionic/storage';
 import { WikiDetailsPage } from '../wiki-details/wiki-details';
+import { Modal } from '../../components/modules';
 
 /**
  * Generated class for the WikiElementsPage page.
@@ -22,7 +23,11 @@ export class WikiElementsPage {
 	categorie;
 	page;
 	nbElemPerPage;
-	constructor(public navCtrl: NavController, public navParams: NavParams, private storage: Storage) {
+	listElements = [];
+	modal;
+	constructor(public navCtrl: NavController, public navParams: NavParams, private loadingCtrl: LoadingController, private storage: Storage) {
+		this.modal = new Modal(this.loadingCtrl);
+		this.modal.showModal();
 		this.api = new ApiModule(storage);
 		storage.get("navigation").then( val => {
 			this.categorie = val.categorie;
@@ -50,13 +55,14 @@ export class WikiElementsPage {
 	setListe (jsonData){
 		var newContainerContent = "";
 		for (var prop in jsonData) {
-			console.log("obj." + prop +" = " + jsonData[prop].name);
-			newContainerContent += '<div [navPush]="wikiDetail" class="element">';
-			newContainerContent += '<div class="image">img</div>';
-			newContainerContent += '<div class="name">' + jsonData[prop].name + '</div>';
-			newContainerContent += '</div>';
+			jsonData[prop]["elementId"] = prop;
+			this.listElements.push(jsonData[prop]);
 		}
+		this.modal.hideModal();
+	}
 
-		document.getElementById("container").innerHTML = newContainerContent;
+	goToDetails(elementId) {
+		console.log('redirectTo:' + this.categorie + "/" + elementId);
+		this.navCtrl.push(WikiDetailsPage);
 	}
 }
