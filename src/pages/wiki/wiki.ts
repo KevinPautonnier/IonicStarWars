@@ -29,6 +29,7 @@ export class WikiPage {
 
 	constructor(public nav: NavController, private loadingCtrl: LoadingController, private storage: Storage) {
 		this.storage.set("navigation", this.navigation);
+		this.storage.set("listCategories", this.listCategories);
 	};
 
 	toElementListe(categorie) {

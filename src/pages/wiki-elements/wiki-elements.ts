@@ -31,6 +31,7 @@ export class WikiElementsPage {
 		this.api = new ApiModule(storage);
 		storage.get("navigation").then( val => {
 			this.categorie = val.categorie;
+			console.log("categorie:" + this.categorie);
 			this.page = val.page;
 			this.nbElemPerPage = val.nbElemPerPage;
 			this.ionViewDidSet();
@@ -59,9 +60,6 @@ export class WikiElementsPage {
 		for (var prop in jsonData) {
 			jsonData[prop]["elementId"] = prop;
 			this.listElements.push(jsonData[prop]);
-			
-			console.log(jsonData[prop].name);
-			console.log(jsonData[prop].principaleAttributeName);
 		}
 		this.modal.hideModal();
 	}
