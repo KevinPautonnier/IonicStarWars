@@ -3,7 +3,8 @@ import { IonicPage, NavController, NavParams , ToastController , LoadingControll
 import { WikiPage } from '../wiki/wiki';
 import { Storage } from '@ionic/storage';
 import { NativeAudio } from '@ionic-native/native-audio';
-import {Modal} from '../../app/app.component';
+import { Modal } from '../../app/app.component';
+import { SettingsPage } from '../settings/settings';
 
 @IonicPage()
 @Component({
@@ -12,6 +13,8 @@ import {Modal} from '../../app/app.component';
 })
 export class GalaxyPage {
   wikiPage = WikiPage;
+  settingsPage = SettingsPage;
+  imageSrc = 'assets/imgs/galaxy/X-wing-200.png';
 
   // Varibles for "info-bulles"
   speechs=[
@@ -23,17 +26,11 @@ export class GalaxyPage {
   constructor(private nativeAudio: NativeAudio, public navCtrl: NavController, public navParams: NavParams, private storage: Storage , private toastCtrl: ToastController, private loadingCtrl: LoadingController) {
     this.bb8speech(this.speechs.length, this.speechs, this);
 
-    // Audio launching
-    this.nativeAudio.preloadComplex('ambiance', 'assets/musics/ambiance.mp3', 1, 1, 0);
-    nativeAudio.loop('ambiance');
-
     // Test side choosed by user
-    storage.ready().then(() => {
+    this.storage.ready().then(() => {
       this.storage.get('side').then((val) => {
-
         if(val == "dark"){
-
-          (<HTMLImageElement>document.getElementById("me")).src = "assets/imgs/galaxy/darth-vader.png";
+          this.imageSrc = "assets/imgs/galaxy/darth-vader.png";
           this.sideToast("Aucune limite à mon pouvoir !");
         }
         else if(val == "light"){
@@ -42,10 +39,28 @@ export class GalaxyPage {
         else{
           this.sideToast("Qui êtes vous ? je ne sens pas la force en vous.");
         }
-
       })
     })
+  }
 
+  ionViewWillEnter(){
+    console.log("viewWillEnter")
+    // Audio launching
+    this.nativeAudio.preloadComplex('ambiance', 'assets/musics/ambiance.mp3', 1, 1, 0);
+    this.nativeAudio.loop('ambiance');
+
+    // Test side choosed by user
+    this.storage.get('side').then((val) => {
+    console.log(val);
+      if(val == "dark"){
+        console.log("dv");
+        this.imageSrc = 'assets/imgs/galaxy/darth-vader.png';
+      }
+      else{
+        console.log("yd");
+        this.imageSrc = 'assets/imgs/galaxy/X-wing-200.png';
+      }
+    })
   }
 
     // Launch the assistant BB8
@@ -64,7 +79,6 @@ export class GalaxyPage {
        message: text,
        duration: 4000,
        position: 'top',
-
      });
      toast.present();
    }
