@@ -3,7 +3,7 @@ import { IonicPage, NavController, NavParams , ToastController , LoadingControll
 import { WikiPage } from '../wiki/wiki';
 import { Storage } from '@ionic/storage';
 import { NativeAudio } from '@ionic-native/native-audio';
-import { Modal } from '../../app/app.component';
+import { Modal } from '../../components/modules';
 import { SettingsPage } from '../settings/settings';
 
 @IonicPage()
