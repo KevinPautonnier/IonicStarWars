@@ -8,7 +8,7 @@ import { WikiStarshipsPage } from '../wiki-starships/wiki-starships';
 import { WikiPlanetsPage } from '../wiki-planets/wiki-planets';
 import { WikiElementsPage } from '../wiki-elements/wiki-elements';
 import { Storage } from '@ionic/storage';
-import {Modal} from '../../app/app.component';
+import {Modal} from '../../components/modules';
 
 @Component({
   selector: 'page-wiki',
@@ -91,7 +91,7 @@ function getData2step ( urlComplement, callback ){
 								// *** La dernière requête est de retour ***
 
 								var newResponse = {};
-								
+
 								for (var p = 0; p <= (LastId-firstId); p++){
 									newResponse[p+firstId] = data[tmp["categorie"]].data[firstId + p];
 								}
@@ -104,7 +104,7 @@ function getData2step ( urlComplement, callback ){
 				if(tmp["nbSend"] == 0){
 					// *** Aucune requête n'a été effectué ***
 					var newResponse = {};
-					firstId = Number(zone[0]); 
+					firstId = Number(zone[0]);
 					for (var p = 0; p <= (LastId-firstId); p++){
 						newResponse[p+firstId] = data[categorieName].data[firstId + p];
 					}
