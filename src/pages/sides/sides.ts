@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams} from 'ionic-angular';
-import { HomePage } from '../home/home';
 import { GalaxyPage } from '../galaxy/galaxy';
 import { Storage } from '@ionic/storage';
 import { NativeAudio } from '@ionic-native/native-audio';
@@ -12,7 +11,6 @@ import { NativeAudio } from '@ionic-native/native-audio';
   templateUrl: 'sides.html',
 })
 export class SidesPage {
-    homePage = HomePage;
     galaxyPage = GalaxyPage;
 
 
