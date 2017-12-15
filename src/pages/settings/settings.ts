@@ -17,6 +17,7 @@ export class SettingsPage {
 
   constructor(private storage: Storage ,private nativeAudio: NativeAudio, public navCtrl: NavController, public navParams: NavParams) {
     storage.ready().then(() => {
+      //change theme depending on the side choosen
       this.storage.get('side').then((val) => {
         if(val == "dark"){
           //document.getElementsByClassName("button").color="danger";
