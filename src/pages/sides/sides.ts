@@ -39,4 +39,8 @@ export class SidesPage {
       }
       this.storage.set('firstTime', false);
     }
+
+    ionViewWillLeave() {
+      this.nativeAudio.stop('theme');
+    }
 }

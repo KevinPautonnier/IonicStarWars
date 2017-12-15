@@ -8,7 +8,7 @@ import { WikiStarshipsPage } from '../wiki-starships/wiki-starships';
 import { WikiPlanetsPage } from '../wiki-planets/wiki-planets';
 import { WikiElementsPage } from '../wiki-elements/wiki-elements';
 import { Storage } from '@ionic/storage';
-import {Modal} from '../../app/app.component';
+import {Modal} from '../../components/modules';
 
 @Component({
   selector: 'page-wiki',
@@ -26,7 +26,7 @@ export class WikiPage {
 		{categorie:"planets",title:"Planets",imgUrl:"assets/imgs/planets.jpg"},
 	]
 	constructor(public nav: NavController, private loadingCtrl: LoadingController, private storage: Storage) {
-		this.storage.set("navigation", {categorie : "species", films : undefined, page:1, nbElemPerPage:200});
+		this.storage.set("navigation", {categorie : "species", films : undefined, page:1, nbElemPerPage:24});
 	};
 
 	toElementListe(categorie) {

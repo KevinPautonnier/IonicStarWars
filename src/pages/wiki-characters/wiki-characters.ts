@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
 import { ApiModule } from '../wiki/wiki';
 import { Storage } from '@ionic/storage';
-import {Modal} from '../../app/app.component';
+import {Modal} from '../../components/modules';
 
 /**
  * Generated class for the WikiCharactersPage page.

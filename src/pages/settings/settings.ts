@@ -15,7 +15,7 @@ export class SettingsPage {
   sidesPage = SidesPage;
   aboutPage = AboutPage;
 
-  constructor(private storage: Storage , nativeAudio: NativeAudio, public navCtrl: NavController, public navParams: NavParams) {
+  constructor(private storage: Storage ,private nativeAudio: NativeAudio, public navCtrl: NavController, public navParams: NavParams) {
     storage.ready().then(() => {
       this.storage.get('side').then((val) => {
         if(val == "dark"){
@@ -24,10 +24,4 @@ export class SettingsPage {
       })
     })
   }
-
-  mute(){
-    //this.nativeAudio.stop( 'ambiance' );
-    //this.nativeAudio.unload( 'ambiance' );
-  }
-
 }

@@ -3,7 +3,7 @@ import { IonicPage, NavController, NavParams , ToastController , LoadingControll
 import { WikiPage } from '../wiki/wiki';
 import { Storage } from '@ionic/storage';
 import { NativeAudio } from '@ionic-native/native-audio';
-import { Modal } from '../../app/app.component';
+import { Modal } from '../../components/modules';
 import { SettingsPage } from '../settings/settings';
 
 @IonicPage()
@@ -15,6 +15,11 @@ export class GalaxyPage {
   wikiPage = WikiPage;
   settingsPage = SettingsPage;
   imageSrc = 'assets/imgs/galaxy/X-wing-200.png';
+  toast = this.toastCtrl.create({
+    message: '',
+    duration: 3000,
+    position: 'top'
+  });
 
   // Varibles for "info-bulles"
   speechs=[
@@ -44,20 +49,16 @@ export class GalaxyPage {
   }
 
   ionViewWillEnter(){
-    console.log("viewWillEnter")
     // Audio launching
     this.nativeAudio.preloadComplex('ambiance', 'assets/musics/ambiance.mp3', 1, 1, 0);
     this.nativeAudio.loop('ambiance');
 
     // Test side choosed by user
     this.storage.get('side').then((val) => {
-    console.log(val);
       if(val == "dark"){
-        console.log("dv");
         this.imageSrc = 'assets/imgs/galaxy/darth-vader.png';
       }
       else{
-        console.log("yd");
         this.imageSrc = 'assets/imgs/galaxy/X-wing-200.png';
       }
     })
@@ -75,11 +76,16 @@ export class GalaxyPage {
 
     // Toast adapt for the side choosen
     sideToast(text) {
-     let toast = this.toastCtrl.create({
+     this.toast = this.toastCtrl.create({
        message: text,
        duration: 4000,
        position: 'top',
      });
-     toast.present();
+     this.toast.present();
+   }
+
+   ionViewWillLeave() {
+     this.nativeAudio.stop('ambiance');
+     this.toast.dismiss();
    }
 }

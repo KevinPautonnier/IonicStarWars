@@ -3,7 +3,7 @@ import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-an
 import { ApiModule } from '../wiki/wiki';
 import { Storage } from '@ionic/storage';
 import { WikiDetailsPage } from '../wiki-details/wiki-details';
-import { Modal } from '../../app/app.component';
+import { Modal } from '../../components/modules';
 
 /**
  * Generated class for the WikiElementsPage page.

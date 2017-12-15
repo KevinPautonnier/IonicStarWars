@@ -4,9 +4,9 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 import { NativeAudio } from '@ionic-native/native-audio';
-import { MyApp, Modal } from './app.component';
+import { MyApp  } from './app.component';
 import { WikiPage } from '../pages/wiki/wiki';
-
+import { Modal } from '../components/modules';
 
 import { ApiModule } from '../pages/wiki/wiki';
 import { SidesPage } from '../pages/sides/sides';
@@ -63,7 +63,8 @@ import { AboutPageModule } from '../pages/about/about.module'
     SettingsPageModule,
     EpisodeDetailsPageModule,
     WikiElementsPageModule,
-    WikiDetailsPageModule
+    WikiDetailsPageModule,
+    AboutPageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -81,7 +82,8 @@ import { AboutPageModule } from '../pages/about/about.module'
     SettingsPage,
     EpisodeDetailsPage,
     WikiElementsPage,
-    WikiDetailsPage
+    WikiDetailsPage,
+    AboutPage
   ],
   providers: [
     StatusBar,

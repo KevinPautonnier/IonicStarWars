@@ -18,39 +18,23 @@
   }
 }
 
-@keyframes float2 {
-  0% {
-    //filter: drop-shadow(5px 15px 0px rgba(0,0,0,0.6));
-    transform: translatey(0px);
-  }
-  50% {
-    //filter: drop-shadow(25px 15px 0px rgba(0,0,0,0.2));
-    transform: translatey(-10px);
-  }
-  100% {
-    //filter: drop-shadow( 5px 15px 0px rgba(0,0,0,0.6));
-    transform: translatey(0px);
-  }
-}
-
 #galaxy{
   background-image: url('../assets/imgs/galaxy/background.jpg');
   background-size: cover;
   img{
     filter: drop-shadow(0px 0px 10px white);
   }
-  .image-container{
-    //animation: float2 3s ease-in-out infinite;
-    filter: drop-shadow(5px 15px 0px rgba(0,0,0,0.6));
+  .image-container:not(#me)>img{
+    filter: drop-shadow(5px 6px 0px rgba(0,0,0,0.4));
   }
 
   #tatooine {
-    top: 5vh;
-    left: 20vw;
+    top: 1vh;
+    left:10vw;
   }
   #c1a {
-    top: 1vh;
-    right: 26vw;
+    top: 0vh;
+    right: 18vw;
   }
   #dagobah {
     top: 28vh;
@@ -70,12 +54,12 @@
     right: 10vw;
   }
   #starkiller {
-    top: 61vh;
-    right: 18vw;
+    top: 15vh;
+    left: 35vw;
   }
   #destroyer {
-    top: 72vh;
-    left: 10vw;
+    top: 67vh;
+    left: 24vw;
     width: 70vmin;
   }
   #me{
