@@ -27,7 +27,7 @@ Then just clone the repo on your computer.
 Before testing the application you have to update your project:
 
 ```{r, engine='bash', count_lines}
-IonicStarWars$ npm update
+IonicStarWars$ npm i
 ```
 
 In order to test the application, type:
