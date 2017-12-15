@@ -20,7 +20,8 @@ import { Modal } from '../../components/modules';
 export class WikiElementsPage {
 	wikiDetail = WikiDetailsPage;
 	api = undefined;
-	categorie;
+	categorie = "test";
+	get getcategorie(){return this.categorie.charAt(0).toUpperCase() + this.categorie.slice(1)};
 	page;
 	nbElemPerPage;
 	listElements = [];
@@ -31,7 +32,7 @@ export class WikiElementsPage {
 		this.api = new ApiModule(storage);
 		storage.get("navigation").then( val => {
 			this.categorie = val.categorie;
-			console.log("categorie:" + this.categorie);
+			console.log("WikiElementsPage constructor categorie:" + this.categorie);
 			this.page = val.page;
 			this.nbElemPerPage = val.nbElemPerPage;
 			this.ionViewDidSet();
