@@ -26,7 +26,7 @@ export class GalaxyPage {
   // Varibles for "info-bulles"
   speechs=[
     "Click on me to get infos about the association!",
-    "Click on the X-Wing to access a list of all datas available",
+    "Click on your personnal ship to access a list of all datas available",
     "Click on the planet/starships to view infos about episodes",
   ];
 
