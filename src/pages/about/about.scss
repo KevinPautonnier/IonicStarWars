@@ -1,3 +1,62 @@
-page-about {
+@font-face {
+  font-family: "Ma Super Fonte";
+  src: url('../assets/fonts/STARWARS.TTF');
+}
 
+ion-card{
+  position: absolute;
+  top : 45px;
+  z-index: 0;
+}
+.blackcard{
+  background-color: #454545;
+  border: 2px;
+}
+
+.star-wars {
+  z-index: -1;
+  width:100%;
+  justify-content: center;
+  background-image: url('../assets/imgs/bg-asso.jpg');
+  background-size: cover;
+  height: 100%;
+  font-size: 250px;
+  line-height: 20%;
+  perspective: 400px;
+  text-align: justify;
+  p,h1{
+    font-family: STARWARS;
+    color: #ffe81f;
+  }
+  p{
+    font-size: 40px;
+  }
+}
+
+.crawl {
+  width: 100%;
+  position: relative;
+  transform-origin: 50% 100%;
+  animation: crawl 90s linear infinite;
+}
+
+.crawl > .title {
+  font-size: 90%;
+  text-align: center;
+}
+
+.crawl > .title h1 {
+  margin: 0 0 100px;
+  text-transform: uppercase;
+}
+
+@keyframes crawl {
+    0% {
+    top: 0px;
+    transform: rotateX(20deg)  translateZ(0);
+  }
+    100% {
+    top: -6000px;
+    transform: rotateX(25deg) translateZ(-2500px);
+  }
 }

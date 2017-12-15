@@ -33,4 +33,8 @@ export class AboutPage {
     this.nativeAudio.stop('duel');
   }
 
+  toassociationForm(){
+    window.open("https://docs.google.com/forms/d/1JRrSCy6PBrbSV7stx8VUOpPVwELS_AY8iSUZX4tXXCI/viewform?edit_requested=true", '_system')
+  }
+
 }
