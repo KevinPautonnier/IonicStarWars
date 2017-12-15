@@ -63,7 +63,8 @@ import { AboutPageModule } from '../pages/about/about.module'
     SettingsPageModule,
     EpisodeDetailsPageModule,
     WikiElementsPageModule,
-    WikiDetailsPageModule
+    WikiDetailsPageModule,
+    AboutPageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -81,7 +82,8 @@ import { AboutPageModule } from '../pages/about/about.module'
     SettingsPage,
     EpisodeDetailsPage,
     WikiElementsPage,
-    WikiDetailsPage
+    WikiDetailsPage,
+    AboutPage
   ],
   providers: [
     StatusBar,

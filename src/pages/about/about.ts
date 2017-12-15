@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { NativeAudio } from '@ionic-native/native-audio';
 
 /**
  * Generated class for the AboutPage page.
@@ -15,11 +16,21 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class AboutPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(private nativeAudio: NativeAudio, public navCtrl: NavController, public navParams: NavParams) {
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad AboutPage');
+  }
+
+  ionViewWillEnter(){
+    // Audio launching
+    this.nativeAudio.preloadComplex('duel', 'assets/musics/duel.mp3', 1, 1, 0);
+    this.nativeAudio.play('duel');
+  }
+
+  ionViewWillLeave() {
+    this.nativeAudio.stop('duel');
   }
 
 }
