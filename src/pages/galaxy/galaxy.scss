@@ -34,7 +34,7 @@
 }
 
 #galaxy{
-  background-image: url('../assets/imgs/galaxy/background.png');
+  background-image: url('../assets/imgs/galaxy/background.jpg');
   background-size: cover;
   img{
     filter: drop-shadow(0px 0px 10px white);
@@ -121,7 +121,11 @@
 }
 
 .loading-wrapper{
-  background-color: rgba(1,1,1,0.2)!important;
+  background-color: rgba(1,1,1,0)!important;
+  border-radius: 0px!important;
+  box-shadow: none!important;
+  webkit-box-shadow:none!important;
+
 
 }
 
