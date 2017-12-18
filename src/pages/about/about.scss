@@ -8,9 +8,11 @@ ion-card{
   top : 45px;
   z-index: 0;
 }
-.blackcard{
-  background-color: #454545;
-  border: 2px;
+#contact{
+  position: absolute;
+  bottom: 0px;
+  height: 15vh;
+
 }
 
 .star-wars {
@@ -22,7 +24,7 @@ ion-card{
   height: 100%;
   font-size: 250px;
   line-height: 20%;
-  perspective: 400px;
+  perspective: 600px;
   text-align: justify;
   p,h1{
     font-family: STARWARS;
@@ -37,7 +39,7 @@ ion-card{
   width: 100%;
   position: relative;
   transform-origin: 50% 100%;
-  animation: crawl 90s linear infinite;
+  animation: crawl 120s linear infinite;
 }
 
 .crawl > .title {
@@ -52,11 +54,11 @@ ion-card{
 
 @keyframes crawl {
     0% {
-    top: 0px;
+    top: 500px;
     transform: rotateX(20deg)  translateZ(0);
   }
     100% {
     top: -6000px;
-    transform: rotateX(25deg) translateZ(-2500px);
+    transform: rotateX(155deg) translateZ(-1000px);
   }
 }
