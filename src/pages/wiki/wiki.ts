@@ -16,7 +16,6 @@ import {Modal} from '../../components/modules';
 })
 
 export class WikiPage {
-	toDisplay = undefined;
 	listCategories = [
 		{categorie:"films",title:"Films",imgUrl:"assets/imgs/films.jpeg"},
 		{categorie:"species",title:"Species",imgUrl:"assets/imgs/species.jpg"},
@@ -25,7 +24,7 @@ export class WikiPage {
 		{categorie:"starships",title:"Starships",imgUrl:"assets/imgs/starships.jpeg"},
 		{categorie:"planets",title:"Planets",imgUrl:"assets/imgs/planets.jpg"},
 	]
-	navigation = {categorie : undefined, films : undefined, page:1, nbElemPerPage:24, elementId: undefined};
+	navigation = {categorie : undefined, films : undefined, page:1, nbElemPerPage:300, elementId: undefined};
 
 	constructor(public nav: NavController, private loadingCtrl: LoadingController, private storage: Storage) {
 		this.storage.set("navigation", this.navigation);
@@ -37,28 +36,9 @@ export class WikiPage {
 		this.navigation["categorie"] = categorie;
 		this.storage.set("navigation", this.navigation).then(navigation => {this.nav.push(WikiElementsPage)});		
 	}
-/*
-	toWikiFilmsPage (){this.nav.push(WikiFilmsPage);};
-	toWikiSpeciesPage (){
-		
-		this.nav.push(WikiElementsPage);
-	};
-	toWikiCharactersPage (){this.nav.push(WikiCharactersPage);};
-	toWikiVehiculesPage (){this.nav.push(WikiVehiculesPage);};
-	toWikiStarshipsPage (){
-		new Modal(this.loadingCtrl).showModal(3);
-		this.nav.push(WikiStarshipsPage);
-	};
-	toWikiPlanetsPage (){this.nav.push(WikiPlanetsPage);};
-*/
 	rechercher(name) {
 
 	}
-/*
-	getToDisplay(){ return this.toDisplay; }
-	setToDisplay(_toDisplay){ this.toDisplay = _toDisplay }
-	resetToDisplay(){this.toDisplay = undefined }
-*/
 }
 
 
@@ -122,6 +102,8 @@ function getData2step ( urlComplement, callback ){
 							//console.log("idAjout:" + (firstId + p));
 							if(response["__zone_symbol__currentTask"] == undefined){
 								data[tmp["categorie"]].data[elementsId] = response;
+							}else{
+								data[tmp["categorie"]].data[elementsId] = "404";
 							}
 							if(tmp["nbSend"] == 0){
 								// *** La dernière requête est de retour ***
@@ -154,7 +136,7 @@ function getData2step ( urlComplement, callback ){
 function concatData(categorie, firstId, LastId){
 	var newResponse = {};
 	for (var p = 0; p <= (LastId-firstId); p++){
-		if(data[categorie].data[firstId + p] != undefined){
+		if(data[categorie].data[firstId + p] != undefined && data[categorie].data[firstId + p] != "404"){
 			newResponse[p+firstId] = data[categorie].data[firstId + p];
 		}
 	}
@@ -162,12 +144,7 @@ function concatData(categorie, firstId, LastId){
 }
 
 function requestApi( urlComplement, callback ){
-	//console.log("requestApi_data=" + JSON.stringify(data));
-/*
-	wikiStorage.get('test').then((val) => {
-		console.log('test : ', val);
-	});
-*/
+
 	var requestUrl = apiRequestUrl + urlComplement;
 	console.log("RequestApi:" + requestUrl);
 
