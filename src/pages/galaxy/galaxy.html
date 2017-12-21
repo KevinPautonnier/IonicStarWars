@@ -6,15 +6,15 @@
 -->
 <body>
   <ion-content padding id="galaxy">
-      <div class="image-container" id="c1a">
+      <div (click)="toFilmDetailsPage(2)" class="image-container" id="c1a">
           <img src="assets/imgs/galaxy/c1a-200.png">
           <p>EPISODE II</p>
       </div>
-      <div class="image-container" id="dagobah">
+      <div (click)="toFilmDetailsPage(5)" class="image-container" id="dagobah">
           <img src="assets/imgs/galaxy/dagobah-200.png">
           <p>EPISODE VI</p>
       </div>
-      <div class="image-container" id="death">
+      <div (click)="toFilmDetailsPage(1)" class="image-container" id="death">
           <img src="assets/imgs/galaxy/Death_Star-200.png">
           <p>EPISODE IV</p>
       </div>
@@ -22,22 +22,22 @@
           <img  [navPush]="movie8Page" src="assets/imgs/galaxy/destroyer.png">
           <p>EPISODE VIII</p>
       </div>
-      <div class="image-container" id="millenium">
+      <div (click)="toFilmDetailsPage(6)" class="image-container" id="millenium">
           <img src="assets/imgs/galaxy/millennium-200.png">
           <p>EPISODE V</p>
       </div>
-      <div class="image-container" id="mustafar">
+      <div (click)="toFilmDetailsPage(4)" class="image-container" id="mustafar">
           <img src="assets/imgs/galaxy/Mustafar-200.png">
           <p>EPISODE III</p>
       </div>
-      <div class="image-container" id="starkiller">
+      <div (click)="toFilmDetailsPage(7)" class="image-container" id="starkiller">
           <img src="assets/imgs/galaxy/starkiller-200.png">
           <p>EPISODE VII</p>
       </div>
-      <div class="image-container"  id="me">
+      <div  class="image-container"  id="me">
           <img [navPush]="wikiPage" [src]="imageSrc">
       </div>
-      <div (click)="toFilmDetailsPage()" class="image-container" id="tatooine">
+      <div (click)="toFilmDetailsPage(3)" class="image-container" id="tatooine">
           <img src="assets/imgs/galaxy/tatooine-200.png">
           <p>EPISODE I</p>
       </div>
