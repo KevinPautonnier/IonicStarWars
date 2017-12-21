@@ -64,13 +64,14 @@ export class WikiElementsPage {
       var img_filler = "";
       if(this.navigation.categorie == "people"){
         img_filler= "assets/imgs/wiki/characters/" + this.prepare(jsonData[prop]["name"]) +".png";
-      }else if( this.navigation.categorie == "planet"){
-          img_filler= "assets/imgs/wiki/planets/" + this.prepare(jsonData[prop]["name"]);
+      }else if( this.navigation.categorie == "planets"){
+          img_filler= "assets/imgs/wiki/planets/" + this.prepare(jsonData[prop]["name"])+".png";
       }else{
           img_filler = "unknown.png";
       }
-      console.log(img_filler);
-      jsonData[prop]["img"]=  img_filler;
+
+      jsonData[prop]["img"]=  encodeURI(img_filler);
+      console.log(this.navigation.categorie);
 			this.listElements.push(jsonData[prop]);
 		}
 		this.modal.hideModal();
