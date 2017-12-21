@@ -11,6 +11,7 @@ import { Modal } from '../../components/modules';
  * Ionic pages and navigation.
  */
 
+
 @IonicPage()
 @Component({
   selector: 'page-wiki-details',
@@ -22,6 +23,7 @@ export class WikiDetailsPage {
 	navigation = {categorie:"test"};
 	api;
 	listDetails = [];
+	listDetailsDetails = {};
 
 	constructor(public navCtrl: NavController, public navParams: NavParams, private loadingCtrl: LoadingController, private storage: Storage) {
 		this.modal = new Modal(this.loadingCtrl);
@@ -51,16 +53,40 @@ export class WikiDetailsPage {
 	setListe (jsonData){
 		this.listDetails = [];
 		for (var prop in jsonData) {
-			var newDetail;
-			if( (typeof jsonData[prop]) == "string"){
-				newDetail = { title: prop, value : jsonData[prop] };
-			}else{
-				newDetail = { title: prop, value : JSON.stringify(jsonData[prop]) };
-			}
-			this.listDetails.push(newDetail);
-			//console.log("setDetailList:" +  JSON.stringify(newDetail));
+			//console.log("props:" + prop);
+			this.listDetails.push(this.generateVisual(prop, jsonData[prop]));
 		}
 		this.modal.hideModal();
 
+	}
+
+	generateVisual(prop, objValue){
+		var newDetail
+		switch(typeof objValue) {
+			case "string":
+				newDetail = { title: prop, value : objValue, isList : false, isUrl : false };
+				if(objValue.slice(0,4) == "http"){
+					newDetail["isUrl"] = true;
+				}
+				break;
+
+			case "object":
+				newDetail = { title: prop, value : objValue, isList : true, isUrl : false };
+				this.listDetailsDetails[prop] = [];
+				//console.log("object_objValue:" + JSON.stringify(newDetail.value));
+				for(var prop2 in objValue){
+					//console.log("generateVisualOf:" + this.api.getDataFromUrl(objValue[prop2]).categorie );
+					//console.log("generateVisualOf:" + objValue[prop2] );
+					var newDetail2 = this.generateVisual(this.api.getDataFromUrl(objValue[prop2]).categorie, objValue[prop2])
+					this.listDetailsDetails[prop].push(newDetail2);
+					console.log("this.[...].push(" + JSON.stringify(newDetail2));
+					//console.log("object_objValue:" + JSON.stringify(newDetail2.value));
+				}
+				break;
+
+			default:
+				newDetail = { title: prop, value : JSON.stringify(objValue) };
+		}
+		return newDetail;
 	}
 }
