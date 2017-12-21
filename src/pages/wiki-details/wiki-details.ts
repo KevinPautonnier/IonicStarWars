@@ -44,11 +44,10 @@ export class WikiDetailsPage {
 		var request = this.navigation["categorie"] + "/" + this.navigation["elementId"];
 		console.log("request:" + request);
 		this.api.getData( request, response => {
-			//console.log(response); 
+			//console.log(response);
 			this.setListe(response)
-			this.modal.hideModal();
 		});
-		
+
 	}
 
 	setListe (jsonData){
@@ -58,6 +57,7 @@ export class WikiDetailsPage {
 			this.listDetails.push(this.generateVisual(prop, jsonData[prop]));
 		}
 		this.modal.hideModal();
+
 	}
 
 	generateVisual(prop, objValue){

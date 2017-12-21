@@ -17,10 +17,7 @@ import { NativeAudio } from '@ionic-native/native-audio';
 export class AboutPage {
 
   constructor(private nativeAudio: NativeAudio, public navCtrl: NavController, public navParams: NavParams) {
-  }
-
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad AboutPage');
+    this.nativeAudio.preloadComplex('duel', 'assets/musics/duel.mp3', 1, 1, 0);
   }
 
   ionViewWillEnter(){

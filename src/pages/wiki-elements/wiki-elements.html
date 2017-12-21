@@ -13,10 +13,10 @@
 </ion-header>
 
 
-<ion-content padding>
+<ion-content padding  class="{{ getcategorie}}">
   <div id="container">
     <div *ngFor="let tuile of listElements" (click)="goToDetails(tuile.elementId)" class="element">
-      <div class="image">img</div>
+      <div class="image"></div>
       <div class="name" >{{tuile[tuile.principaleAttributeName]}}</div>
     </div>
 

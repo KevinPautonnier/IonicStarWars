@@ -32,6 +32,7 @@ export class GalaxyPage {
   ];
 
   constructor(private nativeAudio: NativeAudio, public navCtrl: NavController, public navParams: NavParams, private storage: Storage , private toastCtrl: ToastController, private loadingCtrl: LoadingController) {
+    this.nativeAudio.preloadComplex('ambiance', 'assets/musics/ambiance.mp3', 1, 1, 0);
     this.bb8speech(this.speechs.length, this.speechs, this);
 
     // Test side choosed by user
