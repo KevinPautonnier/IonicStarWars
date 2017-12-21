@@ -22,6 +22,8 @@ export class WikiDetailsPage {
 	modal;
 	navigation = {categorie:"test"};
 	api;
+	title;
+	get getTitle(){return this.title}
 	listDetails = [];
 	listDetailsDetails = {};
 
@@ -42,10 +44,15 @@ export class WikiDetailsPage {
 
 	ionViewDidSet() {
 		var request = this.navigation["categorie"] + "/" + this.navigation["elementId"];
-		console.log("request:" + request);
+		console.log("ionViewDidSet_request:" + request);
 		this.api.getData( request, response => {
 			//console.log(response);
-			this.setListe(response)
+			if(response != "404"){
+				this.title = response[response.principaleAttributeName];
+				this.setListe(response)
+			}else{
+				this.title = "No Data";
+			}
 		});
 
 	}
@@ -78,15 +85,24 @@ export class WikiDetailsPage {
 					//console.log("generateVisualOf:" + this.api.getDataFromUrl(objValue[prop2]).categorie );
 					//console.log("generateVisualOf:" + objValue[prop2] );
 					var newDetail2 = this.generateVisual(this.api.getDataFromUrl(objValue[prop2]).categorie, objValue[prop2])
+					newDetail2["url"] = objValue[prop2];
 					this.listDetailsDetails[prop].push(newDetail2);
 					console.log("this.[...].push(" + JSON.stringify(newDetail2));
 					//console.log("object_objValue:" + JSON.stringify(newDetail2.value));
 				}
 				break;
 
-			default:
+			defaultkey: "value", 
 				newDetail = { title: prop, value : JSON.stringify(objValue) };
 		}
 		return newDetail;
+	}
+
+	redirectTo(url){
+		this.modal.showModal();
+		console.log("redirectTo:" + url);
+		this.navigation["categorie"] = this.api.getDataFromUrl(url).categorie;
+		this.navigation["elementId"] = this.api.getDataFromUrl(url).elementId;
+		this.storage.set("navigation", this.navigation).then(navigation => {this.ionViewDidSet();});		
 	}
 }

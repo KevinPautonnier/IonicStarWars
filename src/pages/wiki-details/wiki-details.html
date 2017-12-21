@@ -7,7 +7,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>wiki-details</ion-title>
+    <ion-title>{{getTitle}}</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -19,7 +19,7 @@
     <div *ngFor="let tuile of listDetails" class="element">
       <div class="name">{{tuile["title"]}}</div>
 
-      <div *ngIf="tuile.isUrl" class="value" > goingTo : {{tuile["value"]}} </div>
+      <div *ngIf="tuile.isUrl" class="value link" > goingTo : {{tuile["value"]}} </div>
 
       <div *ngIf="tuile.isList" class="value"> 
         
@@ -27,7 +27,8 @@
           <!-- <div>willBeAList : {{tuile["value"]}} </div> -->
 
           <div *ngFor="let tuile2 of listDetailsDetails[tuile.title]" class="listDetailsElement">
-            <p>elemListe({{tuile2["title"]}}) : {{tuile2["value"]}}</p> 
+            <p *ngIf="tuile2.isUrl" (click)="redirectTo(tuile2.url)" class="link" > goingTo : {{tuile2["value"]}} </p>
+            <p *ngIf="!tuile2.isUrl">  {{tuile["value"]}} </p>
           </div>
         </div>
 
