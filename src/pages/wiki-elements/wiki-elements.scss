@@ -7,7 +7,7 @@ page-wiki-elements {
       width: 100%;
       height: 20vmin;
 
-      background-color: #2ec95c;
+      background-color: #2f2f2f;
 
       display: flex;
       flex-direction: row;
@@ -18,11 +18,12 @@ page-wiki-elements {
       .image{
         height: 100%;
         width: 30%;
-        background-size: 100% 100% ;
+        background-size: contain ;
         background-repeat: no-repeat;
         display: flex;
         justify-content: center;
         align-items: center;
+        background-position: left;
 
         color: white;
       }

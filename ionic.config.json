@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 {
   "name": "ionicStarWars",
   "app_id": "e657fdf3",
@@ -7,13 +6,3 @@
     "cordova": {}
   }
 }
-=======
-{
-  "name": "ionicStarWars",
-  "app_id": "e657fdf3",
-  "type": "ionic-angular",
-  "integrations": {
-    "cordova": {}
-  }
-}
->>>>>>> 57367b0409564221e57aaa3c0d1a54e570fdd093
