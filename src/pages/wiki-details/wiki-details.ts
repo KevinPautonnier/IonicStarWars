@@ -42,17 +42,16 @@ export class WikiDetailsPage {
 		var request = this.navigation["categorie"] + "/" + this.navigation["elementId"];
 		console.log("request:" + request);
 		this.api.getData( request, response => {
-			//console.log(response); 
+			//console.log(response);
 			this.setListe(response)
-			this.modal.hideModal();
 		});
-		
+
 	}
 
 	setListe (jsonData){
 		this.listDetails = [];
 		for (var prop in jsonData) {
-			var newDetail; 
+			var newDetail;
 			if( (typeof jsonData[prop]) == "string"){
 				newDetail = { title: prop, value : jsonData[prop] };
 			}else{
@@ -62,5 +61,6 @@ export class WikiDetailsPage {
 			//console.log("setDetailList:" +  JSON.stringify(newDetail));
 		}
 		this.modal.hideModal();
+
 	}
 }
