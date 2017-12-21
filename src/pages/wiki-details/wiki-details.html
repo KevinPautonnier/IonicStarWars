@@ -14,30 +14,13 @@
 
 
 <ion-content padding>
+
   <div id="container">
-    <div class="element">
-      <div class="name">Name</div>
-      <div class="value">Value</div>
+    <div *ngFor="let tuile of listDetails" class="element">
+      <div class="name">{{tuile["title"]}}</div>
+      <div class="value">{{tuile["value"]}}</div>
     </div>
 
-    <div class="element">
-      <div class="name">Name</div>
-      <div class="value">Value</div>
-    </div>
-
-    <div class="element">
-      <div class="name">Name</div>
-      <div class="value">Value</div>
-    </div>
-
-    <div class="element">
-      <div class="name">Name</div>
-      <div class="value">Value</div>
-    </div>
-
-    <div class="element">
-      <div class="name">Name</div>
-      <div class="value">Value</div>
-    </div>
+    
   </div>
 </ion-content>

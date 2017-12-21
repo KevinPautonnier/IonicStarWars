@@ -22,7 +22,7 @@ export class SettingsPage {
     storage.ready().then(() => {
       this.storage.get('side').then((val) => {
         if(val == "dark"){
-          //document.getElementsByClassName("button").color="danger";
+            //document.getElementById('btn1').setAttribute('color','danger');
         }
       })
     })
