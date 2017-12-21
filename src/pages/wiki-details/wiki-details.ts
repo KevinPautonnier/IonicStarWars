@@ -55,6 +55,7 @@ export class WikiDetailsPage {
 			}
 		});
 
+		
 	}
 
 	setListe (jsonData){

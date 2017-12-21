@@ -49,19 +49,37 @@ export class WikiElementsPage {
 		var request = this.navigation.categorie + "/" + ( nbPreviousElements + 1 ) + "-" + ( nbPreviousElements + this.navigation["nbElemPerPage"] );
 		//console.log("request:" + request);
 		this.api.getData( request, response => {
-			//console.log(response); 
+			//console.log(response);
 			this.setListe(response)
 		});
 	}
 
 	setListe (jsonData){
 		this.listElements = [];
+
 		for (var prop in jsonData) {
 			jsonData[prop]["elementId"] = prop;
+
+
+      var img_filler = "";
+      if(this.navigation.categorie == "people"){
+        img_filler= "assets/imgs/wiki/characters/" + this.prepare(jsonData[prop]["name"]) +".png";
+      }else if( this.navigation.categorie == "planets"){
+          img_filler= "assets/imgs/wiki/planets/" + this.prepare(jsonData[prop]["name"])+".png";
+      }else{
+          img_filler = "unknown.png";
+      }
+
+      jsonData[prop]["img"]=  encodeURI(img_filler);
+      console.log(this.navigation.categorie);
 			this.listElements.push(jsonData[prop]);
 		}
 		this.modal.hideModal();
 	}
+
+  prepare(string){
+    return string.replace(/\s/g, "").toLocaleLowerCase();
+  }
 
 	goToDetails(elementId) {
 		console.log('redirectTo:' + this.navigation.categorie + "/" + elementId);

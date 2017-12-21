@@ -16,7 +16,7 @@
 <ion-content padding  class="{{ getcategorie}}">
   <div id="container">
     <div *ngFor="let tuile of listElements" (click)="goToDetails(tuile.elementId)" class="element">
-      <div class="image"></div>
+      <div class="image" [ngStyle]="{'background-image': 'url(' + tuile.img + '), url(assets/imgs/wiki/unknown.jpg)'}"></div>
       <div class="name" >{{tuile[tuile.principaleAttributeName]}}</div>
     </div>
 
