@@ -17,7 +17,7 @@ import { YoutubeVideoPlayer } from '@ionic-native/youtube-video-player';
 export class Movie8Page {
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private youtube: YoutubeVideoPlayer) {
-    youtube.openVideo('fEtX4MBcXP8');
+    youtube.openVideo('feQoOTF-_pA');
   }
 
   ionViewDidLoad() {
