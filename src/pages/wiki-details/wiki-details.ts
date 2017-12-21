@@ -114,10 +114,10 @@ export class WikiDetailsPage {
 		return newDetail;
 	}
 
-	redirectTo(url){
+	redirectTo(url = ""){
+		console.log("redirectTo:" + url);
 		if(url.length > 0){	
 			this.modal.showModal();
-			console.log("redirectTo:" + url);
 			this.navigation["categorie"] = this.api.getDataFromUrl(url).categorie;
 			this.navigation["elementId"] = this.api.getDataFromUrl(url).elementId;
 			this.storage.set("navigation", this.navigation).then(navigation => {this.ionViewDidSet();});	

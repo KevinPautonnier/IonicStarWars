@@ -27,7 +27,7 @@
           <!-- <div>willBeAList : {{tuile["value"]}} </div> -->
 
           <div *ngFor="let tuile2 of listDetailsDetails[tuile.title]" class="listDetailsElement">
-            <p *ngIf="tuile2.isUrl" (click)="redirectTo(tuile2.url)" class="link" > --> {{tuile2["urlTitle"]}} <--  </p>
+            <p *ngIf="tuile2.isUrl" (Click)="redirectTo(tuile2.url)" class="link" > --> {{tuile2["urlTitle"]}} <--  </p>
             <p *ngIf="!tuile2.isUrl">  {{tuile["value"]}} </p>
           </div>
         </div>

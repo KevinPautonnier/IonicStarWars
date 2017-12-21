@@ -259,7 +259,7 @@ function getData05(urlComplement, callback ){
 
 	}else{
 		// *** Si la catégorie à déjà été demandé ***
-		console.log("knewCategorie:" + url[0]);
+		//console.log("knewCategorie:" + url[0]);
 		getData2step( urlComplement, newCallback );
 	}
 }
