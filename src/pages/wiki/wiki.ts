@@ -19,7 +19,7 @@ export class WikiPage {
 	listCategories = [
 		{categorie:"films",title:"Films",imgUrl:"assets/imgs/films.jpeg"},
 		{categorie:"species",title:"Species",imgUrl:"assets/imgs/species.jpg"},
-		{categorie:"people",title:"Personnages",imgUrl:"assets/imgs/personnages.jpg"},
+		{categorie:"people",title:"Characters",imgUrl:"assets/imgs/personnages.jpg"},
 		{categorie:"vehicles",title:"Vehicles",imgUrl:"assets/imgs/vehicules.jpg"},
 		{categorie:"starships",title:"Starships",imgUrl:"assets/imgs/starships.jpeg"},
 		{categorie:"planets",title:"Planets",imgUrl:"assets/imgs/planets.jpg"},
@@ -120,11 +120,16 @@ function getData2step ( urlComplement, callback ){
 			}
 		}else{
 			// *** Element unique ***
-			if(data[categorieName].data[elementNumber] == undefined ) {
+			if(data[categorieName].data[elementNumber] == undefined || data[categorieName].data[elementNumber] == "404") {
 				// *** si l'élément demandé n'a pas encore été requeté. ***
 				requestApi(urlComplement, response => {
-					data[categorieName].data[elementNumber] = response;
-					callback(response);
+					if(response["__zone_symbol__currentTask"] == undefined){
+						data[tmp["categorie"]].data[elementNumber] = response;
+						callback(response);
+					}else{
+						data[tmp["categorie"]].data[elementNumber] = "404";
+						callback("404");
+					}
 				});
 			}else {
 				callback(data[categorieName].data[elementNumber]);
@@ -252,7 +257,7 @@ function getData05(urlComplement, callback ){
 
 	}else{
 		// *** Si la catégorie à déjà été demandé ***
-		console.log("knewCategorie");
+		//console.log("knewCategorie");
 		getData2step( urlComplement, newCallback );
 	}
 }
@@ -280,6 +285,15 @@ export class ApiModule {
 		// *** Préparation de la sauvegarde dans storage ***
 		//debugger;
 		wikiStorage.get("data").then(storageData =>{ data = storageData; })
-		wikiStorage.get("navigation").then(storageData =>{ navigation = storageData; getData05(urlComplement, callback )})
+		wikiStorage.get("navigation").then(storageNavigationData =>{ navigation = storageNavigationData; getData05(urlComplement, callback )})
+	}
+
+	getDataFromUrl(url){
+		var urlObject = {
+			categorie : url.split("/")[4],
+			elementId : url.split("/")[5]
+		}
+
+		return urlObject;
 	}
 }

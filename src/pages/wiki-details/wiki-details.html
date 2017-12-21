@@ -18,8 +18,25 @@
   <div id="container">
     <div *ngFor="let tuile of listDetails" class="element">
       <div class="name">{{tuile["title"]}}</div>
-      <div class="value">{{tuile["value"]}}</div>
+
+      <div *ngIf="tuile.isUrl" class="value" > goingTo : {{tuile["value"]}} </div>
+
+      <div *ngIf="tuile.isList" class="value"> 
+        
+        <div> 
+          <!-- <div>willBeAList : {{tuile["value"]}} </div> -->
+
+          <div *ngFor="let tuile2 of listDetailsDetails[tuile.title]" class="listDetailsElement">
+            <p>elemListe({{tuile2["title"]}}) : {{tuile2["value"]}}</p> 
+          </div>
+        </div>
+
+      </div>
+      <div *ngIf="!tuile.isUrl && !tuile.isList" class="value">  {{tuile["value"]}} </div>
+
     </div>
+
+
 
     
   </div>
