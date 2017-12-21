@@ -92,7 +92,7 @@ export class WikiDetailsPage {
 				}
 				break;
 
-			defaultkey: "value", 
+			default:
 				newDetail = { title: prop, value : JSON.stringify(objValue) };
 		}
 		return newDetail;
