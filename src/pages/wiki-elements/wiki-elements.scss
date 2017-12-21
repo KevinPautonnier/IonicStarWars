@@ -12,12 +12,13 @@ page-wiki-elements {
       flex-direction: row;
       align-items: center;
 
-      margin-bottom: 4px;
+      margin-bottom: 14px;
 
       .image{
         height: 100%;
         width: 30%;
-        background-color: #3f51b5;
+        background-image: url("../assets/imgs/splash.png");
+        background-size: cover;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -36,5 +37,48 @@ page-wiki-elements {
       }
     }
 
+
+  }
+}
+
+.Films {
+  .scroll-content {
+    background-image: url('../assets/imgs/films.jpeg');
+    background-size: cover;
+    background-position: center;
+  }
+}
+.Species {
+  .scroll-content {
+    background-image: url('../assets/imgs/species.jpg');
+    background-size: cover;
+    background-position: center;
+  }
+}
+.People {
+  .scroll-content {
+    background-image: url('../assets/imgs/personnages.jpg');
+    background-size: cover;
+  }
+}
+.Vehicles {
+  .scroll-content {
+    background-image: url('../assets/imgs/vehicules.jpg');
+    background-size: cover;
+    background-position: center;
+  }
+}
+.Starships {
+  .scroll-content {
+    background-image: url('../assets/imgs/starships.jpeg');
+    background-size: cover;
+    background-position: center;
+  }
+}
+.Planets {
+  .scroll-content {
+    background-image: url('../assets/imgs/planets.jpg');
+    background-size: cover;
+    background-position: center;
   }
 }
