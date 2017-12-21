@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams , ToastController , LoadingController } from 'ionic-angular';
 import { WikiPage } from '../wiki/wiki';
+import { WikiDetailsPage } from '../wiki-details/wiki-details';
 import { Storage } from '@ionic/storage';
 import { NativeAudio } from '@ionic-native/native-audio';
 import { Modal } from '../../components/modules';
@@ -46,8 +47,25 @@ export class GalaxyPage {
         else{
           this.sideToast("Who are you ? i don't feel the force with you.");
         }
-      })
-    })
+      });
+    });
+  }
+
+  toFilmDetailsPage(episode){
+    this.storage.get("navigation").then((val) => {
+          if(val == undefined){val = {}}
+          val.categorie = "films";
+          val.films = true;
+          val.page =1;
+          val.elementId = episode;
+          this.storage.set("navigation", val).then((val) =>
+              {
+              this.navCtrl.push(WikiDetailsPage);
+              }
+        );
+     }
+   );
+
   }
 
   ionViewWillEnter(){
@@ -67,6 +85,7 @@ export class GalaxyPage {
   }
 
     // Launch the assistant BB8
+
     bb8speech(i, speechs, fun){
       if(i>0){
         setTimeout(function(){
@@ -77,6 +96,7 @@ export class GalaxyPage {
     }
 
     // Toast adapt for the side choosen
+
     sideToast(text) {
      this.toast = this.toastCtrl.create({
        message: text,
@@ -91,4 +111,5 @@ export class GalaxyPage {
      this.nativeAudio.stop('ambiance');
      this.toast.dismiss();
    }
+
 }
