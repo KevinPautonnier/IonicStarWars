@@ -24,7 +24,7 @@ ion-card{
   height: 100%;
   font-size: 250px;
   line-height: 20%;
-  perspective: 600px;
+  perspective: 150px;
   text-align: justify;
   display: flex;
   p,h1{
@@ -32,7 +32,7 @@ ion-card{
     color: #ffe81f;
   }
   p{
-    font-size: 40px;
+    font-size: 30px;
   }
 }
 
@@ -40,7 +40,7 @@ ion-card{
   width: 100%;
   position: relative;
   transform-origin: 50% 100%;
-  animation: crawl 120s linear infinite;
+  animation: crawl 45s linear infinite;
 }
 
 .crawl > .title {
@@ -59,7 +59,7 @@ ion-card{
     transform: rotateX(20deg)  translateZ(0);
   }
     100% {
-    top: -6000px;
-    transform: rotateX(155deg) translateZ(-1000px);
+    top: -3000px;
+    transform: rotateX(25deg) translateZ(-1000px);
   }
 }

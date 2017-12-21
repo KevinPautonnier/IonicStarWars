@@ -5,9 +5,15 @@
 }
 
 @font-face {
-  font-family: "Ma Super Fonte";
-  src: url('../assets/fonts/STARWARS.TTF');
+    font-family: 'STARWARS';
+    src: url('../assets/fonts/STARWARS.eot');
+    src: url('../assets/fonts/STARWARS.eot') format('embedded-opentype'),
+         url('../assets/fonts/STARWARS.woff2') format('woff2'),
+         url('../assets/fonts/STARWARS.woff') format('woff'),
+         url('../assets/fonts/STARWARS.ttf') format('truetype'),
+         url('../assets/fonts/STARWARS.svg#STARWARS') format('svg');
 }
+
 
 @keyframes float {
   0% {
@@ -83,6 +89,7 @@
   }
 
   .speech-bubble{
+    font-family: "STARWARS";
     position: absolute;
     bottom: 0px;
     left: 5px;
