@@ -8,7 +8,9 @@ import { WikiStarshipsPage } from '../wiki-starships/wiki-starships';
 import { WikiPlanetsPage } from '../wiki-planets/wiki-planets';
 import { WikiElementsPage } from '../wiki-elements/wiki-elements';
 import { Storage } from '@ionic/storage';
-import {Modal} from '../../components/modules';
+import { Modal } from '../../components/modules';
+
+import { AlertController } from 'ionic-angular';
 
 @Component({
   selector: 'page-wiki',
@@ -25,8 +27,10 @@ export class WikiPage {
 		{categorie:"planets",title:"Planets",imgUrl:"assets/imgs/planets.jpg"},
 	]
 	navigation = {categorie : undefined, films : undefined, page:1, nbElemPerPage:300, elementId: undefined};
+	api;
 
-	constructor(public nav: NavController, private loadingCtrl: LoadingController, private storage: Storage) {
+	constructor(public nav: NavController, private loadingCtrl: LoadingController, private storage: Storage, public alertCtrl: AlertController) {
+		this.api = new ApiModule(storage)
 		this.storage.set("navigation", this.navigation);
 		this.storage.set("listCategories", this.listCategories);
 	};
@@ -36,8 +40,40 @@ export class WikiPage {
 		this.navigation["categorie"] = categorie;
 		this.storage.set("navigation", this.navigation).then(navigation => {this.nav.push(WikiElementsPage)});		
 	}
-	rechercher(name) {
+	search(value){
+		this.api.search(value);
+	}
+	searchInCategorie(categorie, value){
+		this.api.searchInCategorie(categorie, value);
+	}
 
+	showPrompt() {
+		let prompt = this.alertCtrl.create({
+			title: 'Search',
+			message: "Enter name/title or a part of it",
+			inputs: [
+				{
+					name: 'value',
+					placeholder: 'Name / Title'
+				},
+			],
+			buttons: [
+				{
+					text: 'Cancel',
+					handler: data => {
+						console.log('Cancel clicked');
+					}
+				},
+				{
+					text: 'Search',
+					handler: data => {
+						console.log('Search clicked:' + data.value);
+						this.search(data.value);
+					}
+				}
+			]
+		});
+		prompt.present();
 	}
 }
 
@@ -90,30 +126,28 @@ function getData2step ( urlComplement, callback ){
 				var LastId = Number(zone[1]);
 				tmp["firstId"] = Number(zone[0]);
 				tmp["LastId"] = Number(zone[1]);
-				tmp["nbSend"] = 0;
-				tmp["categorie"] = categorieName;
-				tmp["callback"] = callback;
-				tmp["nbSend"] = 0;
+				tmp[categorieName] = {};
+				tmp[categorieName]["nbSend"] = 0;
 				while(firstId <= tmp["LastId"]){
 					if(data[categorieName].data[firstId] == undefined ){
-						tmp["nbSend"] = tmp["nbSend"] + 1;
-						requestApi(categorieName + "/" +  firstId + "/", function(elementsId, response) {
-							tmp["nbSend"] = tmp["nbSend"] -1;
+						tmp[categorieName]["nbSend"] = tmp[categorieName]["nbSend"] + 1;
+						requestApi(categorieName + "/" +  firstId + "/", function(elementsId, categorie, callback, response) {
+							tmp[categorieName]["nbSend"] = tmp[categorieName]["nbSend"] -1;
 							//console.log("idAjout:" + (firstId + p));
 							if(response["__zone_symbol__currentTask"] == undefined){
-								data[tmp["categorie"]].data[elementsId] = response;
+								data[categorie].data[elementsId] = response;
 							}else{
-								data[tmp["categorie"]].data[elementsId] = "404";
+								data[categorie].data[elementsId] = "404";
 							}
-							if(tmp["nbSend"] == 0){
+							if(tmp[categorieName]["nbSend"] == 0){
 								// *** La dernière requête est de retour ***
-								tmp["callback"](concatData(tmp["categorie"],Number(tmp["firstId"]), Number(tmp["LastId"])));
+								callback(concatData(categorie,Number(tmp["firstId"]), Number(tmp["LastId"])));
 							}
-						}.bind(null, firstId));
+						}.bind(null, firstId, categorieName, callback));
 					}
 					firstId = firstId + 1;
 				}
-				if(tmp["nbSend"] == 0){
+				if(tmp[categorieName]["nbSend"] == 0){
 					// *** Aucune requête n'a été effectué ***
 					callback(concatData(categorieName, Number(zone[0]), LastId));
 				}
@@ -187,22 +221,34 @@ function _callbackInitCategorie( urlComplement, callback, response ){
 function fillCategorie(categorie, callback) {
 	console.log("fillCategorie:"+categorie);
 	var i = 1;
-	tmp["nbSend"] = 0;
+	tmp[categorie] = {};
+	tmp[categorie]["nbSend"] = 0;
 	while(i <= data[categorie].count ){
-		if(data[categorie].data[i] == undefined || data[categorie].data[i] == "404" ){
-			tmp["nbSend"] = tmp["nbSend"] +1;
-			requestApi(categorie + "/" + i + "/", _callbackSaveDataElement.bind(null, categorie, i, callback));
+		tmp[categorie]["nbSend"] = tmp[categorie]["nbSend"] +1;
+		if(data[categorie].data[i] == undefined ){
+			requestApi(categorie + "/" + i + "/", _callbackSaveDataElement.bind(null, categorie, i, callback, true));
+		}else{
+			_callbackSaveDataElement( categorie, i, callback, i == data[categorie].count, data[categorie].data[i]);
 		}
 		i++
 	}
 	//console.log("data=" + data);
 }
 
-function _callbackSaveDataElement( categorie, elementId, callback, response ) {
-	tmp["nbSend"] = tmp["nbSend"] -1;
-	data[categorie].data[elementId] = response;
-	if(tmp["nbSend"] < 1){
-		callback(data[categorie].data);
+function _callbackSaveDataElement( categorie, elementId, callback, isAsync, response ) {
+	//console.log("_callbackSaveDataElement:"+categorie + "-" + elementId + "-nbSend:" + tmp[categorie]["nbSend"]);
+	tmp[categorie]["nbSend"] = tmp[categorie]["nbSend"] -1;
+
+	if(response["__zone_symbol__currentTask"] == undefined){
+
+		data[categorie].data[elementId] = response;
+		if(tmp[categorie]["nbSend"] < 1 && isAsync){
+			callback(data[categorie].data);
+		}
+
+	}else{
+		//console.log("new404");
+		data[categorie].data[elementId] = "404";
 	}
 
 }
@@ -278,5 +324,34 @@ export class ApiModule {
 			elementId : url.split("/")[5]
 		}
 		return urlObject;
+	}
+
+
+	search(value) {
+		//console.log("ApiModule_search:" + value );
+		this.storage.get("data").then(data => {
+			for(var p in data.categories){
+				//console.log("searchIn:" + data.categories[p]);
+				this.searchInCategorie(data.categories[p], value,function( categorie, response ){
+					console.log("responseToSearch:" + categorie);
+					console.log(response);
+				}.bind(null, data.categories[p]));
+			}
+		})
+		
+	}
+
+	searchInCategorie(categorie, value, callback){
+		//console.log("ApiModule_searchInCategorie(" + value + "):" +  categorie );
+		this.getData(categorie + "/", function (value, response) {
+			var listObject = {};
+			for(var p in response){
+				if(response[p]["principaleAttributeName"] != undefined && response[p][response[p]["principaleAttributeName"]].toUpperCase().includes(value.toUpperCase())){
+					//console.log("searchFound:" + response[p][response[p]["principaleAttributeName"]]);
+					listObject[p] = response[p];
+				}
+			}
+			callback(listObject);
+		}.bind(null, value))
 	}
 }
