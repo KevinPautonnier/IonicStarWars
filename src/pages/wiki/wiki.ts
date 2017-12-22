@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { NavController, LoadingController } from 'ionic-angular';
-import { WikiFilmsPage } from '../wiki-films/wiki-films';
 import { WikiElementsPage } from '../wiki-elements/wiki-elements';
 import { WikiDetailsPage } from '../wiki-details/wiki-details';
 import { WikiSearchPage } from '../wiki-search/wiki-search';
@@ -62,7 +61,7 @@ export class WikiPage {
 					// *** One have been find ***
 					for(var categorieName in formatedResult.categories){
 						this.navigation["categorie"] = categorieName;
-						for(var p in categorieName){
+						for(var p in formatedResult.categories[categorieName]){
 							this.navigation["elementId"] = p;
 						}
 					}
@@ -70,9 +69,16 @@ export class WikiPage {
 						this.nav.push(WikiDetailsPage);
 					})
 
+				}else if(formatedResult.nbCategorie == 1){
+					// *** all elements are in the same categorie ***
+					// TODO : prévoire un affichage différent
+					this.storage.set("searchData", formatedResult).then(result => {
+						this.nav.push(WikiSearchPage);
+					})
+
 				}else{
 					// *** Multiple and random object have been find ***
-					this.storage.set("search", result).then(result => {
+					this.storage.set("searchData", formatedResult).then(result => {
 						this.nav.push(WikiSearchPage);
 					})
 				}

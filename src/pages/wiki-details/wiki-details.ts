@@ -35,7 +35,7 @@ export class WikiDetailsPage {
 		this.api = new ApiModule(storage);
 		this.storage.get("navigation").then( val => {
 			this.navigation = val;
-			console.log("WikiDetailsPage constructor navigation:" + JSON.stringify(val));
+			//console.log("WikiDetailsPage constructor navigation:" + JSON.stringify(val));
 			this.ionViewDidSet();
 		});
 	}
