@@ -1,8 +1,0 @@
-{
-  "name": "ionicStarWars",
-  "app_id": "e657fdf3",
-  "type": "ionic-angular",
-  "integrations": {
-    "cordova": {}
-  }
-}

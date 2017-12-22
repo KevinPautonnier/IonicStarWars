@@ -1,0 +1,24 @@
+page-episode-details {
+  ion-card {
+    position: relative;
+    text-align: center;
+    height:12vh;
+  }
+
+  .card-title {
+    position: absolute;
+    top: 3vh;
+    font-size: 6vh;
+    width: 100%;
+    font-weight: bold;
+    color: #FFF;
+  }
+
+  .card-subtitle {
+    font-size: 1.0em;
+    position: absolute;
+    top: 52%;
+    width: 100%;
+    color: #fff;
+  }
+}
