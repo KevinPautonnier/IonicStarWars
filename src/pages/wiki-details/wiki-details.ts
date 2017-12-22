@@ -144,7 +144,7 @@ export class WikiDetailsPage {
 	}
 
 	setUrlTitle(url, title){
-		console.log("setUrlTitle(" + url + ", " + title +" )");
+		//console.log("setUrlTitle(" + url + ", " + title +" )");
 		this.api.getData(url, response => {
 			if(response != "404"){
 				for(var obj in this.listDetailsDetails[title]){
