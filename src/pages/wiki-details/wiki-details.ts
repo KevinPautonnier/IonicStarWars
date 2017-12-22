@@ -66,7 +66,9 @@ export class WikiDetailsPage {
 			if (this.ignoreKey.indexOf(prop) == -1 ) {
 				if (this.ignoreValue.indexOf(jsonData[prop]) == -1) {
 					if (prop == 'img') {
-						this.listDetails.reverse().push(this.generateVisual(prop, jsonData[prop]));
+						var title = this.listDetails.reverse().pop();
+						this.listDetails.push(this.generateVisual(prop, jsonData[prop]));
+						this.listDetails.push(title);
 						this.listDetails.reverse();
 					}
 					else {
@@ -74,7 +76,6 @@ export class WikiDetailsPage {
 					}
 				}
 			}
-
 		}
 		this.modal.hideModal();
 
@@ -84,7 +85,7 @@ export class WikiDetailsPage {
 		var newDetail;
 		switch(typeof objValue) {
 			case "string":
-				newDetail = { title: prop, value : objValue, isList : false, isUrl : false, isImg : false};
+				newDetail = { title: prop, value : objValue, isList : false, isUrl : false, isImg : false, isTitle : false};
 				if(objValue.slice(0,4) == "http"){
 					newDetail["isUrl"] = true;
 					this.api.getData(objValue, response => {
@@ -104,6 +105,9 @@ export class WikiDetailsPage {
 				}
 				else if(objValue.includes(".png")){
 					newDetail["isImg"] = true;
+				}
+				else if(prop == 'title' || prop == 'name'){
+					newDetail["isTitle"] = true;
 				}
 				break;
 

@@ -17,11 +17,12 @@
 
   <div id="container">
     <div *ngFor="let tuile of listDetails" class="element">
-      <div class="name">{{tuile["title"]}}</div>
+      <div *ngIf="!tuile.isTitle" class="name">{{tuile["title"]}}</div>
 
       <div *ngIf="tuile.isUrl" (click)="redirectTo(tuile.value)" class="value link" > --> {{tuile["urlTitle"]}} <-- </div>
 
       <img *ngIf="tuile.isImg" class="value" src={{tuile.value}}>
+      <div *ngIf="tuile.isTitle" class="title">{{tuile.value}}</div>
 
       <div *ngIf="tuile.isList" class="value"> 
 
@@ -35,7 +36,7 @@
         </div>
 
       </div>
-      <div *ngIf="!tuile.isUrl && !tuile.isList && !tuile.isImg" class="value">  {{tuile["value"]}} </div>
+      <div *ngIf="!tuile.isUrl && !tuile.isList && !tuile.isImg && !tuile.isTitle" class="value">  {{tuile["value"]}} </div>
 
     </div>
 
