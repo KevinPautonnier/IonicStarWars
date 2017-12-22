@@ -49,6 +49,7 @@ export class WikiSearchPage {
 			for(var p in this.searchData.categories[categorieName]){
 				var tmpElement = this.searchData.categories[categorieName][p];
 				tmpElement["categorie"] = categorieName;
+				tmpElement["elementId"] = p;
 				tmpCategorie.push(tmpElement);
 			}
 			tmpPageData.push(tmpCategorie);

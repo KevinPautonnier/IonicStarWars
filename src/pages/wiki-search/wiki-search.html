@@ -16,14 +16,14 @@
 <ion-content padding  class="categorieName">
 	<div id="container">
 		<div *ngFor="let tuile of pageData" class="categorie">
-			<div class="categorieTitleElement">
+<!-- 			<div class="categorieTitleElement">
 				<div class="name" >{{tuile["0"]["categorie"]}}</div>
-			</div>
+			</div> -->
 
-<!-- 			<ion-card *ngFor="let tuile of listCategories" (click)="toElementListe(tuile.categorie)">
-				<img src="getCategorieParametre(tuile['0']['categorie']).imgUrl"/>
+			<div class="element title">
+				<img src="{{getCategorieParametre(tuile['0']['categorie']).imgUrl}}" />
 				<div class="card-title"> {{getCategorieParametre(tuile["0"]["categorie"]).title}} </div>
-			</ion-card> -->
+			</div>
 
 			<div *ngFor="let tuile2 of tuile" (click)="goToDetails(tuile2.categorie, tuile2.elementId)" class="element">
 				<div class="image" [ngStyle]="{'background-image': 'url(' + tuile2.img + '), url(assets/imgs/wiki/unknown.jpg)'}"></div>

@@ -39,9 +39,29 @@ page-wiki-search {
       }
     }
 
+    .title{
+    	overflow:hidden;
+
+		position: relative;
+		text-align: center;
+		height:12vh;
+		
+    	img {
+    		width:100%;
+    	}
+
+    	.card-title {
+			position: absolute;
+			top: 3vh;
+			font-size: 6vh;
+			width: 100%;
+			font-weight: bold;
+			color: #FFF;
+		}
+    }
+
 
   }
-
 }
 
 .categorieName {
