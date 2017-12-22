@@ -61,7 +61,7 @@ var data = {
 		"species":"name",
 		"planets" :"name"}
 };
-// {films:{count:70, nbElemPerPage:3, data:{1:{}, ...}, ...}, ...}
+// {films:{count:70, data:{1:{}, ...}, ...}, ...}
 
 function getData2step ( urlComplement, callback ){
 	var url = urlComplement.split("/");
@@ -69,7 +69,7 @@ function getData2step ( urlComplement, callback ){
 	var categorieName = url[0];
 	var elementNumber = url[1];
 	if(elementNumber == ""){
-		updateFullCategorie(categorieName);
+		fillCategorie(categorieName, callback);
 	}else{
 		if(elementNumber.includes("-")){
 			// *** Multiple element à charger ***
@@ -178,55 +178,33 @@ function requestApi( urlComplement, callback ){
 function _callbackInitCategorie( urlComplement, callback, response ){
 	var newCategorie = {
 		count : response.count,
-		nbElemPerPage : response.results.length,
 		data : {}
 	}
-	var i = 0;
-	while(response.results.length > i){
-		response.results[i]["principaleAttributeName"] = response["principaleAttributeName"];
-		newCategorie.data[i+1] = response.results[i];
-		i= i+1;
-	};
-	//console.log("creation:" + tmp["urlComplement"].split("/")[0] );
 	data[urlComplement.split("/")[0]] = newCategorie;
 	getData2step(urlComplement, callback);
 }
 
-function updateFullCategorie(categorie) {
-	console.log("fullUpdate:"+categorie);
+function fillCategorie(categorie, callback) {
+	console.log("fillCategorie:"+categorie);
 	var i = 1;
+	tmp["nbSend"] = 0;
 	while(i <= data[categorie].count ){
-		if(data[categorie].data[i] == undefined){
-			console.log("element:" + i + "-" + data[categorie].data[i] + "xxxxxxxxxxxx");
-			requestApi(categorie + "/?page=" + Math.ceil(i/data[categorie].nbElemPerPage), _callbackGetDataElement);
-			i+= data[categorie].nbElemPerPage;
-		}else{
-			//console.log("element:" + i + "-" + data[categorie].data[i].name);
-			i++
+		if(data[categorie].data[i] == undefined || data[categorie].data[i] == "404" ){
+			tmp["nbSend"] = tmp["nbSend"] +1;
+			requestApi(categorie + "/" + i + "/", _callbackSaveDataElement.bind(null, categorie, i, callback));
 		}
+		i++
 	}
 	//console.log("data=" + data);
 }
 
-function _callbackGetDataElement( response ) {
-	debugger;
-	var tmpData = {};
-	var categorie = response.previous.split("/")[4];
-	var page = Number(response.previous.split("/")[5].slice(-1)) +1;
-	tmpData[categorie] = {data:{}};
-	var i=0,j;
-	while(i < response.results.length){
-		j = (page-1)*data[categorie].nbElemPerPage + i;
-		response.results[i]["principaleAttributeName"] = response["principaleAttributeName"];
-		tmpData[categorie].data[j+1] = response.results[i];
-		i= i+1;
-	};
-	console.log("ajout:" + categorie + "-p" + page);
-	for(var k in tmpData[categorie].data) {
-		data[categorie].data[k]=tmpData[categorie].data[k];
+function _callbackSaveDataElement( categorie, elementId, callback, response ) {
+	tmp["nbSend"] = tmp["nbSend"] -1;
+	data[categorie].data[elementId] = response;
+	if(tmp["nbSend"] < 1){
+		callback(data[categorie].data);
 	}
-	console.log("ajout:" + categorie + "-p" + page + "x");
-	//console.log("data=" + tmpData);
+
 }
 
 function formatUrl(url){
