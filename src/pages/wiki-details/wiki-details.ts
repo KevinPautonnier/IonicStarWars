@@ -23,6 +23,8 @@ export class WikiDetailsPage {
 	navigation = {categorie:"test"};
 	api;
 	title;
+	ignoreKey = ['created', 'edited', 'episode_id', 'principaleAttributeName', 'elementId'];
+	ignoreValue = ['unknown.png'];
 	get getTitle(){return this.title}
 	listDetails = [];
 	listDetailsDetails = {};
@@ -61,15 +63,25 @@ export class WikiDetailsPage {
 	setListe (jsonData){
 		this.listDetails = [];
 		for (var prop in jsonData) {
-			//console.log("props:" + prop);
-			this.listDetails.push(this.generateVisual(prop, jsonData[prop]));
+			console.log('caca');
+			console.log(prop, jsonData[prop]);
+			if (this.ignoreKey.indexOf(prop) == -1 ) {
+				if (this.ignoreValue.indexOf(jsonData[prop]) == -1) {
+					if (prop == 'img') {
+						this.listDetails.reverse().push(this.generateVisual(prop, jsonData[prop]));
+						this.listDetails.reverse();
+					}
+					this.listDetails.push(this.generateVisual(prop, jsonData[prop]));
+				}
+			}
+
 		}
 		this.modal.hideModal();
 
 	}
 
 	generateVisual(prop, objValue){
-		var newDetail
+		var newDetail;
 		switch(typeof objValue) {
 			case "string":
 				newDetail = { title: prop, value : objValue, isList : false, isUrl : false };
