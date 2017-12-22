@@ -69,7 +69,9 @@ export class WikiDetailsPage {
 						this.listDetails.reverse().push(this.generateVisual(prop, jsonData[prop]));
 						this.listDetails.reverse();
 					}
-					this.listDetails.push(this.generateVisual(prop, jsonData[prop]));
+					else {
+						this.listDetails.push(this.generateVisual(prop, jsonData[prop]));
+					}
 				}
 			}
 
