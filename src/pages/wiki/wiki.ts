@@ -120,14 +120,17 @@ function getData2step ( urlComplement, callback ){
 			}
 		}else{
 			// *** Element unique ***
+			if(data[categorieName] == undefined){
+				console.log("getData2step_data[categorieName]:" + categorieName);
+			}
 			if(data[categorieName].data[elementNumber] == undefined || data[categorieName].data[elementNumber] == "404") {
 				// *** si l'élément demandé n'a pas encore été requeté. ***
 				requestApi(urlComplement, response => {
 					if(response["__zone_symbol__currentTask"] == undefined){
-						data[tmp["categorie"]].data[elementNumber] = response;
+						data[categorieName].data[elementNumber] = response;
 						callback(response);
 					}else{
-						data[tmp["categorie"]].data[elementNumber] = "404";
+						data[categorieName].data[elementNumber] = "404";
 						callback("404");
 					}
 				});
@@ -164,7 +167,7 @@ function requestApi( urlComplement, callback ){
 	.then(response => {
 
 			//console.log("response.json:" + JSON.stringify(response));
-			response["principaleAttributeName"] = getPrincipaleAttributeName(navigation.categorie);
+			response["principaleAttributeName"] = getPrincipaleAttributeName(urlComplement.split("/")[0]);
 			callback(response);
 		}).catch(error => {
 			console.error(error);
@@ -172,7 +175,7 @@ function requestApi( urlComplement, callback ){
 	});
 }
 
-function _callbackInitCategorie( response ){
+function _callbackInitCategorie( urlComplement, callback, response ){
 	var newCategorie = {
 		count : response.count,
 		nbElemPerPage : response.results.length,
@@ -185,8 +188,8 @@ function _callbackInitCategorie( response ){
 		i= i+1;
 	};
 	//console.log("creation:" + tmp["urlComplement"].split("/")[0] );
-	data[tmp["urlComplement"].split("/")[0]] = newCategorie;
-	getData2step(tmp["urlComplement"], tmp["callback"]);
+	data[urlComplement.split("/")[0]] = newCategorie;
+	getData2step(urlComplement, callback);
 }
 
 function updateFullCategorie(categorie) {
@@ -227,10 +230,11 @@ function _callbackGetDataElement( response ) {
 }
 
 function formatUrl(url){
-	if(url.length > apiRequestUrl.length && url.subString(0,apiRequestUrl.length-1) == apiRequestUrl ){
-		return url.subString(apiRequestUrl.length, url.length-1);
+	var url2 = "" + url;
+	if(url2.length > apiRequestUrl.length && url2.slice(0,apiRequestUrl.length) == apiRequestUrl ){
+		return url2.slice(apiRequestUrl.length, url2.length-1);
 	}else{
-		return url;
+		return url2;
 	}
 }
 
@@ -244,20 +248,18 @@ function getPrincipaleAttributeName(categorieName){
 
 function getData05(urlComplement, callback ){
 	var newCallback = function(response ){ wikiStorage.set("data",data); callback(response) };
-	var url = urlComplement.split("/");
-
+	
 	urlComplement = formatUrl(urlComplement);
-
+	
+	var url = urlComplement.split("/");
 	if( data[url[0]] == undefined && data.categories.indexOf(url[0]) > -1 ){
 		// *** Si première demande d'une catégorie ***
-		console.log("newCategorie");
-		tmp["urlComplement"] = urlComplement;
-		tmp["callback"] = newCallback;
-		requestApi(url[0]+"/", _callbackInitCategorie );
+		console.log("newCategorie:" + url[0]);
+		requestApi(url[0]+"/", _callbackInitCategorie.bind(null, urlComplement, newCallback) );
 
 	}else{
 		// *** Si la catégorie à déjà été demandé ***
-		//console.log("knewCategorie");
+		//console.log("knewCategorie:" + url[0]);
 		getData2step( urlComplement, newCallback );
 	}
 }
@@ -293,7 +295,6 @@ export class ApiModule {
 			categorie : url.split("/")[4],
 			elementId : url.split("/")[5]
 		}
-
 		return urlObject;
 	}
 }
