@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
 /**
- * Generated class for the WikiPlanetsPage page.
+ * Generated class for the WikiSearchPage page.
  *
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
@@ -10,16 +10,16 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
 @IonicPage()
 @Component({
-  selector: 'page-wiki-planets',
-  templateUrl: 'wiki-planets.html',
+  selector: 'page-wiki-search',
+  templateUrl: 'wiki-search.html',
 })
-export class WikiPlanetsPage {
+export class WikiSearchPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad WikiPlanetsPage');
+    console.log('ionViewDidLoad WikiSearchPage');
   }
 
 }

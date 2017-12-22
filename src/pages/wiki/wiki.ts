@@ -1,16 +1,24 @@
 import { Component } from '@angular/core';
 import { NavController, LoadingController } from 'ionic-angular';
 import { WikiFilmsPage } from '../wiki-films/wiki-films';
-import { WikiSpeciesPage } from '../wiki-species/wiki-species';
-import { WikiCharactersPage } from '../wiki-characters/wiki-characters';
-import { WikiVehiculesPage } from '../wiki-vehicules/wiki-vehicules';
-import { WikiStarshipsPage } from '../wiki-starships/wiki-starships';
-import { WikiPlanetsPage } from '../wiki-planets/wiki-planets';
 import { WikiElementsPage } from '../wiki-elements/wiki-elements';
+import { WikiSearchPage } from '../pages/wiki-search/wiki-search';
 import { Storage } from '@ionic/storage';
 import { Modal } from '../../components/modules';
-
 import { AlertController } from 'ionic-angular';
+
+
+function formatResult(result){
+	var formatedResult = {totalFindCount:0, nbCategorie:0, categories:{}};
+	for(var p in result){
+		if(Object.keys(result[p]).length > 0 ){
+			formatedResult["totalFindCount"] = formatedResult["totalFindCount"] + Object.keys(result[p]).length;
+			formatedResult["nbCategorie"] = formatedResult["nbCategorie"] + 1;
+			formatedResult["categories"][p] = result[p]
+		}
+	}
+	return formatedResult;
+}
 
 @Component({
   selector: 'page-wiki',
@@ -40,11 +48,33 @@ export class WikiPage {
 		this.navigation["categorie"] = categorie;
 		this.storage.set("navigation", this.navigation).then(navigation => {this.nav.push(WikiElementsPage)});		
 	}
+
 	search(value){
-		this.api.search(value);
+		if(("" + value).length > 0 ){
+			this.api.search(value, result => {
+				var formatedResult = formatResult(result);
+				if( formatedResult.totalFindCount == 0){
+					// *** Nothing have been find ***
+					this.doConfirmNothinFind();
+
+				}else if(formatedResult.totalFindCount == 1){
+					// *** One have been find ***
+
+				}else if(formatedResult.nbCategorie == 1){
+					// *** all find object are in the same categorie ***
+
+				}else{
+					// *** Multiple and random object have been find ***
+
+				}
+			});
+		}
 	}
+
 	searchInCategorie(categorie, value){
-		this.api.searchInCategorie(categorie, value);
+		if(("" + value).length > 0 ){
+			this.api.searchInCategorie(categorie, value);
+		}
 	}
 
 	showPrompt() {
@@ -74,6 +104,30 @@ export class WikiPage {
 			]
 		});
 		prompt.present();
+	}
+
+	doConfirmNothinFind() {
+		let alert = this.alertCtrl.create({
+			title: 'Search',
+			message: 'Nothing have been found with this key word.',
+			buttons: [
+				{
+					text: 'Ok',
+					handler: () => {
+						console.log('Ok clicked');
+					}
+				},
+				{
+					text: 'Retry',
+					handler: () => {
+						console.log('Retry clicked');
+						this.showPrompt();
+					}
+				}
+			]
+		});
+
+		alert.present();
 	}
 }
 
@@ -327,15 +381,25 @@ export class ApiModule {
 	}
 
 
-	search(value) {
-		//console.log("ApiModule_search:" + value );
+	search(value, callback) {
+		console.log("ApiModule_search:" + value );
+		tmp["search"] = {};
+		tmp["search"]["nbSend"] = 0;
+		var result = {};
 		this.storage.get("data").then(data => {
 			for(var p in data.categories){
+				tmp["search"]["nbSend"] = tmp["search"]["nbSend"] + 1;
 				//console.log("searchIn:" + data.categories[p]);
-				this.searchInCategorie(data.categories[p], value,function( categorie, response ){
+				this.searchInCategorie(data.categories[p], value, function( categorie, callback, response ){
 					console.log("responseToSearch:" + categorie);
 					console.log(response);
-				}.bind(null, data.categories[p]));
+					result[categorie] = response;
+					tmp["search"]["nbSend"] = tmp["search"]["nbSend"] - 1;
+					if(tmp["search"]["nbSend"] == 0){
+						console.log("search_END");
+						callback(result);
+					}
+				}.bind(null, data.categories[p], callback));
 			}
 		})
 		
