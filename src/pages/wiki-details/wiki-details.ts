@@ -23,6 +23,8 @@ export class WikiDetailsPage {
 	navigation = {categorie:"test"};
 	api;
 	title;
+	ignoreKey = ['created', 'edited', 'episode_id', 'principaleAttributeName', 'elementId', 'url'];
+	ignoreValue = ['unknown.png'];
 	get getTitle(){return this.title}
 	listDetails = [];
 	listDetailsDetails = {};
@@ -55,25 +57,53 @@ export class WikiDetailsPage {
 			}
 		});
 
+		
 	}
 
 	setListe (jsonData){
 		this.listDetails = [];
 		for (var prop in jsonData) {
-			//console.log("props:" + prop);
-			this.listDetails.push(this.generateVisual(prop, jsonData[prop]));
+			if (this.ignoreKey.indexOf(prop) == -1 ) {
+				if (this.ignoreValue.indexOf(jsonData[prop]) == -1) {
+					if (prop == 'img') {
+						this.listDetails.reverse().push(this.generateVisual(prop, jsonData[prop]));
+						this.listDetails.reverse();
+					}
+					else {
+						this.listDetails.push(this.generateVisual(prop, jsonData[prop]));
+					}
+				}
+			}
+
 		}
 		this.modal.hideModal();
 
 	}
 
 	generateVisual(prop, objValue){
-		var newDetail
+		var newDetail;
 		switch(typeof objValue) {
 			case "string":
-				newDetail = { title: prop, value : objValue, isList : false, isUrl : false };
+				newDetail = { title: prop, value : objValue, isList : false, isUrl : false, isImg : false};
 				if(objValue.slice(0,4) == "http"){
 					newDetail["isUrl"] = true;
+					this.api.getData(objValue, response => {
+						if(response != "404"){
+							for(var obj in this.listDetails){
+								if(this.listDetails[obj].value == objValue){
+									this.listDetails[obj].urlTitle = response[response.principaleAttributeName];
+									console.log("link( " + response[response.principaleAttributeName] + "):" + objValue);
+									break;
+								}
+							}
+						}else{
+							this.listDetailsDetails[prop][obj].urlTitle = "No Data"
+							this.listDetails[prop][obj].objValue = "";
+						}
+					});
+				}
+				else if(objValue.includes(".png")){
+					newDetail["isImg"] = true;
 				}
 				break;
 
@@ -86,8 +116,9 @@ export class WikiDetailsPage {
 					//console.log("generateVisualOf:" + objValue[prop2] );
 					var newDetail2 = this.generateVisual(this.api.getDataFromUrl(objValue[prop2]).categorie, objValue[prop2])
 					newDetail2["url"] = objValue[prop2];
+					this.setUrlTitle(objValue[prop2], prop);
 					this.listDetailsDetails[prop].push(newDetail2);
-					console.log("this.[...].push(" + JSON.stringify(newDetail2));
+					//console.log("this.[...].push(" + JSON.stringify(newDetail2));
 					//console.log("object_objValue:" + JSON.stringify(newDetail2.value));
 				}
 				break;
@@ -98,11 +129,30 @@ export class WikiDetailsPage {
 		return newDetail;
 	}
 
-	redirectTo(url){
-		this.modal.showModal();
+	redirectTo(url = ""){
 		console.log("redirectTo:" + url);
-		this.navigation["categorie"] = this.api.getDataFromUrl(url).categorie;
-		this.navigation["elementId"] = this.api.getDataFromUrl(url).elementId;
-		this.storage.set("navigation", this.navigation).then(navigation => {this.ionViewDidSet();});		
+		if(url.length > 0){	
+			this.modal.showModal();
+			this.navigation["categorie"] = this.api.getDataFromUrl(url).categorie;
+			this.navigation["elementId"] = this.api.getDataFromUrl(url).elementId;
+			this.storage.set("navigation", this.navigation).then(navigation => {this.ionViewDidSet();});	
+		}	
+	}
+
+	setUrlTitle(url, title){
+		console.log("setUrlTitle(" + url + ", " + title +" )");
+		this.api.getData(url, response => {
+			if(response != "404"){
+				for(var obj in this.listDetailsDetails[title]){
+					if(this.listDetailsDetails[title][obj].url == url){
+						this.listDetailsDetails[title][obj].urlTitle = response[response.principaleAttributeName];
+						break;
+					}
+				}
+			}else{
+				this.listDetailsDetails[title][obj].urlTitle = "No Data";
+				this.listDetailsDetails[title][obj].url = "";
+			}
+		});
 	}
 }

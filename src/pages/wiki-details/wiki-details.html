@@ -19,21 +19,23 @@
     <div *ngFor="let tuile of listDetails" class="element">
       <div class="name">{{tuile["title"]}}</div>
 
-      <div *ngIf="tuile.isUrl" class="value link" > goingTo : {{tuile["value"]}} </div>
+      <div *ngIf="tuile.isUrl" (click)="redirectTo(tuile.value)" class="value link" > --> {{tuile["urlTitle"]}} <-- </div>
+
+      <img *ngIf="tuile.isImg" class="value" src={{tuile.value}}>
 
       <div *ngIf="tuile.isList" class="value"> 
-        
+
         <div> 
           <!-- <div>willBeAList : {{tuile["value"]}} </div> -->
 
           <div *ngFor="let tuile2 of listDetailsDetails[tuile.title]" class="listDetailsElement">
-            <p *ngIf="tuile2.isUrl" (click)="redirectTo(tuile2.url)" class="link" > goingTo : {{tuile2["value"]}} </p>
+            <p *ngIf="tuile2.isUrl" (click)="redirectTo(tuile2.url)" class="link" > --> {{tuile2["urlTitle"]}} <--  </p>
             <p *ngIf="!tuile2.isUrl">  {{tuile["value"]}} </p>
           </div>
         </div>
 
       </div>
-      <div *ngIf="!tuile.isUrl && !tuile.isList" class="value">  {{tuile["value"]}} </div>
+      <div *ngIf="!tuile.isUrl && !tuile.isList && !tuile.isImg" class="value">  {{tuile["value"]}} </div>
 
     </div>
 
