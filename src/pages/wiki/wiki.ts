@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, LoadingController } from 'ionic-angular';
 import { WikiFilmsPage } from '../wiki-films/wiki-films';
 import { WikiElementsPage } from '../wiki-elements/wiki-elements';
+import { WikiDetailsPage } from '../wiki-details/wiki-details';
 import { WikiSearchPage } from '../pages/wiki-search/wiki-search';
 import { Storage } from '@ionic/storage';
 import { Modal } from '../../components/modules';
@@ -14,7 +15,7 @@ function formatResult(result){
 		if(Object.keys(result[p]).length > 0 ){
 			formatedResult["totalFindCount"] = formatedResult["totalFindCount"] + Object.keys(result[p]).length;
 			formatedResult["nbCategorie"] = formatedResult["nbCategorie"] + 1;
-			formatedResult["categories"][p] = result[p]
+			formatedResult["categories"][p] = result[p];
 		}
 	}
 	return formatedResult;
@@ -59,6 +60,15 @@ export class WikiPage {
 
 				}else if(formatedResult.totalFindCount == 1){
 					// *** One have been find ***
+					for(var categorieName in formatedResult.categories){
+						this.navigation["categorie"] = categorieName;
+						for(var p in categorieName){
+							this.navigation["elementId"] = p;
+						}
+					}
+					this.storage.set("navigation", this.navigation).then(navigation => {
+						this.nav.push(WikiDetailsPage);
+					})
 
 				}else if(formatedResult.nbCategorie == 1){
 					// *** all find object are in the same categorie ***
