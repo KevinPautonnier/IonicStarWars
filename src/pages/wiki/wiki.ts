@@ -3,7 +3,7 @@ import { NavController, LoadingController } from 'ionic-angular';
 import { WikiFilmsPage } from '../wiki-films/wiki-films';
 import { WikiElementsPage } from '../wiki-elements/wiki-elements';
 import { WikiDetailsPage } from '../wiki-details/wiki-details';
-import { WikiSearchPage } from '../pages/wiki-search/wiki-search';
+import { WikiSearchPage } from '../wiki-search/wiki-search';
 import { Storage } from '@ionic/storage';
 import { Modal } from '../../components/modules';
 import { AlertController } from 'ionic-angular';
@@ -70,12 +70,11 @@ export class WikiPage {
 						this.nav.push(WikiDetailsPage);
 					})
 
-				}else if(formatedResult.nbCategorie == 1){
-					// *** all find object are in the same categorie ***
-
 				}else{
 					// *** Multiple and random object have been find ***
-
+					this.storage.set("search", result).then(result => {
+						this.nav.push(WikiSearchPage);
+					})
 				}
 			});
 		}
