@@ -84,7 +84,7 @@ function getData2step ( urlComplement, callback ){
 					container[zone[0]] = response;
 					callback(container);
 				}
-				requestApi(categorieName + "/" +  zone[0], newCallback);
+				requestApi(categorieName + "/" +  zone[0] + "/", newCallback);
 			}else{
 				var firstId = Number(zone[0]);
 				var LastId = Number(zone[1]);
@@ -97,7 +97,7 @@ function getData2step ( urlComplement, callback ){
 				while(firstId <= tmp["LastId"]){
 					if(data[categorieName].data[firstId] == undefined ){
 						tmp["nbSend"] = tmp["nbSend"] + 1;
-						requestApi(categorieName + "/" +  firstId, function(elementsId, response) {
+						requestApi(categorieName + "/" +  firstId + "/", function(elementsId, response) {
 							tmp["nbSend"] = tmp["nbSend"] -1;
 							//console.log("idAjout:" + (firstId + p));
 							if(response["__zone_symbol__currentTask"] == undefined){
@@ -153,7 +153,7 @@ function concatData(categorie, firstId, LastId){
 
 function requestApi( urlComplement, callback ){
 
-	var requestUrl = apiRequestUrl + urlComplement;
+	var requestUrl = apiRequestUrl + formatUrl(urlComplement);
 	console.log("RequestApi:" + requestUrl);
 
 	fetch(new Request(requestUrl))
@@ -209,6 +209,10 @@ function _callbackSaveDataElement( categorie, elementId, callback, response ) {
 
 function formatUrl(url){
 	var url2 = "" + url;
+	//console.log("lastChar:" + url2.charAt(url2.length - 1));
+	if(url2.charAt(url2.length - 1) !=  '/') {
+		url2 = url2 + "/";
+	}
 	if(url2.length > apiRequestUrl.length && url2.slice(0,apiRequestUrl.length) == apiRequestUrl ){
 		return url2.slice(apiRequestUrl.length, url2.length-1);
 	}else{
@@ -227,18 +231,18 @@ function getPrincipaleAttributeName(categorieName){
 function getData05(urlComplement, callback ){
 	var newCallback = function(response ){ wikiStorage.set("data",data); callback(response) };
 	
-	urlComplement = formatUrl(urlComplement);
+	var formatedUrlComplement = formatUrl(urlComplement);
 	
-	var url = urlComplement.split("/");
+	var url = formatedUrlComplement.split("/");
 	if( data[url[0]] == undefined && data.categories.indexOf(url[0]) > -1 ){
 		// *** Si première demande d'une catégorie ***
 		console.log("newCategorie:" + url[0]);
-		requestApi(url[0]+"/", _callbackInitCategorie.bind(null, urlComplement, newCallback) );
+		requestApi(url[0]+"/", _callbackInitCategorie.bind(null, formatedUrlComplement, newCallback) );
 
 	}else{
 		// *** Si la catégorie à déjà été demandé ***
 		//console.log("knewCategorie:" + url[0]);
-		getData2step( urlComplement, newCallback );
+		getData2step( formatedUrlComplement, newCallback );
 	}
 }
 
