@@ -23,7 +23,7 @@ export class WikiDetailsPage {
 	navigation = {categorie:"test"};
 	api;
 	title;
-	ignoreKey = ['created', 'edited', 'episode_id', 'principaleAttributeName', 'elementId'];
+	ignoreKey = ['created', 'edited', 'episode_id', 'principaleAttributeName', 'elementId', 'url'];
 	ignoreValue = ['unknown.png'];
 	get getTitle(){return this.title}
 	listDetails = [];
@@ -63,8 +63,6 @@ export class WikiDetailsPage {
 	setListe (jsonData){
 		this.listDetails = [];
 		for (var prop in jsonData) {
-			console.log('caca');
-			console.log(prop, jsonData[prop]);
 			if (this.ignoreKey.indexOf(prop) == -1 ) {
 				if (this.ignoreValue.indexOf(jsonData[prop]) == -1) {
 					if (prop == 'img') {
@@ -84,7 +82,7 @@ export class WikiDetailsPage {
 		var newDetail;
 		switch(typeof objValue) {
 			case "string":
-				newDetail = { title: prop, value : objValue, isList : false, isUrl : false };
+				newDetail = { title: prop, value : objValue, isList : false, isUrl : false, isImg : false};
 				if(objValue.slice(0,4) == "http"){
 					newDetail["isUrl"] = true;
 					this.api.getData(objValue, response => {
@@ -101,6 +99,9 @@ export class WikiDetailsPage {
 							this.listDetails[prop][obj].objValue = "";
 						}
 					});
+				}
+				else if(objValue.includes(".png")){
+					newDetail["isImg"] = true;
 				}
 				break;
 
