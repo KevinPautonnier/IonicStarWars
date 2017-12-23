@@ -36,9 +36,10 @@ export class WikiPage {
 	]
 	navigation = {categorie : undefined, films : undefined, page:1, nbElemPerPage:300, elementId: undefined};
 	api;
-
+	modal;
 	constructor(public nav: NavController, private loadingCtrl: LoadingController, private storage: Storage, public alertCtrl: AlertController) {
 		this.api = new ApiModule(storage)
+		this.modal = new Modal(this.loadingCtrl);
 		this.storage.set("navigation", this.navigation);
 		this.storage.set("listCategories", this.listCategories);
 	};
@@ -50,6 +51,7 @@ export class WikiPage {
 	}
 
 	search(value){
+		this.modal.showModal();
 		if(("" + value).length > 0 ){
 			this.api.search(value, result => {
 				var formatedResult = formatResult(result);
@@ -82,7 +84,10 @@ export class WikiPage {
 						this.nav.push(WikiSearchPage);
 					})
 				}
+				this.modal.hideModal();
 			});
+		}else{
+			this.modal.hideModal()
 		}
 	}
 
@@ -174,7 +179,7 @@ function getData2step ( urlComplement, callback ){
 	var categorieName = url[0];
 	var elementNumber = url[1];
 	if(elementNumber == ""){
-		fillCategorie(categorieName, callback);
+		getData2step(categorieName + "/1-300/", callback);
 	}else{
 		if(elementNumber.includes("-")){
 			// *** Multiple element à charger ***
@@ -269,13 +274,15 @@ function requestApi( urlComplement, callback ){
 	})
 	.then(response => {
 
-			//console.log("response.json:" + JSON.stringify(response));
-			response["principaleAttributeName"] = getPrincipaleAttributeName(urlComplement.split("/")[0]);
-			callback(response);
-		}).catch(error => {
-			console.error(error);
-			callback(error);
-	});
+		//console.log("response.json:" + JSON.stringify(response));
+		response["principaleAttributeName"] = getPrincipaleAttributeName(urlComplement.split("/")[0]);
+		callback(response);
+	})
+	.catch(error => {
+		console.log("DidCathAError");
+		console.error(error);
+		callback(error);
+	});	
 }
 
 function _callbackInitCategorie( urlComplement, callback, response ){
@@ -285,41 +292,6 @@ function _callbackInitCategorie( urlComplement, callback, response ){
 	}
 	data[urlComplement.split("/")[0]] = newCategorie;
 	getData2step(urlComplement, callback);
-}
-
-function fillCategorie(categorie, callback) {
-	console.log("fillCategorie:"+categorie);
-	var i = 1;
-	tmp[categorie] = {};
-	tmp[categorie]["nbSend"] = 0;
-	while(i <= data[categorie].count ){
-		tmp[categorie]["nbSend"] = tmp[categorie]["nbSend"] +1;
-		if(data[categorie].data[i] == undefined ){
-			requestApi(categorie + "/" + i + "/", _callbackSaveDataElement.bind(null, categorie, i, callback, true));
-		}else{
-			_callbackSaveDataElement( categorie, i, callback, i == data[categorie].count, data[categorie].data[i]);
-		}
-		i++
-	}
-	//console.log("data=" + data);
-}
-
-function _callbackSaveDataElement( categorie, elementId, callback, isAsync, response ) {
-	//console.log("_callbackSaveDataElement:"+categorie + "-" + elementId + "-nbSend:" + tmp[categorie]["nbSend"]);
-	tmp[categorie]["nbSend"] = tmp[categorie]["nbSend"] -1;
-
-	if(response["__zone_symbol__currentTask"] == undefined){
-
-		data[categorie].data[elementId] = response;
-		if(tmp[categorie]["nbSend"] < 1 && isAsync){
-			callback(data[categorie].data);
-		}
-
-	}else{
-		//console.log("new404");
-		data[categorie].data[elementId] = "404";
-	}
-
 }
 
 function formatUrl(url){
@@ -383,7 +355,7 @@ export class ApiModule {
 		//console.log("getData_data=" + JSON.stringify(data));
 		// *** Préparation de la sauvegarde dans storage ***
 		//debugger;
-		wikiStorage.get("data").then(storageData =>{ data = storageData; })
+		//wikiStorage.get("data").then(storageData =>{ data = storageData; })
 		wikiStorage.get("navigation").then(storageNavigationData =>{ navigation = storageNavigationData; getData05(urlComplement, callback )})
 	}
 
@@ -422,7 +394,7 @@ export class ApiModule {
 
 	searchInCategorie(categorie, value, callback){
 		//console.log("ApiModule_searchInCategorie(" + value + "):" +  categorie );
-		this.getData(categorie + "/", function (value, response) {
+		this.getData(categorie + "/0-300", function (value, response) {
 			var listObject = {};
 			for(var p in response){
 				if(response[p]["principaleAttributeName"] != undefined && response[p][response[p]["principaleAttributeName"]].toUpperCase().includes(value.toUpperCase())){
